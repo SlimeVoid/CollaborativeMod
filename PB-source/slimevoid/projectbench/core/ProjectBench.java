@@ -1,0 +1,53 @@
+package slimevoid.projectbench.core;
+
+import slimevoid.projectbench.core.lib.CoreLib;
+import slimevoid.projectbench.network.ConnectionHandler;
+import slimevoidlib.ICommonProxy;
+import slimevoidlib.network.ClientPacketHandler;
+import slimevoidlib.network.CommonPacketHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
+
+@Mod(
+		modid = CoreLib.MOD_ID,
+		name = CoreLib.MOD_NAME,
+		version = CoreLib.MOD_VERSION,
+		dependencies = CoreLib.MOD_DEPENDENCIES)
+@NetworkMod(
+		clientSideRequired = true,
+		serverSideRequired = false,
+		clientPacketHandlerSpec = @SidedPacketHandler(
+				channels = { CoreLib.MOD_CHANNEL },
+				packetHandler = ClientPacketHandler.class),
+		serverPacketHandlerSpec = @SidedPacketHandler(
+				channels = { CoreLib.MOD_CHANNEL },
+				packetHandler = CommonPacketHandler.class),
+		connectionHandler = ConnectionHandler.class)
+public class ProjectBench {
+	@SidedProxy(
+			clientSide = CoreLib.CLIENT_PROXY,
+			serverSide = CoreLib.COMMON_PROXY)
+	public static ICommonProxy proxy;
+	
+	@Instance(CoreLib.MOD_ID)
+	public static ProjectBench instance;
+
+	@EventHandler
+	public void ProjectBenchPreInit(FMLPreInitializationEvent event) {
+	}
+
+	@EventHandler
+	public void ProjectBenchInit(FMLInitializationEvent event) {
+	}
+
+	@EventHandler
+	public void ProjectBenchPostInit(FMLPostInitializationEvent event) {
+	}
+}

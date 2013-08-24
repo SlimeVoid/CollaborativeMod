@@ -6,15 +6,18 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 
 public class ContainerProjectBench extends Container {
+	
+	TileEntityProjectBench projectbench;
 
 	public ContainerProjectBench(InventoryPlayer player, TileEntityProjectBench tileentity) {
 		super();
+		this.projectbench = tileentity;
+		
 	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		// TODO :: Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

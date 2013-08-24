@@ -23,7 +23,7 @@ public class TileEntityProjectBase extends TileEntityBase {
 
 	@Override
 	public int getBlockID() {
-		return PBCore.projectBase.blockID;
+		return PBCore.blockProjectBase.blockID;
 	}
 	
 	public int getLightValue() {

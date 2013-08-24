@@ -1,16 +1,26 @@
 package slimevoid.projectbench.blocks;
 
 import slimevoid.projectbench.core.lib.BlockLib;
+import slimevoid.projectbench.core.lib.IconLib;
 import slimevoid.projectbench.tileentity.TileEntityProjectBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockProjectBase extends BlockBase {
+	
+	protected Icon[][] iconList;
+	
+	@Override
+	public void registerIcons(IconRegister iconRegister) {
+		iconList = new Icon[BlockLib.BLOCK_BASE_MAX][6];
+		iconList = BlockLib.registerIcons(iconRegister, iconList);
+	}
 
-	protected BlockProjectBase(int blockID, Material material,
-			Class tileEntityClass) {
-		super(blockID, material, tileEntityClass);
+	public BlockProjectBase(int blockID) {
+		super(blockID, Material.rock);
 		this.setHardness(2.0F);
 		this.setCreativeTab(CreativeTabs.tabDecorations);
 	}

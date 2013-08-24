@@ -37,6 +37,7 @@ public abstract class TileEntityBase extends TileEntity {
 	}
 
 	public boolean onBlockActivated(EntityPlayer entityplayer) {
+		System.out.println("Base Activated");
 		return false;
 	}
 	

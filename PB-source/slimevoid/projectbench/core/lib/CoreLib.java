@@ -12,7 +12,7 @@ public class CoreLib {
 	public static final String MOD_VERSION = "0.0.0.1";
 	public static final String MOD_DEPENDENCIES = "required-after:SlimevoidLib";
 	public static final String MOD_CHANNEL = "PROJECTBENCH";
-	public static final String CLIENT_PROXY = "slimevoid.projectbench.client.proxy.ClientProxy";
+	public static final String CLIENT_PROXY = "slimevoid.projectbench.proxy.ClientProxy";
 	public static final String COMMON_PROXY = "slimevoid.projectbench.proxy.CommonProxy";
 	@SideOnly(Side.CLIENT) 
 	public static boolean OPTIFINE_INSTALLED = FMLClientHandler.instance().hasOptifine();;

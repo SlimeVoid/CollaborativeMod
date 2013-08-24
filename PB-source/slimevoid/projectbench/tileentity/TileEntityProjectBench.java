@@ -1,7 +1,7 @@
 package slimevoid.projectbench.tileentity;
 
+import slimevoid.projectbench.core.ProjectBench;
 import slimevoid.projectbench.core.lib.BlockLib;
-import slimevoid.projectbench.core.lib.CoreLib;
 import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoidlib.util.SlimevoidHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,13 +31,14 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 	
 	@Override
 	public boolean onBlockActivated(EntityPlayer entityplayer) {
+		System.out.println("Bench Activated");
 		if (entityplayer.isSneaking()) {
 			return false;
 		}
 		if (this.worldObj.isRemote) {
 			return true;
 		} else {
-			entityplayer.openGui(CoreLib.MOD_ID, GuiLib.GUIID_PROJECT_BENCH, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+			entityplayer.openGui(ProjectBench.instance, GuiLib.GUIID_PROJECT_BENCH, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 			return true;
 		}
 	}

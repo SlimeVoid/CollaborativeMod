@@ -6,6 +6,7 @@ import java.util.Random;
 
 import slimevoid.projectbench.core.lib.BlockLib;
 import slimevoid.projectbench.core.lib.RenderLib;
+import slimevoid.projectbench.items.ItemBase;
 import slimevoid.projectbench.tileentity.TileEntityBase;
 
 import net.minecraft.block.Block;
@@ -20,11 +21,11 @@ import net.minecraft.world.World;
 
 public class BlockBase extends BlockContainer {
 	
-	Class tileEntityClass;
+	Class[] tileEntityMap;
 
-	protected BlockBase(int blockID, Material material, Class tileEntityClass) {
+	protected BlockBase(int blockID, Material material) {
 		super(blockID, material);
-		this.tileEntityClass = tileEntityClass;
+		this.tileEntityMap = new Class[BlockLib.BLOCK_BASE_MAX];
 	}
 	
 	@Override
@@ -137,6 +138,7 @@ public class BlockBase extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int side, float xHit, float yHit, float zHit) {
+		System.out.println("Base Activated");
 		TileEntityBase tileentitybase = (TileEntityBase) BlockLib
 				.getTileEntity(world, x, y, z, TileEntityBase.class);
 		if (tileentitybase == null) {
@@ -150,19 +152,30 @@ public class BlockBase extends BlockContainer {
 	public int getRenderType() {
 		return RenderLib.BLOCK_BASE;
 	}
+	
+	public void addTileEntityMapping(int metadata, Class tileEntityClass) {
+		this.tileEntityMap[metadata] = tileEntityClass;
+	}
 
 	public void setItemName(int metadata, String name) {
 		Item item = Item.itemsList[this.blockID];
+		if (item != null) {
+			((ItemBase) item).setMetaName(metadata, (new StringBuilder()).append("tile.").append(name).toString());
+		}
+	}
 
+	@Override
+	public TileEntity createTileEntity(World world, int metadata) {
+		try {
+			return (TileEntity) this.tileEntityMap[metadata].newInstance();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		try {
-			return (TileEntity) this.tileEntityClass.newInstance();
-		} catch (Exception e) {
-			return null;
-		}
+		return null;
 	}
 
 }

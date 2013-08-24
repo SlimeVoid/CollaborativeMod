@@ -22,14 +22,15 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		dependencies = CoreLib.MOD_DEPENDENCIES)
 @NetworkMod(
 		clientSideRequired = true,
-		serverSideRequired = false,
-		clientPacketHandlerSpec = @SidedPacketHandler(
-				channels = { CoreLib.MOD_CHANNEL },
-				packetHandler = ClientPacketHandler.class),
-		serverPacketHandlerSpec = @SidedPacketHandler(
-				channels = { CoreLib.MOD_CHANNEL },
-				packetHandler = CommonPacketHandler.class),
-		connectionHandler = ConnectionHandler.class)
+		serverSideRequired = false//,
+//		clientPacketHandlerSpec = @SidedPacketHandler(
+//				channels = { CoreLib.MOD_CHANNEL },
+//				packetHandler = ClientPacketHandler.class),
+//		serverPacketHandlerSpec = @SidedPacketHandler(
+//				channels = { CoreLib.MOD_CHANNEL },
+//				packetHandler = CommonPacketHandler.class),
+//		connectionHandler = ConnectionHandler.class
+)
 public class ProjectBench {
 	@SidedProxy(
 			clientSide = CoreLib.CLIENT_PROXY,
@@ -49,5 +50,6 @@ public class ProjectBench {
 
 	@EventHandler
 	public void ProjectBenchPostInit(FMLPostInitializationEvent event) {
+		PBInit.initialize();
 	}
 }

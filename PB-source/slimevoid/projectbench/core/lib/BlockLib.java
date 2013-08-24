@@ -93,5 +93,4 @@ public class BlockLib {
 		iconList[BLOCK_PROJECT_BENCH_ID][5] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_SIDE);
 		return iconList;
 	}
-
 }

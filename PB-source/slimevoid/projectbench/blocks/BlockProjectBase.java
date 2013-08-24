@@ -1,7 +1,6 @@
 package slimevoid.projectbench.blocks;
 
 import slimevoid.projectbench.core.lib.BlockLib;
-import slimevoid.projectbench.core.lib.IconLib;
 import slimevoid.projectbench.tileentity.TileEntityProjectBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -18,6 +17,21 @@ public class BlockProjectBase extends BlockBase {
 		iconList = new Icon[BlockLib.BLOCK_BASE_MAX][6];
 		iconList = BlockLib.registerIcons(iconRegister, iconList);
 	}
+	
+	@Override
+	public Icon getBlockTexture(IBlockAccess iblockaccess, int x, int y, int z, int side) {
+		int metadata = iblockaccess.getBlockMetadata(x, y, z);
+		TileEntityProjectBase tileentity = (TileEntityProjectBase) BlockLib.getTileEntity(iblockaccess, x, y, z, this.tileEntityMap[metadata]);
+		if (tileentity != null) {
+			this.getIcon(tileentity.getBlockTexture(x, y, z, side), metadata);
+		}
+		return this.getIcon(side, metadata);
+	}
+	
+	@Override
+	public Icon getIcon(int side, int metadata) {
+		return this.iconList[metadata][side];
+	}
 
 	public BlockProjectBase(int blockID) {
 		super(blockID, Material.rock);
@@ -32,6 +46,11 @@ public class BlockProjectBase extends BlockBase {
 			return super.getLightValue(iblockaccess, x, y, z);
 		else
 			return tileentityprojectbase.getLightValue();
+	}
+	
+	@Override
+	public int getRenderType() {
+		return 0;
 	}
 	
 	@Override

@@ -44,4 +44,9 @@ public class TileEntityProjectBase extends TileEntityBase {
 		nbttagcompound.setByte(NBTLib.TILE_ROTATION, (byte) this.rotation);
 		nbttagcompound.setByte(NBTLib.TILE_ACTIVE, (byte) (this.active ? 1 : 0));
 	}
+
+	public int getBlockTexture(int x, int y, int z, int side) {
+		// TODO :: Side based on Rotation 
+		return side;
+	}
 }

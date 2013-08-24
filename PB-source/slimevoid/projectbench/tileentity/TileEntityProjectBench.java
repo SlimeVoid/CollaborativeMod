@@ -1,20 +1,66 @@
 package slimevoid.projectbench.tileentity;
 
 import slimevoid.projectbench.core.lib.BlockLib;
+import slimevoid.projectbench.core.lib.CoreLib;
+import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoidlib.util.SlimevoidHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 
-public class TileEntityProjectBench extends TileEntity implements ISidedInventory {
+public class TileEntityProjectBench extends TileEntityProjectBase implements ISidedInventory {
 	
 	private ItemStack[] contents;
 	
 	public TileEntityProjectBench() {
 		contents = new ItemStack[28];
+	}
+	
+	@Override
+	public int getDamageValue() {
+		return 0;
+	}
+	
+	@Override
+	public boolean canUpdate() {
+		return false;
+	}
+	
+	@Override
+	public boolean onBlockActivated(EntityPlayer entityplayer) {
+		if (entityplayer.isSneaking()) {
+			return false;
+		}
+		if (this.worldObj.isRemote) {
+			return true;
+		} else {
+			entityplayer.openGui(CoreLib.MOD_ID, GuiLib.GUIID_PROJECT_BENCH, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+			return true;
+		}
+	}
+
+	@Override
+	public void onBlockRemoval() {
+		for (int i = 0; i < 27; i++) {
+			ItemStack itemstack = this.contents[i];
+			if (itemstack != null && itemstack.stackSize > 0) {
+				BlockLib.dropItem(this.worldObj, this.xCoord, this.yCoord, this.zCoord, itemstack);
+			}
+		}
+
+	}
+
+	public int getStartInventorySide(ForgeDirection side) {
+		// TODO :: Start Inventory
+		return 10;
+	}
+
+	public int getSizeInventorySide(ForgeDirection side) {
+		// TODO :: Size Inventory
+		return 18;
 	}
 
 	@Override
@@ -108,7 +154,7 @@ public class TileEntityProjectBench extends TileEntity implements ISidedInventor
 	}
 
 	@Override
-	public boolean canInsertItem(int i, ItemStack itemstack, int j) {
+	public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
 		// TODO :: Auto-generated method stub
 		return false;
 	}

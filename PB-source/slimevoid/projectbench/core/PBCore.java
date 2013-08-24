@@ -6,6 +6,7 @@ import slimevoid.projectbench.core.lib.BlockLib;
 import slimevoid.projectbench.items.ItemBase;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 
@@ -14,6 +15,8 @@ public class PBCore {
 	public static int blockProjectBaseID;
 	public static BlockProjectBase blockProjectBase;
 	public static Configuration configuration;
+	public static Item itemPlanBlank;
+	public static Item itemPlanFull;
 
 	public static void registerNames() {
 	}

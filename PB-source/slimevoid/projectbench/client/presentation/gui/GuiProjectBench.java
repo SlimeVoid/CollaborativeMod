@@ -1,4 +1,4 @@
-package slimevoid.projectbench.presentation.gui;
+package slimevoid.projectbench.client.presentation.gui;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,13 +15,13 @@ public class GuiProjectBench extends GuiContainer {
 	public GuiProjectBench(InventoryPlayer playerInventory, TileEntityProjectBench projectBench) {
 		super(new ContainerProjectBench(playerInventory, projectBench));
 		this.projectBench = projectBench;
-		this.height = 222;
+		this.ySize = 222;
 	}
 
 	@Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		this.drawString(this.mc.fontRenderer, "Project Bench", 60, 6, 0x404040);
-		this.drawString(this.mc.fontRenderer, "Inventory", 8, (this.height - 96) + 2, 0x404040);
+		fontRenderer.drawString("Project Bench", 60, 6, 0x404040);
+		fontRenderer.drawString("Inventory", 8, (this.ySize - 96) + 2, 0x404040);
 	}
 	
 	@Override

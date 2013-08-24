@@ -23,7 +23,7 @@ public class BlockProjectBase extends BlockBase {
 		int metadata = iblockaccess.getBlockMetadata(x, y, z);
 		TileEntityProjectBase tileentity = (TileEntityProjectBase) BlockLib.getTileEntity(iblockaccess, x, y, z, this.tileEntityMap[metadata]);
 		if (tileentity != null) {
-			this.getIcon(tileentity.getBlockTexture(x, y, z, side), metadata);
+			return this.getIcon(tileentity.getBlockTexture(x, y, z, side), metadata);
 		}
 		return this.getIcon(side, metadata);
 	}

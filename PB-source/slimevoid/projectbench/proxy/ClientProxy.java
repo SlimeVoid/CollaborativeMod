@@ -4,10 +4,10 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import slimevoid.projectbench.client.presentation.gui.GuiProjectBench;
 import slimevoid.projectbench.core.ProjectBench;
 import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.GuiLib;
-import slimevoid.projectbench.presentation.gui.GuiProjectBench;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 import slimevoidlib.util.SlimevoidHelper;
 

@@ -46,7 +46,9 @@ public class TileEntityProjectBase extends TileEntityBase {
 	}
 
 	public int getBlockTexture(int x, int y, int z, int side) {
-		// TODO :: Side based on Rotation 
+		// TODO :: Side based on Rotation
+		System.out.println("Side: " + side);
+		System.out.println("Rotation: " + this.rotation);
 		return side;
 	}
 }

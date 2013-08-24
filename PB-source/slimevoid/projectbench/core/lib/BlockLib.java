@@ -87,8 +87,8 @@ public class BlockLib {
 	public static Icon[][] registerIcons(IconRegister iconRegister, Icon[][] iconList) {
 		iconList[BLOCK_PROJECT_BENCH_ID][0] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_BOTTOM);
 		iconList[BLOCK_PROJECT_BENCH_ID][1] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_TOP);
-		iconList[BLOCK_PROJECT_BENCH_ID][2] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_SIDE);
-		iconList[BLOCK_PROJECT_BENCH_ID][3] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_FRONT);
+		iconList[BLOCK_PROJECT_BENCH_ID][2] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_FRONT);
+		iconList[BLOCK_PROJECT_BENCH_ID][3] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_SIDE);
 		iconList[BLOCK_PROJECT_BENCH_ID][4] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_SIDE);
 		iconList[BLOCK_PROJECT_BENCH_ID][5] = iconRegister.registerIcon(IconLib.PROJECT_BENCH_SIDE);
 		return iconList;

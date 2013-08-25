@@ -152,11 +152,9 @@ public class ContainerProjectBench extends Container {
 		int b0 = 140;
 		int l;
         int i1;
-        //plan slot
-        this.addSlotToContainer(new SlotPlan(tileentity,1,17,36 ));
         
-        //crafting result
-        this.addSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 0, 143, 35));
+        
+        
         
         //crafting matrix will have ghost inventory "slots" behind
         //This area should drop items stored here out into world or attempt to store items into internal
@@ -168,6 +166,12 @@ public class ContainerProjectBench extends Container {
                 this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3 , 48 + i1 * 18, 18 + l * 18));
             }
         }
+		
+		//crafting result
+        this.addSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 9, 143, 35));
+		
+		//plan slot
+        this.addSlotToContainer(new SlotPlan(tileentity,1,17,36 ));
 		//bench inventory
 		for(l=0; l<2; ++l){
 			for (i1 = 0; i1 < tileentity.getSizeInventory()/2; ++i1)
@@ -222,5 +226,43 @@ public class ContainerProjectBench extends Container {
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return true;
 	}
+	
+	/**
+     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
+     */
+    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+    {
+        ItemStack itemstack = null;
+        Slot slot = (Slot)this.inventorySlots.get(par2);
+
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+
+            if (par2 < 2 * 9)
+            {
+                if (!this.mergeItemStack(itemstack1, 2 * 9 , this.inventorySlots.size(), true))
+                {
+                    return null;
+                }
+            }
+            else if (!this.mergeItemStack(itemstack1, 10, 2 * 9 , false))
+            {
+                return null;
+            }
+
+            if (itemstack1.stackSize == 0)
+            {
+                slot.putStack((ItemStack)null);
+            }
+            else
+            {
+                slot.onSlotChanged();
+            }
+        }
+
+        return itemstack;
+    }
 
 }

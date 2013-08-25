@@ -13,6 +13,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import slimevoid.projectbench.core.PBCore;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 
 public class ContainerProjectBench extends Container {
@@ -124,13 +125,11 @@ public class ContainerProjectBench extends Container {
 			super(inventory, i, j, k);
 		}
 
-		// add when done with plans
 		@Override
 		// isItemValid
 		public boolean isItemValid(ItemStack itemstack) {
-			return itemstack.itemID == new ItemStack(Block.workbench).itemID;
-			// return itemstack.itemID == PBCore.itemPlanBlank.itemID
-			// || itemstack.itemID == PBCore.itemPlanFull.itemID;
+			return itemstack.itemID == PBCore.itemPlanBlank.itemID
+			|| itemstack.itemID == PBCore.itemPlanFull.itemID;
 		}
 
 		public int getSlotStackLimit() {

@@ -13,6 +13,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
 public class ContainerProjectBench extends Container {
@@ -127,7 +129,7 @@ public class ContainerProjectBench extends Container {
 		
 		
 		//add when done with plans
-		//@Override
+		@Override
 		//isItemValid
 		public boolean isItemValid(ItemStack itemstack) {
 			return itemstack.itemID == new ItemStack(Block.workbench).itemID;
@@ -142,134 +144,152 @@ public class ContainerProjectBench extends Container {
 
 	TileEntityProjectBench projectbench;
 	// SlotCraftRefill slotCraft;
-	//public InventorySubCraft craftMatrix;
+	// public InventorySubCraft craftMatrix;
 	/** The crafting matrix inventory (3x3). */
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = new InventoryCraftResult();
-    private World worldObj;
+	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+	public IInventory craftResult = new InventoryCraftResult();
+	private World worldObj;
 	public int satisfyMask;
 
-	public ContainerProjectBench(InventoryPlayer player,World world, TileEntityProjectBench tileentity) {
+	public ContainerProjectBench(InventoryPlayer playerInventory, World world, TileEntityProjectBench tileentity) {
 		super();
-		this.projectbench = tileentity;		
+		this.projectbench = tileentity;
 		this.worldObj = world;
 		int b0 = 140;
 		int l;
-        int i1;
-        
-        
-        
-        
-        //crafting matrix will have ghost inventory "slots" behind
-        //This area should drop items stored here out into world or attempt to store items into internal
-        //inventory and then drop remaining items from the player
-		for (l = 0; l < 3; ++l)
-        {
-            for (i1 = 0; i1 < 3; ++i1)
-            {
-                this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3 , 48 + i1 * 18, 18 + l * 18));
-            }
-        }
-		
-		//crafting result
-        this.addSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 9, 143, 35));
-		
-		//plan slot
-        this.addSlotToContainer(new SlotPlan(tileentity,0,17,36 ));
-		//bench inventory
-		for(l=0; l<2; ++l){
-			for (i1 = 0; i1 < tileentity.getSizeInventory()/2; ++i1)
-			{
-				this.addSlotToContainer(new Slot(tileentity, i1 + l *9 +1, 8 + i1 * 18, l *18 + 90));
+		int i1;
+
+		// crafting matrix will have ghost inventory "slots" behind
+		// This area should drop items stored here out into world or attempt to
+		// store items into internal
+		// inventory and then drop remaining items from the player
+		for (l = 0; l < 3; ++l) {
+			for (i1 = 0; i1 < 3; ++i1) {
+				this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3,
+						48 + i1 * 18, 18 + l * 18));
 			}
 		}
-		//Player inventory
-		 for (l = 0; l < 3; ++l)
-	        {
-	            for (i1 = 0; i1 < 9; ++i1)
-	            {
-	                this.addSlotToContainer(new Slot(player, i1 + l * 9 + 9, 8 + i1 * 18, l * 18 + b0));
-	            }
-	        }
-		 //hotbar inventory
-	        for (l = 0; l < 9; ++l)
-	        {
-	            this.addSlotToContainer(new Slot(player, l, 8 + l * 18, 58 + b0));
-	        }
+
+		// crafting result
+		this.addSlotToContainer(new SlotCrafting(playerInventory.player,
+				this.craftMatrix, this.craftResult, 9, 143, 35));
+
+		// plan slot
+		this.addSlotToContainer(new SlotPlan(tileentity, 0, 17, 36));
+		// bench inventory
+		for (l = 0; l < 2; ++l) {
+			for (i1 = 0; i1 < tileentity.getSizeInventory() / 2; ++i1) {
+				this.addSlotToContainer(new Slot(tileentity, i1 + l * 9 + 1,
+						8 + i1 * 18, l * 18 + 90));
+			}
+		}
+		// Player inventory
+		for (l = 0; l < 3; ++l) {
+			for (i1 = 0; i1 < 9; ++i1) {
+				this.addSlotToContainer(new Slot(playerInventory, i1 + l * 9 + 9,
+						8 + i1 * 18, l * 18 + b0));
+			}
+		}
+		// hotbar inventory
+		for (l = 0; l < 9; ++l) {
+			this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 58 + b0));
+		}
 	}
+
 	/**
-     * Callback for when the crafting matrix is changed.
-     */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
-    {
-        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.worldObj));
-    }
+	 * Callback for when the crafting matrix is changed.
+	 */
+	public void onCraftMatrixChanged(IInventory inventory) {
+		this.craftResult.setInventorySlotContents(
+				0,
+				CraftingManager.getInstance().findMatchingRecipe(
+						this.craftMatrix, this.worldObj));
+	}
 
-    /**
-     * Called when the container is closed.
-     */
-    public void onContainerClosed(EntityPlayer par1EntityPlayer)
-    {
-    	//TODO:try to shove as many items found in crafting matrix into internal storage before dumping to world
-        super.onContainerClosed(par1EntityPlayer);
+	/**
+	 * Called when the container is closed.
+	 */
+	public void onContainerClosed(EntityPlayer entityplayer) {
+		// TODO :: try to shove as many items found in crafting matrix into
+		// internal storage before dumping to world
+		super.onContainerClosed(entityplayer);
 
-        if (!this.worldObj.isRemote)
-        {
-            for (int i = 0; i < 9; ++i)
-            {
-                ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+		if (!this.worldObj.isRemote) {
+			for (int i = 0; i < 9; ++i) {
+				ItemStack itemstack = this.craftMatrix
+						.getStackInSlotOnClosing(i);
 
-                if (itemstack != null)
-                {
-                    par1EntityPlayer.dropPlayerItem(itemstack);
-                }
-            }
-        }
-    }
+				if (itemstack != null) {
+					entityplayer.dropPlayerItem(itemstack);
+				}
+			}
+		}
+	}
+
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return true;
 	}
-	
+
+	public ItemStack[] getPlanItems() {
+		ItemStack plan = this.projectbench.getStackInSlot(9);
+		if (plan == null)
+			return null;
+		else
+			return getShadowItems(plan);
+	}
+
+	public static ItemStack[] getShadowItems(ItemStack ist) {
+		if (ist.stackTagCompound == null)
+			return null;
+		NBTTagList require = ist.stackTagCompound.getTagList("requires");
+		if (require == null)
+			return null;
+		ItemStack tr[] = new ItemStack[9];
+		for (int i = 0; i < require.tagCount(); i++) {
+			NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
+			ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
+			int sl = item.getByte("Slot");
+			if (sl >= 0 && sl < 9)
+				tr[sl] = is2;
+		}
+
+		return tr;
+	}
+
 	/**
-     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
-     */
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
-    {
-        ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+	 * Called when a player shift-clicks on a slot. You must override this or
+	 * you will crash when someone does that.
+	 */
+	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
+			int slotShiftClicked) {
+		ItemStack itemstackCopy = null;
+		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
 
-        if (slot != null && slot.getHasStack())
-        {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+		if (slot != null && slot.getHasStack()) {
+			ItemStack stackInSlot = slot.getStack();
+			itemstackCopy = stackInSlot.copy();
 
-            if (par2 < 2 * 9 + 11)
-            {
-                if (!this.mergeItemStack(itemstack1, 2 * 9 + 11, this.inventorySlots.size(), true))
-                {
-                    return null;
-                }
-                slot.onSlotChange(itemstack1, itemstack);
-            }
-            else if (!this.mergeItemStack(itemstack1, 10, 2 * 9 + 11, false))
-            {
-                return null;
-            }
+			if (slotShiftClicked < 2 * 9 + 11) {
+				if (!this.mergeItemStack(stackInSlot, 2 * 9 + 11,
+						this.inventorySlots.size(), true)) {
+					return null;
+				}
+				slot.onSlotChange(stackInSlot, itemstackCopy);
+			} else if (!this.mergeItemStack(stackInSlot, 10, 2 * 9 + 11, false)) {
+				return null;
+			}
 
-            if (itemstack1.stackSize == 0)
-            {
-                slot.putStack((ItemStack)null);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
-            
-            slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
-        }
+			if (stackInSlot.stackSize == 0) {
+				slot.putStack((ItemStack) null);
+			} else {
+				slot.onSlotChanged();
+			}
 
-        return itemstack;
-    }
+			slot.onPickupFromSlot(entityplayer, stackInSlot);
+		}
+
+		return itemstackCopy;
+	}
 
 }

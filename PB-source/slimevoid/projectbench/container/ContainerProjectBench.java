@@ -250,6 +250,7 @@ public class ContainerProjectBench extends Container {
                 {
                     return null;
                 }
+                slot.onSlotChange(itemstack1, itemstack);
             }
             else if (!this.mergeItemStack(itemstack1, 10, 2 * 9 + 11, false))
             {
@@ -264,6 +265,8 @@ public class ContainerProjectBench extends Container {
             {
                 slot.onSlotChanged();
             }
+            
+            slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }
 
         return itemstack;

@@ -1,7 +1,5 @@
 package slimevoid.projectbench.container;
 
-import slimevoid.projectbench.core.PBCore;
-import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -10,286 +8,338 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 
-public class ContainerProjectBench extends Container {
-	
-    
-	public static class ContainerNull extends Container {
+public class ContainerProjectBench extends Container
+{
 
+    public static class ContainerNull extends Container
+    {
 
-		@Override
-		public boolean canInteractWith(EntityPlayer entityplayer) {
-			return false;
-		}
+        @Override
+        public boolean canInteractWith(EntityPlayer entityplayer)
+        {
+            return false;
+        }
 
-		@Override
-		public void onCraftMatrixChanged(IInventory inventory) {
-		}
+        @Override
+        public void onCraftMatrixChanged(IInventory inventory)
+        {
+        }
 
-		public ContainerNull() {
-		}
-	}
+        public ContainerNull()
+        {
+        }
+    }
 
-	public class InventorySubUpdate implements IInventory {
-		
-		int size;
-		int start;
-		IInventory parent;
-		final ContainerProjectBench containerProjectBench;
+    public class InventorySubUpdate implements IInventory
+    {
 
-		public InventorySubUpdate(IInventory parentInventory, int startSlot, int inventorySize) {
-			super();
-			containerProjectBench = ContainerProjectBench.this;
-			parent = parentInventory;
-			start = startSlot;
-			size = inventorySize;
-		}
+        int size;
+        int start;
+        IInventory parent;
+        final ContainerProjectBench containerProjectBench;
 
-		@Override
-		public int getSizeInventory() {
-			return size;
-		}
+        public InventorySubUpdate(IInventory parentInventory, int startSlot,
+                int inventorySize)
+        {
+            super();
+            containerProjectBench = ContainerProjectBench.this;
+            parent = parentInventory;
+            start = startSlot;
+            size = inventorySize;
+        }
 
-		@Override
-		public ItemStack getStackInSlot(int slot) {
-			return parent.getStackInSlot(slot + start);
-		}
+        @Override
+        public int getSizeInventory()
+        {
+            return size;
+        }
 
-		@Override
-		public ItemStack decrStackSize(int slot, int amount) {
-			ItemStack itemstack = parent.decrStackSize(slot + start, amount);
-			if (itemstack != null) {
-				ContainerProjectBench.this.onCraftMatrixChanged(this);
-			}
-			return itemstack;
-		}
+        @Override
+        public ItemStack getStackInSlot(int slot)
+        {
+            return parent.getStackInSlot(slot + start);
+        }
 
-		@Override
-		public ItemStack getStackInSlotOnClosing(int slot) {
-			return parent.getStackInSlotOnClosing(slot + start);
-		}
+        @Override
+        public ItemStack decrStackSize(int slot, int amount)
+        {
+            ItemStack itemstack = parent.decrStackSize(slot + start, amount);
+            if (itemstack != null)
+            {
+                ContainerProjectBench.this.onCraftMatrixChanged(this);
+            }
+            return itemstack;
+        }
 
-		@Override
-		public void setInventorySlotContents(int slot, ItemStack ist) {
-			parent.setInventorySlotContents(slot + start, ist);
-			ContainerProjectBench.this.onCraftMatrixChanged(this);
-		}
+        @Override
+        public ItemStack getStackInSlotOnClosing(int slot)
+        {
+            return parent.getStackInSlotOnClosing(slot + start);
+        }
 
-		@Override
-		public String getInvName() {
-			return parent.getInvName();
-		}
+        @Override
+        public void setInventorySlotContents(int slot, ItemStack ist)
+        {
+            parent.setInventorySlotContents(slot + start, ist);
+            ContainerProjectBench.this.onCraftMatrixChanged(this);
+        }
 
-		@Override
-		public int getInventoryStackLimit() {
-			return parent.getInventoryStackLimit();
-		}
+        @Override
+        public String getInvName()
+        {
+            return parent.getInvName();
+        }
 
-		@Override
-		public void onInventoryChanged() {
-			ContainerProjectBench.this.onCraftMatrixChanged(this);
-			parent.onInventoryChanged();
-		}
+        @Override
+        public int getInventoryStackLimit()
+        {
+            return parent.getInventoryStackLimit();
+        }
 
-		@Override
-		public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-			return false;
-		}
+        @Override
+        public void onInventoryChanged()
+        {
+            ContainerProjectBench.this.onCraftMatrixChanged(this);
+            parent.onInventoryChanged();
+        }
 
-		@Override
-		public void openChest() {
-		}
+        @Override
+        public boolean isUseableByPlayer(EntityPlayer entityplayer)
+        {
+            return false;
+        }
 
-		@Override
-		public void closeChest() {
-		}
+        @Override
+        public void openChest()
+        {
+        }
 
-		@Override
-		public boolean isInvNameLocalized() {
-			return false;
-		}
+        @Override
+        public void closeChest()
+        {
+        }
 
-		@Override
-		public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-			return true;
-		}
-	}
+        @Override
+        public boolean isInvNameLocalized()
+        {
+            return false;
+        }
 
-	public static class SlotPlan extends Slot {
+        @Override
+        public boolean isItemValidForSlot(int i, ItemStack itemstack)
+        {
+            return true;
+        }
+    }
 
-		public SlotPlan(IInventory inventory, int i, int j, int k) {
-			super(inventory, i, j, k);
-		}
-		
-		
-		//add when done with plans
-		@Override
-		//isItemValid
-		public boolean isItemValid(ItemStack itemstack) {
-			return itemstack.itemID == new ItemStack(Block.workbench).itemID;
-			//return itemstack.itemID == PBCore.itemPlanBlank.itemID
-					//|| itemstack.itemID == PBCore.itemPlanFull.itemID;
-		}
+    public static class SlotPlan extends Slot
+    {
 
-		public int getSlotStackLimit() {
-			return 1;
-		}
-	}
+        public SlotPlan(IInventory inventory, int i, int j, int k)
+        {
+            super(inventory, i, j, k);
+        }
 
-	TileEntityProjectBench projectbench;
-	// SlotCraftRefill slotCraft;
-	// public InventorySubCraft craftMatrix;
-	/** The crafting matrix inventory (3x3). */
-	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-	public IInventory craftResult = new InventoryCraftResult();
-	private World worldObj;
-	public int satisfyMask;
+        // add when done with plans
+        @Override
+        // isItemValid
+        public boolean isItemValid(ItemStack itemstack)
+        {
+            return itemstack.itemID == new ItemStack(Block.workbench).itemID;
+            // return itemstack.itemID == PBCore.itemPlanBlank.itemID
+            // || itemstack.itemID == PBCore.itemPlanFull.itemID;
+        }
 
-	public ContainerProjectBench(InventoryPlayer playerInventory, World world, TileEntityProjectBench tileentity) {
-		super();
-		this.projectbench = tileentity;
-		this.worldObj = world;
-		int b0 = 140;
-		int l;
-		int i1;
+        public int getSlotStackLimit()
+        {
+            return 1;
+        }
+    }
 
-		// crafting matrix will have ghost inventory "slots" behind
-		// This area should drop items stored here out into world or attempt to
-		// store items into internal
-		// inventory and then drop remaining items from the player
-		for (l = 0; l < 3; ++l) {
-			for (i1 = 0; i1 < 3; ++i1) {
-				this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3,
-						48 + i1 * 18, 18 + l * 18));
-			}
-		}
+    TileEntityProjectBench projectbench;
+    // SlotCraftRefill slotCraft;
+    // public InventorySubCraft craftMatrix;
+    /** The crafting matrix inventory (3x3). */
+    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+    public IInventory craftResult = new InventoryCraftResult();
+    private World worldObj;
+    public int satisfyMask;
 
-		// crafting result
-		this.addSlotToContainer(new SlotCrafting(playerInventory.player,
-				this.craftMatrix, this.craftResult, 9, 143, 35));
+    public ContainerProjectBench(InventoryPlayer playerInventory, World world,
+            TileEntityProjectBench tileentity)
+    {
+        super();
+        this.projectbench = tileentity;
+        this.worldObj = world;
+        int b0 = 140;
+        int l;
+        int i1;
 
-		// plan slot
-		this.addSlotToContainer(new SlotPlan(tileentity, 0, 17, 36));
-		// bench inventory
-		for (l = 0; l < 2; ++l) {
-			for (i1 = 0; i1 < tileentity.getSizeInventory() / 2; ++i1) {
-				this.addSlotToContainer(new Slot(tileentity, i1 + l * 9 + 1,
-						8 + i1 * 18, l * 18 + 90));
-			}
-		}
-		// Player inventory
-		for (l = 0; l < 3; ++l) {
-			for (i1 = 0; i1 < 9; ++i1) {
-				this.addSlotToContainer(new Slot(playerInventory, i1 + l * 9 + 9,
-						8 + i1 * 18, l * 18 + b0));
-			}
-		}
-		// hotbar inventory
-		for (l = 0; l < 9; ++l) {
-			this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 58 + b0));
-		}
-	}
+        // crafting matrix will have ghost inventory "slots" behind
+        // This area should drop items stored here out into world or attempt to
+        // store items into internal
+        // inventory and then drop remaining items from the player
+        for (l = 0; l < 3; ++l)
+        {
+            for (i1 = 0; i1 < 3; ++i1)
+            {
+                this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3,
+                        48 + i1 * 18, 18 + l * 18));
+            }
+        }
+        IInventory[] sourceINventories = new IInventory[2];
+        sourceINventories[0] = this.projectbench;
+        sourceINventories[1] = playerInventory;
+        // crafting result
+        this.addSlotToContainer(new SlotCraftRefill(playerInventory.player,
+                this.craftMatrix, this.craftResult, sourceINventories, this, 9,
+                143, 35));
 
-	/**
-	 * Callback for when the crafting matrix is changed.
-	 */
-	public void onCraftMatrixChanged(IInventory inventory) {
-		this.craftResult.setInventorySlotContents(
-				0,
-				CraftingManager.getInstance().findMatchingRecipe(
-						this.craftMatrix, this.worldObj));
-	}
+        // plan slot
+        this.addSlotToContainer(new SlotPlan(tileentity, 0, 17, 36));
+        // bench inventory
+        for (l = 0; l < 2; ++l)
+        {
+            for (i1 = 0; i1 < tileentity.getSizeInventory() / 2; ++i1)
+            {
+                this.addSlotToContainer(new Slot(tileentity, i1 + l * 9 + 1,
+                        8 + i1 * 18, l * 18 + 90));
+            }
+        }
+        // Player inventory
+        for (l = 0; l < 3; ++l)
+        {
+            for (i1 = 0; i1 < 9; ++i1)
+            {
+                this.addSlotToContainer(new Slot(playerInventory, i1 + l * 9
+                        + 9, 8 + i1 * 18, l * 18 + b0));
+            }
+        }
+        // hotbar inventory
+        for (l = 0; l < 9; ++l)
+        {
+            this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18,
+                    58 + b0));
+        }
+    }
 
-	/**
-	 * Called when the container is closed.
-	 */
-	public void onContainerClosed(EntityPlayer entityplayer) {
-		// TODO :: try to shove as many items found in crafting matrix into
-		// internal storage before dumping to world
-		super.onContainerClosed(entityplayer);
+    /**
+     * Callback for when the crafting matrix is changed.
+     */
+    public void onCraftMatrixChanged(IInventory inventory)
+    {
+        this.craftResult.setInventorySlotContents(
+                0,
+                CraftingManager.getInstance().findMatchingRecipe(
+                        this.craftMatrix, this.worldObj));
+    }
 
-		if (!this.worldObj.isRemote) {
-			for (int i = 0; i < 9; ++i) {
-				ItemStack itemstack = this.craftMatrix
-						.getStackInSlotOnClosing(i);
+    /**
+     * Called when the container is closed.
+     */
+    public void onContainerClosed(EntityPlayer entityplayer)
+    {
+        // TODO :: try to shove as many items found in crafting matrix into
+        // internal storage before dumping to world
+        super.onContainerClosed(entityplayer);
 
-				if (itemstack != null) {
-					entityplayer.dropPlayerItem(itemstack);
-				}
-			}
-		}
-	}
+        if (!this.worldObj.isRemote)
+        {
+            for (int i = 0; i < 9; ++i)
+            {
+                ItemStack itemstack = this.craftMatrix
+                        .getStackInSlotOnClosing(i);
 
-	@Override
-	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return true;
-	}
+                if (itemstack != null)
+                {
+                    entityplayer.dropPlayerItem(itemstack);
+                }
+            }
+        }
+    }
 
-	public ItemStack[] getPlanItems() {
-		ItemStack plan = this.projectbench.getStackInSlot(9);
-		if (plan == null)
-			return null;
-		else
-			return getShadowItems(plan);
-	}
+    @Override
+    public boolean canInteractWith(EntityPlayer entityplayer)
+    {
+        return true;
+    }
 
-	public static ItemStack[] getShadowItems(ItemStack ist) {
-		if (ist.stackTagCompound == null)
-			return null;
-		NBTTagList require = ist.stackTagCompound.getTagList("requires");
-		if (require == null)
-			return null;
-		ItemStack tr[] = new ItemStack[9];
-		for (int i = 0; i < require.tagCount(); i++) {
-			NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
-			ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
-			int sl = item.getByte("Slot");
-			if (sl >= 0 && sl < 9)
-				tr[sl] = is2;
-		}
+    public ItemStack[] getPlanItems()
+    {
+        ItemStack plan = this.projectbench.getStackInSlot(9);
+        if (plan == null)
+            return null;
+        else
+            return getShadowItems(plan);
+    }
 
-		return tr;
-	}
+    public static ItemStack[] getShadowItems(ItemStack ist)
+    {
+        if (ist.stackTagCompound == null)
+            return null;
+        NBTTagList require = ist.stackTagCompound.getTagList("requires");
+        if (require == null)
+            return null;
+        ItemStack tr[] = new ItemStack[9];
+        for (int i = 0; i < require.tagCount(); i++)
+        {
+            NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
+            ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
+            int sl = item.getByte("Slot");
+            if (sl >= 0 && sl < 9)
+                tr[sl] = is2;
+        }
 
-	/**
-	 * Called when a player shift-clicks on a slot. You must override this or
-	 * you will crash when someone does that.
-	 */
-	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
-			int slotShiftClicked) {
-		ItemStack itemstackCopy = null;
-		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
+        return tr;
+    }
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stackInSlot = slot.getStack();
-			itemstackCopy = stackInSlot.copy();
+    /**
+     * Called when a player shift-clicks on a slot. You must override this or
+     * you will crash when someone does that.
+     */
+    public ItemStack transferStackInSlot(EntityPlayer entityplayer,
+            int slotShiftClicked)
+    {
+        ItemStack itemstackCopy = null;
+        Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
 
-			if (slotShiftClicked < 2 * 9 + 11) {
-				if (!this.mergeItemStack(stackInSlot, 2 * 9 + 11,
-						this.inventorySlots.size(), true)) {
-					return null;
-				}
-				slot.onSlotChange(stackInSlot, itemstackCopy);
-			} else if (!this.mergeItemStack(stackInSlot, 10, 2 * 9 + 11, false)) {
-				return null;
-			}
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack stackInSlot = slot.getStack();
+            itemstackCopy = stackInSlot.copy();
 
-			if (stackInSlot.stackSize == 0) {
-				slot.putStack((ItemStack) null);
-			} else {
-				slot.onSlotChanged();
-			}
+            if (slotShiftClicked < 2 * 9 + 11)
+            {
+                if (!this.mergeItemStack(stackInSlot, 2 * 9 + 11,
+                        this.inventorySlots.size(), true))
+                {
+                    return null;
+                }
+                slot.onSlotChange(stackInSlot, itemstackCopy);
+            } else if (!this.mergeItemStack(stackInSlot, 10, 2 * 9 + 11, false))
+            {
+                return null;
+            }
 
-			slot.onPickupFromSlot(entityplayer, stackInSlot);
-		}
+            if (stackInSlot.stackSize == 0)
+            {
+                slot.putStack((ItemStack) null);
+            } else
+            {
+                slot.onSlotChanged();
+            }
 
-		return itemstackCopy;
-	}
+            slot.onPickupFromSlot(entityplayer, stackInSlot);
+        }
+
+        return itemstackCopy;
+    }
 
 }

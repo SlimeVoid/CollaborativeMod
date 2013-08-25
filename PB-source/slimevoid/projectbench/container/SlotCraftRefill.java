@@ -1,44 +1,51 @@
 package slimevoid.projectbench.container;
 
-import slimevoid.projectbench.core.lib.ItemLib;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
+import slimevoid.projectbench.core.lib.ItemLib;
 
 // Referenced classes of package com.eloraam.redpower.base:
 //            ContainerAdvBench
 
 public class SlotCraftRefill extends SlotCrafting {
 
-	IInventory allSlots;
+	IInventory[] allInventories;
 	IInventory craftingMatrix;
 	ContainerProjectBench eventHandler;
 
 	public SlotCraftRefill(EntityPlayer entityplayer, IInventory matrix,
-			IInventory result, IInventory all, ContainerProjectBench evh,
-			int i, int j, int k) {
+			IInventory result, IInventory[] allinventories,
+			ContainerProjectBench evh, int i, int j, int k) {
 		super(entityplayer, matrix, result, i, j, k);
-		allSlots = all;
+		allInventories = allinventories;
 		craftingMatrix = matrix;
 		eventHandler = evh;
 	}
 
-	private int findMatch(ItemStack itemstack) {
-		for (int i = 0; i < 18; i++) {
-			ItemStack test = allSlots.getStackInSlot(10 + i);
-			if (test != null && test.stackSize != 0
-					&& ItemLib.matchOre(itemstack, test))
-				return 10 + i;
-		}
+	private InventoryMatch findMatch(ItemStack itemstack) {
+		InventoryMatch match = new InventoryMatch();
+		for (int j = 0; j < this.allInventories.length; j++) {
+			for (int i = 0; i < allInventories[j].getSizeInventory(); i++) {
+				ItemStack test = allInventories[j].getStackInSlot(i);
+				if (test != null && test.stackSize != 0
+						&& ItemLib.matchOre(itemstack, test)) {
+					match.Inventoryindex = j;
+					match.slotIndex = i;
+					return match;
+				}
 
-		return -1;
+			}
+		}
+		return match;
 	}
 
 	public boolean isLastUse() {
 		int bits = 0;
+
 		for (int i = 0; i < 9; i++) {
-			ItemStack st = allSlots.getStackInSlot(i);
+			ItemStack st = this.craftingMatrix.getStackInSlot(i);
 			if (st == null) {
 				bits |= 1 << i;
 				continue;
@@ -53,24 +60,25 @@ public class SlotCraftRefill extends SlotCrafting {
 
 		if (bits == 511)
 			return false;
-		for (int i = 0; i < 18; i++) {
-			ItemStack test = allSlots.getStackInSlot(10 + i);
-			if (test == null || test.stackSize == 0)
-				continue;
-			int sc = test.stackSize;
-			for (int j = 0; j < 9; j++) {
-				if ((bits & 1 << j) > 0)
+		for (int k = 0; k < this.allInventories.length; k++) {
+			for (int i = 0; i < this.allInventories[k].getSizeInventory(); i++) {
+				ItemStack test = this.allInventories[k].getStackInSlot(i);
+				if (test == null || test.stackSize == 0)
 					continue;
-				ItemStack st = allSlots.getStackInSlot(j);
-				if (st == null || !ItemLib.matchOre(st, test))
-					continue;
-				bits |= 1 << j;
-				if (--sc == 0)
-					break;
+				int sc = test.stackSize;
+				for (int j = 0; j < 9; j++) {
+					if ((bits & 1 << j) > 0)
+						continue;
+					ItemStack st = this.craftingMatrix.getStackInSlot(j);
+					if (st == null || !ItemLib.matchOre(st, test))
+						continue;
+					bits |= 1 << j;
+					if (--sc == 0)
+						break;
+				}
+
 			}
-
 		}
-
 		return bits != 511;
 	}
 
@@ -79,7 +87,7 @@ public class SlotCraftRefill extends SlotCrafting {
 		ItemStack plan[] = eventHandler.getPlanItems();
 		ItemStack cur[] = new ItemStack[9];
 		for (int i = 0; i < 9; i++) {
-			ItemStack st = allSlots.getStackInSlot(i);
+			ItemStack st = this.craftingMatrix.getStackInSlot(i);
 			if (st == null)
 				cur[i] = null;
 			else
@@ -91,16 +99,19 @@ public class SlotCraftRefill extends SlotCrafting {
 			for (int i = 0; i < 9; i++) {
 				if (cur[i] != null || plan[i] == null)
 					continue;
-				int p = findMatch(plan[i]);
-				if (p < 0)
+				InventoryMatch p = findMatch(plan[i]);
+				if (p.slotIndex < 0)
 					continue;
-				ItemStack is2 = allSlots.getStackInSlot(p);
+				ItemStack is2 = this.allInventories[p.Inventoryindex]
+						.getStackInSlot(p.slotIndex);
 				if (is2 == null)
 					continue;
-				allSlots.decrStackSize(p, 1);
+				this.allInventories[p.Inventoryindex].decrStackSize(
+						p.slotIndex, 1);
 				if (is2.getItem().hasContainerItem()) {
 					ItemStack is3 = is2.getItem().getContainerItemStack(is2);
-					allSlots.setInventorySlotContents(p, is3);
+					this.allInventories[p.Inventoryindex]
+							.setInventorySlotContents(p.slotIndex, is3);
 				}
 			}
 
@@ -110,37 +121,48 @@ public class SlotCraftRefill extends SlotCrafting {
 			eventHandler.onCraftMatrixChanged(craftingMatrix);
 			return;
 		}
-		//boolean ch = false;
+		// boolean ch = false;
 		for (int i = 0; i < 9; i++) {
 			if (cur[i] == null)
 				continue;
-			ItemStack nsl = allSlots.getStackInSlot(i);
+			ItemStack nsl = this.craftingMatrix.getStackInSlot(i);
 			if (plan != null && plan[i] != null)
 				continue;
-			int idx;
+			InventoryMatch p;
 			if (nsl != null) {
-				if (ItemLib.matchOre(nsl, cur[i]) || !cur[i].getItem().hasContainerItem())
+				if (ItemLib.matchOre(nsl, cur[i])
+						|| !cur[i].getItem().hasContainerItem())
 					continue;
 				ItemStack ctr = cur[i].getItem().getContainerItemStack(cur[i]);
 				if (ctr == null || ctr.getItem().itemID != nsl.getItem().itemID)
 					continue;
-				idx = findMatch(cur[i]);
-				if (idx >= 0) {
-					ItemStack i1 = allSlots.getStackInSlot(idx);
-					allSlots.setInventorySlotContents(idx, nsl);
-					allSlots.setInventorySlotContents(i, i1);
-					//ch = true;
+				p = findMatch(cur[i]);
+				if (p.slotIndex >= 0) {
+					ItemStack i1 = this.allInventories[p.Inventoryindex]
+							.getStackInSlot(p.slotIndex);
+					this.allInventories[p.Inventoryindex]
+							.setInventorySlotContents(p.slotIndex, nsl);
+					this.craftingMatrix.setInventorySlotContents(i, i1);
+					// ch = true;
 				}
 				continue;
 			}
-			idx = findMatch(cur[i]);
-			if (idx >= 0) {
-				ItemStack i1 = allSlots.getStackInSlot(idx);
-				allSlots.setInventorySlotContents(i, allSlots.decrStackSize(idx, 1));
-				//ch = true;
+			p = findMatch(cur[i]);
+			if (p.slotIndex >= 0) {
+				ItemStack i1 = this.allInventories[p.Inventoryindex]
+						.getStackInSlot(p.slotIndex);
+				this.craftingMatrix.setInventorySlotContents(i,
+						this.allInventories[p.Inventoryindex].decrStackSize(
+								p.slotIndex, 1));
+				// ch = true;
 			}
 		}
 
 		eventHandler.onCraftMatrixChanged(craftingMatrix);
+	}
+
+	private class InventoryMatch {
+		public int Inventoryindex = -1;
+		public int slotIndex = -1;
 	}
 }

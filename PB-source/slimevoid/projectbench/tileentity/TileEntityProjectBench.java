@@ -56,7 +56,7 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 
 	public int getStartInventorySide(ForgeDirection side) {
 		// TODO :: Start Inventory
-		return 10;
+		return 1;
 	}
 
 	public int getSizeInventorySide(ForgeDirection side) {

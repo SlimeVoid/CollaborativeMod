@@ -156,21 +156,19 @@ public class ContainerProjectBench extends Container
             // return itemstack.itemID == PBCore.itemPlanBlank.itemID
             // || itemstack.itemID == PBCore.itemPlanFull.itemID;
         }
-
         public int getSlotStackLimit()
         {
             return 1;
         }
     }
-
-    TileEntityProjectBench projectbench;
-    // SlotCraftRefill slotCraft;
-    // public InventorySubCraft craftMatrix;
-    /** The crafting matrix inventory (3x3). */
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = new InventoryCraftResult();
-    private World worldObj;
-    public int satisfyMask;
+	TileEntityProjectBench projectbench;
+	SlotCraftRefill slotCraft;
+	// public InventorySubCraft craftMatrix;
+	/** The crafting matrix inventory (3x3). */
+	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+	public IInventory craftResult = new InventoryCraftResult();
+	private World worldObj;
+	public int satisfyMask;
 
     public ContainerProjectBench(InventoryPlayer playerInventory, World world,
             TileEntityProjectBench tileentity)

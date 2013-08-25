@@ -2,6 +2,7 @@ package slimevoid.projectbench.container;
 
 import slimevoid.projectbench.core.PBCore;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -123,12 +124,15 @@ public class ContainerProjectBench extends Container {
 		public SlotPlan(IInventory inventory, int i, int j, int k) {
 			super(inventory, i, j, k);
 		}
+		
+		
 		//add when done with plans
 		//@Override
 		//isItemValid
-		public boolean a(ItemStack itemstack) {
-			return itemstack.itemID == PBCore.itemPlanBlank.itemID
-					|| itemstack.itemID == PBCore.itemPlanFull.itemID;
+		public boolean isItemValid(ItemStack itemstack) {
+			return itemstack.itemID == new ItemStack(Block.workbench).itemID;
+			//return itemstack.itemID == PBCore.itemPlanBlank.itemID
+					//|| itemstack.itemID == PBCore.itemPlanFull.itemID;
 		}
 
 		public int getSlotStackLimit() {

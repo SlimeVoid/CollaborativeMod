@@ -23,7 +23,7 @@ public class ClientProxy extends CommonProxy {
 		if (ID == GuiLib.GUIID_PROJECT_BENCH) {
 			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
 			if (tileentity != null && tileentity instanceof TileEntityProjectBench) {
-				return new GuiProjectBench(player.inventory, (TileEntityProjectBench) tileentity);
+				return new GuiProjectBench(player.inventory,world, (TileEntityProjectBench) tileentity);
 			}
 		}
 		return null;

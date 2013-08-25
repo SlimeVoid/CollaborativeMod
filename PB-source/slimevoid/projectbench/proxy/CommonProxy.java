@@ -24,7 +24,7 @@ public class CommonProxy implements ICommonProxy {
 		if (ID == GuiLib.GUIID_PROJECT_BENCH) {
 			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
 			if (tileentity != null && tileentity instanceof TileEntityProjectBench) {
-				return new ContainerProjectBench(player.inventory, (TileEntityProjectBench) tileentity);
+				return new ContainerProjectBench(player.inventory,world, (TileEntityProjectBench) tileentity);
 			}
 		}
 		return null;

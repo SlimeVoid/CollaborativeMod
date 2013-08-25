@@ -66,7 +66,7 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 
 	@Override
 	public int getSizeInventory() {
-		return 28;
+		return 18;
 	}
 
 	@Override

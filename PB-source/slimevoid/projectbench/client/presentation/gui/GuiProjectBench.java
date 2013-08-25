@@ -1,20 +1,30 @@
 package slimevoid.projectbench.client.presentation.gui;
 
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
 import slimevoid.projectbench.container.ContainerProjectBench;
 import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
-public class GuiProjectBench extends GuiContainer {
+public class GuiProjectBench extends GuiContainer implements ICrafting{
 	
 	TileEntityProjectBench projectBench;
+	private IInventory PlayerInventory;
 	
-	public GuiProjectBench(InventoryPlayer playerInventory, TileEntityProjectBench projectBench) {
-		super(new ContainerProjectBench(playerInventory, projectBench));
+	public GuiProjectBench(InventoryPlayer playerInventory,World world, TileEntityProjectBench projectBench) {
+		super(new ContainerProjectBench(playerInventory,world, projectBench));
 		this.projectBench = projectBench;
+		this.PlayerInventory = playerInventory;
 		this.ySize = 222;
 	}
 
@@ -36,5 +46,17 @@ public class GuiProjectBench extends GuiContainer {
 
 	private void drawBench() {
 	}
+
+	@Override
+	public void sendContainerAndContentsToPlayer(Container par1Container, List par2List) {}
+
+	@Override
+	public void sendSlotContents(Container container, int i, ItemStack itemstack) {
+		this.mc.playerController.sendSlotPacket(itemstack, i);
+		
+	}
+
+	@Override
+	public void sendProgressBarUpdate(Container container, int i, int j) {}
 
 }

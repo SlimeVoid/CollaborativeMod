@@ -28,6 +28,8 @@ public class SlotCraftRefill extends SlotCrafting {
 		InventoryMatch match = new InventoryMatch();
 		for (int j = 0; j < this.allInventories.length; j++) {
 			for (int i = 0; i < allInventories[j].getSizeInventory(); i++) {
+				if (j == 0 && i == 0)
+					i = 10;
 				ItemStack test = allInventories[j].getStackInSlot(i);
 				if (test != null && test.stackSize != 0
 						&& ItemLib.matchOre(itemstack, test)) {
@@ -62,6 +64,8 @@ public class SlotCraftRefill extends SlotCrafting {
 			return false;
 		for (int k = 0; k < this.allInventories.length; k++) {
 			for (int i = 0; i < this.allInventories[k].getSizeInventory(); i++) {
+				if (k == 0 && i == 0)
+					i = 10;
 				ItemStack test = this.allInventories[k].getStackInSlot(i);
 				if (test == null || test.stackSize == 0)
 					continue;

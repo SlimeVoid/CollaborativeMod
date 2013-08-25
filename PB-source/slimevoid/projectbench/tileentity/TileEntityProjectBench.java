@@ -1,34 +1,35 @@
 package slimevoid.projectbench.tileentity;
 
-import slimevoid.projectbench.core.ProjectBench;
-import slimevoid.projectbench.core.lib.BlockLib;
-import slimevoid.projectbench.core.lib.GuiLib;
-import slimevoidlib.util.SlimevoidHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
+import slimevoid.projectbench.core.ProjectBench;
+import slimevoid.projectbench.core.lib.BlockLib;
+import slimevoid.projectbench.core.lib.GuiLib;
+import slimevoidlib.util.SlimevoidHelper;
 
-public class TileEntityProjectBench extends TileEntityProjectBase implements ISidedInventory {
-	
+public class TileEntityProjectBench extends TileEntityProjectBase implements
+		ISidedInventory {
+
 	private ItemStack[] contents;
-	
+
 	public TileEntityProjectBench() {
-		contents = new ItemStack[19];
+		contents = new ItemStack[28];
 	}
-	
+
 	@Override
 	public int getDamageValue() {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean canUpdate() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(EntityPlayer entityplayer) {
 		System.out.println("Bench Activated");
@@ -38,7 +39,9 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 		if (this.worldObj.isRemote) {
 			return true;
 		} else {
-			entityplayer.openGui(ProjectBench.instance, GuiLib.GUIID_PROJECT_BENCH, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+			entityplayer.openGui(ProjectBench.instance,
+					GuiLib.GUIID_PROJECT_BENCH, this.worldObj, this.xCoord,
+					this.yCoord, this.zCoord);
 			return true;
 		}
 	}
@@ -48,7 +51,8 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 		for (int i = 0; i < 27; i++) {
 			ItemStack itemstack = this.contents[i];
 			if (itemstack != null && itemstack.stackSize > 0) {
-				BlockLib.dropItem(this.worldObj, this.xCoord, this.yCoord, this.zCoord, itemstack);
+				BlockLib.dropItem(this.worldObj, this.xCoord, this.yCoord,
+						this.zCoord, itemstack);
 			}
 		}
 
@@ -66,7 +70,8 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 
 	@Override
 	public int getSizeInventory() {
-		//this is the intenral persistent inventory 2 rows of 9 and the plan slot
+		// this is the intenral persistent inventory 2 rows of 9 and the plan
+		// slot
 		return 19;
 	}
 
@@ -109,7 +114,8 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 		contents[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()) {
+		if (itemstack != null
+				&& itemstack.stackSize > this.getInventoryStackLimit()) {
 			itemstack.stackSize = this.getInventoryStackLimit();
 		}
 		this.onInventoryChanged();
@@ -132,7 +138,8 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return SlimevoidHelper.isUseableByPlayer(this.worldObj, entityplayer, this.xCoord, this.yCoord, this.zCoord, 0.5D, 0.5D, 0.5D, 64D);
+		return SlimevoidHelper.isUseableByPlayer(this.worldObj, entityplayer,
+				this.xCoord, this.yCoord, this.zCoord, 0.5D, 0.5D, 0.5D, 64D);
 	}
 
 	@Override
@@ -166,31 +173,31 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 		// TODO :: Auto-generated method stub
 		return false;
 	}
-	
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
-    	super.readFromNBT(nbttagcompound);
-    	NBTTagList items = nbttagcompound.getTagList("Items");
-    	for (int i = 0; i < items.tagCount(); i++) {
-    		NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
-    		int j = item.getByte("Slot") & 0xff;
-    		if (j >= 0 && j < this.contents.length) {
-    			this.contents[j] = ItemStack.loadItemStackFromNBT(item);
-    		}
-    	}
-    }
-    
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
-    	super.writeToNBT(nbttagcompound);
-    	NBTTagList items = new NBTTagList();
-    	for (int i = 0; i < contents.length; i++) {
-    		if (contents[i] != null) {
-    			NBTTagCompound item = new NBTTagCompound();
-    			item.setByte("Slot", (byte) i);
-    			this.contents[i].writeToNBT(item);
-    			items.appendTag(item);
-    		}
-    	}
-    	nbttagcompound.setTag("Items", items);
-    }
+
+	public void readFromNBT(NBTTagCompound nbttagcompound) {
+		super.readFromNBT(nbttagcompound);
+		NBTTagList items = nbttagcompound.getTagList("Items");
+		for (int i = 0; i < items.tagCount(); i++) {
+			NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
+			int j = item.getByte("Slot") & 0xff;
+			if (j >= 0 && j < this.contents.length) {
+				this.contents[j] = ItemStack.loadItemStackFromNBT(item);
+			}
+		}
+	}
+
+	public void writeToNBT(NBTTagCompound nbttagcompound) {
+		super.writeToNBT(nbttagcompound);
+		NBTTagList items = new NBTTagList();
+		for (int i = 0; i < contents.length; i++) {
+			if (contents[i] != null) {
+				NBTTagCompound item = new NBTTagCompound();
+				item.setByte("Slot", (byte) i);
+				this.contents[i].writeToNBT(item);
+				items.appendTag(item);
+			}
+		}
+		nbttagcompound.setTag("Items", items);
+	}
 
 }

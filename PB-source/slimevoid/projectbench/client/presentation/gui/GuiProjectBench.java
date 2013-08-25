@@ -16,7 +16,6 @@ import org.lwjgl.opengl.GL11;
 import slimevoid.projectbench.container.ContainerProjectBench;
 import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
-import buildcraft.core.utils.StringUtils;
 
 public class GuiProjectBench extends GuiContainer implements ICrafting {
 
@@ -37,12 +36,12 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 	public void initGui() {
 		super.initGui();
 		lockButton = new GuiButton(3, this.guiLeft + 60, this.guiTop + 127, 10,
-				10, StringUtils.localize("gui.lock"));
+				10, "gui.lock");
 		buttonList.add(lockButton);
 		if (!this.locked) {
-			lockButton.displayString = StringUtils.localize("u");
+			lockButton.displayString = "u";
 		} else {
-			lockButton.displayString = StringUtils.localize("l");
+			lockButton.displayString = "l";
 		}
 	}
 

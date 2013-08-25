@@ -32,6 +32,9 @@ public class PBInit {
 		
 		SlimevoidCore.console(CoreLib.MOD_ID, "Registering blocks...");
 		PBCore.registerBlocks();
+
+		SlimevoidCore.console(CoreLib.MOD_ID, "Registering items...");
+		PBCore.registerItems();
 		
 		ProjectBench.proxy.registerRenderInformation();
 	}

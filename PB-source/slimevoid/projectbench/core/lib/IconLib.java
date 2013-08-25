@@ -8,5 +8,8 @@ public class IconLib {
 	public static final String PROJECT_BENCH_TOP = PROJECT_BENCH_PREFIX + "_top";
 	public static final String PROJECT_BENCH_SIDE = PROJECT_BENCH_PREFIX + "_side";
 	public static final String PROJECT_BENCH_FRONT = PROJECT_BENCH_PREFIX + "_front";
+	public static final String PROJECT_PLAN = ICON_PREFIX + "plan";
+	public static final String PROJECT_PLAN_BLANK = PROJECT_PLAN + "_blank";
+	public static final String PROJECT_PLAN_FULL = PROJECT_PLAN + "_full";
 
 }

@@ -3,9 +3,13 @@ package slimevoid.projectbench.core;
 import cpw.mods.fml.common.registry.GameRegistry;
 import slimevoid.projectbench.blocks.BlockProjectBase;
 import slimevoid.projectbench.core.lib.BlockLib;
+import slimevoid.projectbench.core.lib.IconLib;
+import slimevoid.projectbench.core.lib.LocaleLib;
 import slimevoid.projectbench.items.ItemBase;
+import slimevoid.projectbench.items.ItemPlan;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -13,6 +17,8 @@ import net.minecraftforge.common.Configuration;
 public class PBCore {
 	
 	public static int blockProjectBaseID;
+	public static int itemPlanBlankID;
+	public static int itemPlanFullID;
 	public static BlockProjectBase blockProjectBase;
 	public static Configuration configuration;
 	public static Item itemPlanBlank;
@@ -38,5 +44,11 @@ public class PBCore {
 					Character.valueOf('W'), Block.woodSingleSlab
 		});
 	}
-
+	
+	public static void registerItems() {
+		itemPlanBlank = new Item(itemPlanBlankID).func_111206_d(IconLib.PROJECT_PLAN_BLANK).setUnlocalizedName(LocaleLib.PROJECT_PLAN_BLANK);
+		itemPlanBlank.setCreativeTab(CreativeTabs.tabMisc);
+		itemPlanFull = new ItemPlan(itemPlanFullID);
+		itemPlanFull.setCreativeTab(CreativeTabs.tabMisc);
+	}
 }

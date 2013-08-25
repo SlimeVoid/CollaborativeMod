@@ -21,6 +21,14 @@ public class ConfigurationLib {
 				"projectBaseID",
 				1890).getInt();
 		RenderLib.BLOCK_BASE = RenderingRegistry.getNextAvailableRenderId();
+		PBCore.itemPlanBlankID = PBCore.configuration.get(
+				Configuration.CATEGORY_BLOCK,
+				"planBlankID",
+				18900).getInt();
+		PBCore.itemPlanFullID = PBCore.configuration.get(
+				Configuration.CATEGORY_BLOCK,
+				"planFullID",
+				18901).getInt();
 		PBCore.configuration.save();
 	}
 

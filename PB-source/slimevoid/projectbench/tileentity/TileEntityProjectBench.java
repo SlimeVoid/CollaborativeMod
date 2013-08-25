@@ -16,7 +16,7 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 	private ItemStack[] contents;
 	
 	public TileEntityProjectBench() {
-		contents = new ItemStack[28];
+		contents = new ItemStack[19];
 	}
 	
 	@Override
@@ -66,7 +66,8 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
 
 	@Override
 	public int getSizeInventory() {
-		return 18;
+		//this is the intenral persistent inventory 2 rows of 9 and the plan slot
+		return 19;
 	}
 
 	@Override
@@ -185,6 +186,7 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements ISi
     		if (contents[i] != null) {
     			NBTTagCompound item = new NBTTagCompound();
     			item.setByte("Slot", (byte) i);
+    			this.contents[i].writeToNBT(item);
     			items.appendTag(item);
     		}
     	}

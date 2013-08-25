@@ -171,12 +171,12 @@ public class ContainerProjectBench extends Container {
         this.addSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 9, 143, 35));
 		
 		//plan slot
-        this.addSlotToContainer(new SlotPlan(tileentity,1,17,36 ));
+        this.addSlotToContainer(new SlotPlan(tileentity,0,17,36 ));
 		//bench inventory
 		for(l=0; l<2; ++l){
 			for (i1 = 0; i1 < tileentity.getSizeInventory()/2; ++i1)
 			{
-				this.addSlotToContainer(new Slot(tileentity, i1 + l *9 +9, 8 + i1 * 18, l *18 + 90));
+				this.addSlotToContainer(new Slot(tileentity, i1 + l *9 +1, 8 + i1 * 18, l *18 + 90));
 			}
 		}
 		//Player inventory
@@ -240,14 +240,14 @@ public class ContainerProjectBench extends Container {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (par2 < 2 * 9)
+            if (par2 < 2 * 9 + 11)
             {
-                if (!this.mergeItemStack(itemstack1, 2 * 9 , this.inventorySlots.size(), true))
+                if (!this.mergeItemStack(itemstack1, 2 * 9 + 11, this.inventorySlots.size(), true))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(itemstack1, 10, 2 * 9 , false))
+            else if (!this.mergeItemStack(itemstack1, 10, 2 * 9 + 11, false))
             {
                 return null;
             }

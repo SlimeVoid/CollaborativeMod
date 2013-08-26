@@ -5,6 +5,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemLib {
 
+	public static final String ITEM_PROJECT_PLAN = "project.plan";
+
 	public static boolean matchOre(ItemStack a, ItemStack b) {
 		String s1 = OreDictionary.getOreName(OreDictionary.getOreID(a));
 		String s2 = OreDictionary.getOreName(OreDictionary.getOreID(b));

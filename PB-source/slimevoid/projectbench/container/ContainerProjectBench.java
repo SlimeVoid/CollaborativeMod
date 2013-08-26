@@ -1,6 +1,5 @@
 package slimevoid.projectbench.container;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -12,8 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.world.World;
 import slimevoid.projectbench.core.PBCore;
+import slimevoid.projectbench.core.lib.CommandLib;
+import slimevoid.projectbench.core.lib.ItemLib;
+import slimevoid.projectbench.network.packet.PacketProjectGui;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 
 public class ContainerProjectBench extends Container {
@@ -139,17 +140,16 @@ public class ContainerProjectBench extends Container {
 
 	TileEntityProjectBench projectbench;
 	SlotCraftRefill slotCraft;
-	public IInventory craftResult = new InventoryCraftResult();
+	public IInventory craftResult;
+    public InventoryCrafting fakeInv;
 	public InventoryCrafting craftMatrix;
-	private World worldObj;
 	public int satisfyMask;
 
-	public ContainerProjectBench(InventoryPlayer playerInventory, World world,
-			TileEntityProjectBench tileentity) {
+	public ContainerProjectBench(InventoryPlayer playerInventory, TileEntityProjectBench tileentity) {
 		super();
 		this.projectbench = tileentity;
 		this.craftMatrix = new InventorySubCraft(this, tileentity);
-		this.worldObj = world;
+		this.craftResult = new InventoryCraftResult();
 		int b0 = 140;
 		int l;
 		int i1;
@@ -160,20 +160,22 @@ public class ContainerProjectBench extends Container {
 		// inventory and then drop remaining items from the player
 		for (l = 0; l < 3; ++l) {
 			for (i1 = 0; i1 < 3; ++i1) {
-				this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3,
-						48 + i1 * 18, 18 + l * 18));
+				this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3, 48 + i1 * 18, 18 + l * 18));
 			}
 		}
 		IInventory[] sourceINventories = new IInventory[2];
 		sourceINventories[0] = this.projectbench;
 		sourceINventories[1] = playerInventory;
+		
 		// crafting result
-		this.addSlotToContainer(new SlotCraftRefill(playerInventory.player,
+		slotCraft = new SlotCraftRefill(playerInventory.player,
 				this.craftMatrix, this.craftResult, sourceINventories, this, 9,
-				143, 35));
+				143, 35);
+		this.addSlotToContainer(slotCraft);
 
 		// plan slot
 		this.addSlotToContainer(new SlotPlan(tileentity, 9, 17, 36));
+		
 		// bench inventory
 		for (l = 0; l < 2; ++l) {
 			for (i1 = 0; i1 < tileentity.getSizeInventory() / 2; ++i1) {
@@ -181,6 +183,7 @@ public class ContainerProjectBench extends Container {
 						8 + i1 * 18, l * 18 + 90));
 			}
 		}
+		
 		// Player inventory
 		for (l = 0; l < 3; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
@@ -193,16 +196,94 @@ public class ContainerProjectBench extends Container {
 			this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18,
 					58 + b0));
 		}
+		fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
+		this.onCraftMatrixChanged(craftMatrix);
 	}
 
+	public int getSatisfyMask() {
+		ItemStack plan = this.projectbench.getStackInSlot(9);
+		ItemStack items[] = null;
+		if (plan != null) {
+			items = getShadowItems(plan);
+		}
+		int bits = 0;
+		for (int i = 0; i < 9; i++) {
+			ItemStack st = this.projectbench.getStackInSlot(i);
+			if (st != null) {
+				bits |= 1 << i;
+				continue;
+			}
+			if (items == null || items[i] == null)
+				bits |= 1 << i;
+		}
+
+		if (bits == 511) {
+			return 511;
+		}
+		for (int i = 0; i < 18; i++) {
+			ItemStack test = this.projectbench.getStackInSlot(10 + i);
+			if (test == null || test.stackSize == 0)
+				continue;
+			int sc = test.stackSize;
+			for (int j = 0; j < 9; j++) {
+				if ((bits & 1 << j) > 0) {
+					continue;
+				}
+				ItemStack st = this.projectbench.getStackInSlot(j);
+				if (st != null) {
+					continue;
+				}
+				st = items[j];
+				if (st == null || !ItemLib.matchOre(st, test)) {
+					continue;
+				}
+				bits |= 1 << j;
+				if (--sc == 0) {
+					break;
+				}
+			}
+
+		}
+
+		return bits;
+	}
+
+	private int findMatch(ItemStack a) {
+		for (int i = 0; i < 18; i++) {
+			ItemStack test = this.projectbench.getStackInSlot(10 + i);
+			if (test != null && test.stackSize != 0
+					&& ItemLib.matchOre(a, test))
+				return 10 + i;
+		}
+
+		return -1;
+	}
+    
 	/**
 	 * Callback for when the crafting matrix is changed.
 	 */
 	public void onCraftMatrixChanged(IInventory inventory) {
-		this.craftResult.setInventorySlotContents(
-				0,
-				CraftingManager.getInstance().findMatchingRecipe(
-						this.craftMatrix, this.worldObj));
+		ItemStack plan = this.projectbench.getStackInSlot(10);
+		ItemStack items[] = null;
+		if (plan != null) {
+			items = getShadowItems(plan);
+		}
+		for (int i = 0; i < 9; i++) {
+			ItemStack tos = this.projectbench.getStackInSlot(i);
+			if (tos == null && items != null && items[i] != null) {
+				int j = findMatch(items[i]);
+				if (j > 0) {
+					tos = this.projectbench.getStackInSlot(j);
+				}
+			}
+			this.fakeInv.setInventorySlotContents(i, tos);
+		}
+		satisfyMask = getSatisfyMask();
+		if (satisfyMask == 511) {
+			this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(fakeInv, projectbench.worldObj));
+		} else {
+			this.craftResult.setInventorySlotContents(0, null);
+		}
 	}
 
 	/**
@@ -213,7 +294,7 @@ public class ContainerProjectBench extends Container {
 		// internal storage before dumping to world
 		super.onContainerClosed(entityplayer);
 
-		if (!this.worldObj.isRemote) {
+		if (!this.projectbench.worldObj.isRemote) {
 			for (int i = 0; i < 9; ++i) {
 				ItemStack itemstack = this.craftMatrix
 						.getStackInSlotOnClosing(i);
@@ -227,7 +308,7 @@ public class ContainerProjectBench extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return true;
+		return this.projectbench.isUseableByPlayer(entityplayer);
 	}
 
 	public ItemStack[] getPlanItems() {
@@ -334,4 +415,37 @@ public class ContainerProjectBench extends Container {
 		private Container eventHandler;
 		private TileEntityProjectBench parent;
 	}
+
+	public void handleGuiEvent(PacketProjectGui packet) {
+		if (this.projectbench.worldObj == null
+				|| this.projectbench.worldObj.isRemote)
+			return;
+		if (!packet.getCommand().equals(CommandLib.CREATE_PROJECT_PLAN))
+			return;
+		ItemStack blank = this.projectbench.getStackInSlot(9);
+		if (blank == null || blank.itemID != PBCore.itemPlanBlank.itemID)
+			return;
+		ItemStack plan = new ItemStack(PBCore.itemPlanFull);
+		plan.stackTagCompound = new NBTTagCompound();
+		NBTTagCompound result = new NBTTagCompound();
+		System.out.println(craftResult.getStackInSlot(0));
+		craftResult.getStackInSlot(0).writeToNBT(result);
+		plan.stackTagCompound.setCompoundTag("result", result);
+		NBTTagList requires = new NBTTagList();
+		for (int i = 0; i < 9; i++) {
+			ItemStack is1 = craftMatrix.getStackInSlot(i);
+			if (is1 != null) {
+				ItemStack ist = new ItemStack(is1.itemID, 1,
+						is1.getItemDamage());
+				NBTTagCompound item = new NBTTagCompound();
+				ist.writeToNBT(item);
+				item.setByte("Slot", (byte) i);
+				requires.appendTag(item);
+			}
+		}
+
+		plan.stackTagCompound.setTag("requires", requires);
+		this.projectbench.setInventorySlotContents(9, plan);
+	}
+
 }

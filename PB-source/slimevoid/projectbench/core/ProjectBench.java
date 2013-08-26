@@ -1,10 +1,10 @@
 package slimevoid.projectbench.core;
 
+import slimevoid.projectbench.client.network.ClientPacketHandler;
 import slimevoid.projectbench.core.lib.CoreLib;
+import slimevoid.projectbench.network.CommonPacketHandler;
 import slimevoid.projectbench.network.ConnectionHandler;
 import slimevoidlib.ICommonProxy;
-import slimevoidlib.network.ClientPacketHandler;
-import slimevoidlib.network.CommonPacketHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -22,14 +22,14 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		dependencies = CoreLib.MOD_DEPENDENCIES)
 @NetworkMod(
 		clientSideRequired = true,
-		serverSideRequired = false//,
-//		clientPacketHandlerSpec = @SidedPacketHandler(
-//				channels = { CoreLib.MOD_CHANNEL },
-//				packetHandler = ClientPacketHandler.class),
-//		serverPacketHandlerSpec = @SidedPacketHandler(
-//				channels = { CoreLib.MOD_CHANNEL },
-//				packetHandler = CommonPacketHandler.class),
-//		connectionHandler = ConnectionHandler.class
+		serverSideRequired = false,
+		clientPacketHandlerSpec = @SidedPacketHandler(
+				channels = { CoreLib.MOD_CHANNEL },
+				packetHandler = ClientPacketHandler.class),
+		serverPacketHandlerSpec = @SidedPacketHandler(
+				channels = { CoreLib.MOD_CHANNEL },
+				packetHandler = CommonPacketHandler.class),
+		connectionHandler = ConnectionHandler.class
 )
 public class ProjectBench {
 	@SidedProxy(

@@ -11,6 +11,8 @@ import cpw.mods.fml.common.network.Player;
 import slimevoid.projectbench.container.ContainerProjectBench;
 import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.GuiLib;
+import slimevoid.projectbench.core.lib.PacketLib;
+import slimevoid.projectbench.network.CommonPacketHandler;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 import slimevoidlib.ICommonProxy;
 import slimevoidlib.IPacketHandling;
@@ -24,7 +26,7 @@ public class CommonProxy implements ICommonProxy {
 		if (ID == GuiLib.GUIID_PROJECT_BENCH) {
 			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
 			if (tileentity != null && tileentity instanceof TileEntityProjectBench) {
-				return new ContainerProjectBench(player.inventory,world, (TileEntityProjectBench) tileentity);
+				return new ContainerProjectBench(player.inventory, (TileEntityProjectBench) tileentity);
 			}
 		}
 		return null;
@@ -44,8 +46,8 @@ public class CommonProxy implements ICommonProxy {
 
 	@Override
 	public void preInit() {
-		// TODO :: Auto-generated method stub
-		
+		CommonPacketHandler.init();
+		PacketLib.registerPacketHandlers();
 	}
 
 	@Override

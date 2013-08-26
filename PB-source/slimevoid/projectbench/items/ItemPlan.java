@@ -8,6 +8,7 @@ package slimevoid.projectbench.items;
 import java.util.*;
 
 import slimevoid.projectbench.core.lib.IconLib;
+import slimevoid.projectbench.core.lib.ItemLib;
 import slimevoid.projectbench.core.lib.LocaleLib;
 
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -30,7 +31,7 @@ public class ItemPlan extends Item {
 		super(i);
 		setMaxDamage(0);
 		setHasSubtypes(true);
-		setUnlocalizedName(LocaleLib.PROJECT_PLAN_FULL);
+		setUnlocalizedName(ItemLib.PROJECT_PLAN_FULL);
 		setMaxStackSize(1);
 	}
 
@@ -41,8 +42,9 @@ public class ItemPlan extends Item {
 
 	@Override
 	public String getItemDisplayName(ItemStack ist) {
-		if (ist.stackTagCompound == null)
+		if (ist.stackTagCompound == null) {
 			return super.getItemDisplayName(ist);
+		}
 		if (!ist.stackTagCompound.hasKey("result")) {
 			return super.getItemDisplayName(ist);
 		} else {
@@ -55,8 +57,9 @@ public class ItemPlan extends Item {
 
 	@Override
 	public void addInformation(ItemStack ist, EntityPlayer player, List lines, boolean par4) {
-		if (ist.stackTagCompound == null)
+		if (ist.stackTagCompound == null) {
 			return;
+		}
 		NBTTagList require = ist.stackTagCompound.getTagList("requires");
 		if (require == null)
 			return;
@@ -67,8 +70,9 @@ public class ItemPlan extends Item {
 			List l1 = Arrays.asList(new Integer[] { Integer.valueOf(is2.itemID),
 					Integer.valueOf(is2.getItemDamage()) });
 			Integer lc = (Integer) counts.get(l1);
-			if (lc == null)
+			if (lc == null) {
 				lc = Integer.valueOf(0);
+			}
 			counts.put(l1, Integer.valueOf(lc.intValue() + 1));
 		}
 

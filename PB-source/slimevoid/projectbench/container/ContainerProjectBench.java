@@ -341,7 +341,7 @@ public class ContainerProjectBench extends Container {
 	 * Called when a player shift-clicks on a slot. You must override this or
 	 * you will crash when someone does that.
 	 */
-	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
+/*	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
 			int slotShiftClicked) {
 		ItemStack itemstackCopy = null;
 		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
@@ -370,6 +370,124 @@ public class ContainerProjectBench extends Container {
 		}
 
 		return itemstackCopy;
+	}*/
+
+	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
+			int slotShiftClicked) {
+		ItemStack itemstack = null;
+		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
+		if (slot != null && slot.getHasStack()) {
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+			if (slotShiftClicked == 10) {
+				mergeCrafting(entityplayer, slot, 29, 65);
+				return null;
+			}
+			if (slotShiftClicked < 9) {
+				if (!this.mergeItemStack(itemstack1, 11, 29, false)) {
+					return null;
+				}
+			} else if (slotShiftClicked < 29) {
+				if (!this.mergeItemStack(itemstack1, 29, 65, true)) {
+					return null;
+				}
+			} else if (!this.mergeItemStack(itemstack1, 11, 29, false)) {
+				return null;
+			}
+			if (itemstack1.stackSize == 0) {
+				slot.putStack(null);
+			} else {
+				slot.onSlotChanged();
+			}
+			if (itemstack1.stackSize != itemstack.stackSize) {
+				slot.onPickupFromSlot(entityplayer, itemstack1);
+			} else {
+				return null;
+			}
+		}
+		return itemstack;
+	}
+
+	protected boolean canFit(ItemStack ist, int st, int ed) {
+		int ms = 0;
+		for (int i = st; i < ed; i++) {
+			Slot slot = (Slot) this.inventorySlots.get(i);
+			ItemStack is2 = slot.getStack();
+			if (is2 == null) {
+				return true;
+			}
+			if (ItemLib.compareItemStack(is2, ist) != 0) {
+				continue;
+			}
+			ms += is2.getMaxStackSize() - is2.stackSize;
+			if (ms >= ist.stackSize) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected void fitItem(ItemStack ist, int st, int ed) {
+		if (ist.isStackable()) {
+			for (int i = st; i < ed; i++) {
+				Slot slot = (Slot) this.inventorySlots.get(i);
+				ItemStack is2 = slot.getStack();
+				if (is2 == null || ItemLib.compareItemStack(is2, ist) != 0) {
+					continue;
+				}
+				int n = Math.min(ist.stackSize, ist.getMaxStackSize() - is2.stackSize);
+				if (n == 0) {
+					continue;
+				}
+				ist.stackSize -= n;
+				is2.stackSize += n;
+				slot.onSlotChanged();
+				if (ist.stackSize == 0) {
+					return;
+				}
+			}
+
+		}
+		for (int i = st; i < ed; i++) {
+			Slot slot = (Slot) this.inventorySlots.get(i);
+			ItemStack is2 = slot.getStack();
+			if (is2 == null) {
+				slot.putStack(ist);
+				slot.onSlotChanged();
+				return;
+			}
+		}
+
+	}
+
+	protected void mergeCrafting(EntityPlayer player, Slot cslot, int st, int ed) {
+		int cc = 0;
+		ItemStack ist = cslot.getStack();
+		if (ist == null || ist.stackSize == 0) {
+			return;
+		}
+		ItemStack craftas = ist.copy();
+		int mss = craftas.getMaxStackSize();
+		if (mss == 1)
+			mss = 16;
+		do {
+			if (!canFit(ist, st, ed))
+				return;
+			cc += ist.stackSize;
+			fitItem(ist, st, ed);
+			cslot.onPickupFromSlot(player, ist);
+			if (cc >= mss) {
+				return;
+			}
+			if (slotCraft.isLastUse()) {
+				return;
+			}
+			ist = cslot.getStack();
+			if (ist == null || ist.stackSize == 0) {
+				return;
+			}
+		} while (ItemLib.compareItemStack(ist, craftas) == 0);
 	}
 
 	public class InventorySubCraft extends InventoryCrafting {

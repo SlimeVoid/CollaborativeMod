@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import slimevoid.projectbench.blocks.BlockProjectBase;
 import slimevoid.projectbench.core.lib.BlockLib;
 import slimevoid.projectbench.core.lib.IconLib;
+import slimevoid.projectbench.core.lib.ItemLib;
 import slimevoid.projectbench.core.lib.LocaleLib;
 import slimevoid.projectbench.items.ItemBase;
 import slimevoid.projectbench.items.ItemPlan;
@@ -25,6 +26,7 @@ public class PBCore {
 	public static Item itemPlanFull;
 
 	public static void registerNames() {
+		LocaleLib.registerLanguages();
 	}
 	
 	public static void registerBlocks() {
@@ -46,7 +48,7 @@ public class PBCore {
 	}
 	
 	public static void registerItems() {
-		itemPlanBlank = new Item(itemPlanBlankID).func_111206_d(IconLib.PROJECT_PLAN_BLANK).setUnlocalizedName(LocaleLib.PROJECT_PLAN_BLANK);
+		itemPlanBlank = new Item(itemPlanBlankID).func_111206_d(IconLib.PROJECT_PLAN_BLANK).setUnlocalizedName(ItemLib.PROJECT_PLAN_BLANK);
 		itemPlanBlank.setCreativeTab(CreativeTabs.tabMisc);
 		itemPlanFull = new ItemPlan(itemPlanFullID);
 		itemPlanFull.setCreativeTab(CreativeTabs.tabMisc);

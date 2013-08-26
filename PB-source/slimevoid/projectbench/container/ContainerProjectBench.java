@@ -471,11 +471,13 @@ public class ContainerProjectBench extends Container {
 		}
 		ItemStack craftas = ist.copy();
 		int mss = craftas.getMaxStackSize();
-		if (mss == 1)
+		if (mss == 1) {
 			mss = 16;
+		}
 		do {
-			if (!canFit(ist, st, ed))
+			if (!canFit(ist, st, ed)) {
 				return;
+			}
 			cc += ist.stackSize;
 			fitItem(ist, st, ed);
 			cslot.onPickupFromSlot(player, ist);

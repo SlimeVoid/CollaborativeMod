@@ -163,45 +163,44 @@ public class ContainerProjectBench extends Container {
 				this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3, 48 + i1 * 18, 18 + l * 18));
 			}
 		}
-		IInventory[] sourceINventories = new IInventory[2];
-		sourceINventories[0] = this.projectbench;
-		sourceINventories[1] = playerInventory;
+		// plan slot
+		this.addSlotToContainer(new SlotPlan(new InventorySubUpdate(tileentity, 9, 1), 0, 17, 36));
+		
+		IInventory[] sourceInventories = new IInventory[2];
+		sourceInventories[0] = this.projectbench;
+		sourceInventories[1] = playerInventory;
 		
 		// crafting result
 		slotCraft = new SlotCraftRefill(playerInventory.player,
-				this.craftMatrix, this.craftResult, sourceINventories, this, 9,
-				143, 35);
+				this.craftMatrix, this.craftResult, sourceInventories, this, 0, 143, 35);
 		this.addSlotToContainer(slotCraft);
 
-		// plan slot
-		this.addSlotToContainer(new SlotPlan(tileentity, 9, 17, 36));
 		
 		// bench inventory
 		for (l = 0; l < 2; ++l) {
-			for (i1 = 0; i1 < tileentity.getSizeInventory() / 2; ++i1) {
-				this.addSlotToContainer(new Slot(tileentity, i1 + l * 9 + 10,
-						8 + i1 * 18, l * 18 + 90));
+			for (i1 = 0; i1 < 9; ++i1) {
+				int slotIndex = i1 + (l * 9);
+				this.addSlotToContainer(new Slot(new InventorySubUpdate(tileentity, 10, 18), slotIndex, 8 + i1 * 18, l * 18 + 90));
 			}
 		}
 		
 		// Player inventory
 		for (l = 0; l < 3; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
-				this.addSlotToContainer(new Slot(playerInventory, i1 + l * 9
-						+ 9, 8 + i1 * 18, l * 18 + b0));
+				int slotIndex = i1 + (l * 9) + 9;
+				this.addSlotToContainer(new Slot(playerInventory, slotIndex, 8 + i1 * 18, l * 18 + b0));
 			}
 		}
 		// hotbar inventory
 		for (l = 0; l < 9; ++l) {
-			this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18,
-					58 + b0));
+			this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 58 + b0));
 		}
 		fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
 		this.onCraftMatrixChanged(craftMatrix);
 	}
 
 	public int getSatisfyMask() {
-		ItemStack plan = this.projectbench.getStackInSlot(10);
+		ItemStack plan = this.projectbench.getStackInSlot(9);
 		ItemStack items[] = null;
 		if (plan != null) {
 			items = getShadowItems(plan);
@@ -262,7 +261,7 @@ public class ContainerProjectBench extends Container {
     
 	@Override
 	public void onCraftMatrixChanged(IInventory inventory) {
-		ItemStack plan = this.projectbench.getStackInSlot(10);
+		ItemStack plan = this.projectbench.getStackInSlot(9);
 		ItemStack items[] = null;
 		if (plan != null) {
 			items = getShadowItems(plan);
@@ -311,7 +310,7 @@ public class ContainerProjectBench extends Container {
 	}
 
 	public ItemStack[] getPlanItems() {
-		ItemStack plan = this.projectbench.getStackInSlot(10);
+		ItemStack plan = this.projectbench.getStackInSlot(9);
 		if (plan == null)
 			return null;
 		else
@@ -495,6 +494,8 @@ public class ContainerProjectBench extends Container {
 	}
 
 	public class InventorySubCraft extends InventoryCrafting {
+		private Container eventHandler;
+		private TileEntityProjectBench parent;
 
 		public InventorySubCraft(Container container, TileEntityProjectBench par) {
 			super(container, 3, 3);
@@ -502,17 +503,21 @@ public class ContainerProjectBench extends Container {
 			eventHandler = container;
 		}
 
+		@Override
 		public int getSizeInventory() {
 			return 9;
 		}
 
+		@Override
 		public ItemStack getStackInSlot(int i) {
-			if (i >= 9)
+			if (i >= 9) {
 				return null;
-			else
+			} else {
 				return parent.getStackInSlot(i);
+			}
 		}
 
+		@Override
 		public ItemStack getStackInRowAndColumn(int i, int j) {
 			if (i < 0 || i >= 3) {
 				return null;
@@ -522,20 +527,20 @@ public class ContainerProjectBench extends Container {
 			}
 		}
 
+		@Override
 		public ItemStack decrStackSize(int i, int j) {
 			ItemStack tr = parent.decrStackSize(i, j);
-			if (tr != null)
+			if (tr != null) {
 				eventHandler.onCraftMatrixChanged(this);
+			}
 			return tr;
 		}
 
+		@Override
 		public void setInventorySlotContents(int i, ItemStack ist) {
 			parent.setInventorySlotContents(i, ist);
 			eventHandler.onCraftMatrixChanged(this);
 		}
-
-		private Container eventHandler;
-		private TileEntityProjectBench parent;
 	}
 
 	public void handleGuiEvent(PacketProjectGui packet) {

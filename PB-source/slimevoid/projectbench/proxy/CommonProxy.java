@@ -7,8 +7,10 @@ import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.Player;
 import slimevoid.projectbench.container.ContainerProjectBench;
+import slimevoid.projectbench.core.ProjectBench;
 import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoid.projectbench.core.lib.PacketLib;
@@ -48,6 +50,7 @@ public class CommonProxy implements ICommonProxy {
 	public void preInit() {
 		CommonPacketHandler.init();
 		PacketLib.registerPacketHandlers();
+		NetworkRegistry.instance().registerGuiHandler(ProjectBench.instance, ProjectBench.proxy);
 	}
 
 	@Override

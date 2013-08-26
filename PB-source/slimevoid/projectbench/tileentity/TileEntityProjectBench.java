@@ -72,7 +72,7 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements
 	public int getSizeInventory() {
 		// this is the intenral persistent inventory 2 rows of 9 and the plan
 		// slot
-		return 19;
+		return 28;
 	}
 
 	@Override

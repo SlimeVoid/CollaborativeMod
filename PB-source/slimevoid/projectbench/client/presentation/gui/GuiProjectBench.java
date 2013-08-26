@@ -55,10 +55,12 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
         int x = i - this.guiLeft;
         int y = j - this.guiTop;
         if(x >= 18 && y >= 55 && x <= 32 && y <= 69) {
-            ItemStack plan = this.inventorySlots.getSlot(10).getStack();
-            ItemStack craft = this.inventorySlots.getSlot(9).getStack();
-            if(plan == null || craft == null || plan.itemID != PBCore.itemPlanBlank.itemID)
+            ItemStack plan = this.inventorySlots.getSlot(9).getStack();
+            ItemStack craft = this.inventorySlots.getSlot(10).getStack();
+            if(plan == null || craft == null || plan.itemID != PBCore.itemPlanBlank.itemID) {
+            	System.out.print("No Plan");
                 return;
+            }
             PacketProjectGui pkt = new PacketProjectGui(
             		this.projectBench.xCoord,
             		this.projectBench.yCoord,
@@ -83,14 +85,14 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.func_110434_K().func_110577_a(GuiLib.GUI_PROJECT_BENCH);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		ItemStack plan = this.inventorySlots.getSlot(10).getStack();
-		ItemStack craft = this.inventorySlots.getSlot(9).getStack();
+		ItemStack plan = this.inventorySlots.getSlot(9).getStack();
+		ItemStack craft = this.inventorySlots.getSlot(10).getStack();
 		if (plan != null && craft != null && plan.getItem() != null && plan.getItem().itemID == PBCore.itemPlanBlank.itemID) {
 			this.drawTexturedModalRect(this.guiLeft + 18, this.guiTop + 55, 176, 0, 14, 14);
 		}
 		if (plan != null && plan.itemID == PBCore.itemPlanFull.itemID) {
 			ContainerProjectBench cont = (ContainerProjectBench) this.inventorySlots;
-			ContainerProjectBench _tmp = cont;
+			//ContainerProjectBench _tmp = cont;
 			ItemStack ist[] = ContainerProjectBench.getShadowItems(plan);
 			RenderHelper.enableGUIStandardItemLighting();
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);

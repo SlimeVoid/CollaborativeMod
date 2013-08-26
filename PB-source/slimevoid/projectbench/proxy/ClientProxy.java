@@ -36,7 +36,6 @@ public class ClientProxy extends CommonProxy {
 		super.preInit();
 		ClientPacketHandler.init();
 		PacketLib.registerClientPacketHandlers();
-		NetworkRegistry.instance().registerGuiHandler(ProjectBench.instance, ProjectBench.proxy);
 	}
 
 }

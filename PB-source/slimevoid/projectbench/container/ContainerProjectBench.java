@@ -201,7 +201,7 @@ public class ContainerProjectBench extends Container {
 	}
 
 	public int getSatisfyMask() {
-		ItemStack plan = this.projectbench.getStackInSlot(9);
+		ItemStack plan = this.projectbench.getStackInSlot(10);
 		ItemStack items[] = null;
 		if (plan != null) {
 			items = getShadowItems(plan);
@@ -222,8 +222,9 @@ public class ContainerProjectBench extends Container {
 		}
 		for (int i = 0; i < 18; i++) {
 			ItemStack test = this.projectbench.getStackInSlot(10 + i);
-			if (test == null || test.stackSize == 0)
+			if (test == null || test.stackSize == 0) {
 				continue;
+			}
 			int sc = test.stackSize;
 			for (int j = 0; j < 9; j++) {
 				if ((bits & 1 << j) > 0) {
@@ -259,9 +260,7 @@ public class ContainerProjectBench extends Container {
 		return -1;
 	}
     
-	/**
-	 * Callback for when the crafting matrix is changed.
-	 */
+	@Override
 	public void onCraftMatrixChanged(IInventory inventory) {
 		ItemStack plan = this.projectbench.getStackInSlot(10);
 		ItemStack items[] = null;
@@ -312,7 +311,7 @@ public class ContainerProjectBench extends Container {
 	}
 
 	public ItemStack[] getPlanItems() {
-		ItemStack plan = this.projectbench.getStackInSlot(9);
+		ItemStack plan = this.projectbench.getStackInSlot(10);
 		if (plan == null)
 			return null;
 		else
@@ -372,40 +371,43 @@ public class ContainerProjectBench extends Container {
 		return itemstackCopy;
 	}*/
 
+	@Override
 	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
 			int slotShiftClicked) {
-		ItemStack itemstack = null;
+		ItemStack itemstackCopy = null;
 		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
+		
 		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			if (slotShiftClicked == 10) {
+			ItemStack stackInSlot = slot.getStack();
+			itemstackCopy = stackInSlot.copy();
+			
+			if (slotShiftClicked == 9) {
 				mergeCrafting(entityplayer, slot, 29, 65);
 				return null;
 			}
 			if (slotShiftClicked < 9) {
-				if (!this.mergeItemStack(itemstack1, 11, 29, false)) {
+				if (!this.mergeItemStack(stackInSlot, 10, 29, false)) {
 					return null;
 				}
 			} else if (slotShiftClicked < 29) {
-				if (!this.mergeItemStack(itemstack1, 29, 65, true)) {
+				if (!this.mergeItemStack(stackInSlot, 29, 65, true)) {
 					return null;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 11, 29, false)) {
+			} else if (!this.mergeItemStack(stackInSlot, 10, 29, false)) {
 				return null;
 			}
-			if (itemstack1.stackSize == 0) {
+			if (stackInSlot.stackSize == 0) {
 				slot.putStack(null);
 			} else {
 				slot.onSlotChanged();
 			}
-			if (itemstack1.stackSize != itemstack.stackSize) {
-				slot.onPickupFromSlot(entityplayer, itemstack1);
+			if (stackInSlot.stackSize != itemstackCopy.stackSize) {
+				slot.onPickupFromSlot(entityplayer, stackInSlot);
 			} else {
 				return null;
 			}
 		}
-		return itemstack;
+		return itemstackCopy;
 	}
 
 	protected boolean canFit(ItemStack ist, int st, int ed) {

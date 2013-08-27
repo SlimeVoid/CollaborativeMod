@@ -1,5 +1,7 @@
 package slimevoid.projectbench.container;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -396,20 +398,20 @@ public class ContainerProjectBench extends Container {
 					|| stackInSlot.itemID == PBCore.itemPlanFull.itemID)){
 				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot
 					if (!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
-						itemstackCopy = null;
+						return null;
 					}
 				}				
-			}else if (slotShiftClicked < 11) {
+			}else if (slotShiftClicked < 9 || slotShiftClicked==10) {
 				if (!this.mergeItemStack(stackInSlot, 11, 65, false)) {
-					itemstackCopy = null;
+					return null;
 				}
 			} else if (slotShiftClicked < 29) { //if internal inventory shift click into player inventory
-				if (!this.mergeItemStack(stackInSlot, 29, 65, true)) {
-					itemstackCopy = null;
+				if (!this.mergeItemStack(stackInSlot, 28, 65, true)) {					
+						return null;					
 				}
 			} else if (!this.mergeItemStack(stackInSlot, 11, 29, false)) { //if player then go into internal inventory first
 				if (!this.mergeItemStack(stackInSlot, 0, 9, false)){//then crafting grid					
-					itemstackCopy = null;					
+					return null;					
 				}
 			}
 			if (stackInSlot.stackSize == 0) {
@@ -420,7 +422,7 @@ public class ContainerProjectBench extends Container {
 			if (stackInSlot.stackSize != itemstackCopy.stackSize) {
 				slot.onPickupFromSlot(entityplayer, stackInSlot);
 			} else {
-				itemstackCopy = null;
+				return null;
 			}
 		}
 		return itemstackCopy;

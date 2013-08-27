@@ -2,6 +2,7 @@ package slimevoid.projectbench.core;
 
 import java.io.File;
 
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.CoreLib;
 import slimevoidlib.core.SlimevoidCore;
 
@@ -16,7 +17,7 @@ public class PBInit {
 			return;
 		initialized = true;
 		ProjectBench.proxy.preInit();
-		PBCore.configuration = new Configuration(new File(
+		ConfigurationLib.configuration = new Configuration(new File(
 				ProjectBench.proxy.getMinecraftDir(),
 				"config/ProjectBench.cfg"));
 		load();

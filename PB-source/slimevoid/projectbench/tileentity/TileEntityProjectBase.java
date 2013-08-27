@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
-import slimevoid.projectbench.core.PBCore;
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.NBTLib;
 
 public class TileEntityProjectBase extends TileEntityBase {
@@ -26,7 +26,7 @@ public class TileEntityProjectBase extends TileEntityBase {
 
 	@Override
 	public int getBlockID() {
-		return PBCore.blockProjectBase.blockID;
+		return ConfigurationLib.blockProjectBase.blockID;
 	}
 	
 	public int getLightValue() {

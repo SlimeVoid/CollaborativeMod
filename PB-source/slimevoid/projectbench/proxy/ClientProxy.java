@@ -1,12 +1,10 @@
 package slimevoid.projectbench.proxy;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import slimevoid.projectbench.client.network.ClientPacketHandler;
 import slimevoid.projectbench.client.presentation.gui.GuiProjectBench;
-import slimevoid.projectbench.core.ProjectBench;
 import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoid.projectbench.core.lib.PacketLib;
@@ -25,7 +23,7 @@ public class ClientProxy extends CommonProxy {
 		if (ID == GuiLib.GUIID_PROJECT_BENCH) {
 			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
 			if (tileentity != null && tileentity instanceof TileEntityProjectBench) {
-				return new GuiProjectBench(player.inventory,world, (TileEntityProjectBench) tileentity);
+				return new GuiProjectBench(player, player.inventory,world, (TileEntityProjectBench) tileentity);
 			}
 		}
 		return null;

@@ -1,5 +1,8 @@
 package slimevoid.projectbench.container;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import slimevoid.projectbench.core.PBCore;
 import slimevoid.projectbench.core.lib.CommandLib;
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.InventoryMatch;
 import slimevoid.projectbench.core.lib.ItemLib;
 import slimevoid.projectbench.network.packet.PacketProjectGui;
@@ -132,8 +136,8 @@ public class ContainerProjectBench extends Container {
 		@Override
 		// isItemValid
 		public boolean isItemValid(ItemStack itemstack) {
-			return itemstack.itemID == PBCore.itemPlanBlank.itemID
-			|| itemstack.itemID == PBCore.itemPlanFull.itemID;
+			return itemstack.itemID == ConfigurationLib.itemPlanBlank.itemID
+			|| itemstack.itemID == ConfigurationLib.itemPlanFull.itemID;
 		}
 
 		public int getSlotStackLimit() {
@@ -142,9 +146,9 @@ public class ContainerProjectBench extends Container {
 	}
 
 	TileEntityProjectBench projectbench;
-	public IInventory playerInventory;
-	public IInventory externalInventories[];
-	public IInventory externalSlotInventories[];
+	public InventoryPlayer playerInventory;
+	public List<IInventory> externalInventories;
+	public List<IInventory> externalSlotInventories;
 	SlotCraftRefill slotCraft;
 	public IInventory craftResult;
     public InventoryCrafting fakeInv;
@@ -159,6 +163,11 @@ public class ContainerProjectBench extends Container {
 		this.craftMatrix = new InventorySubCraft(this, tileentity);
 		this.craftResult = new InventoryCraftResult();
 		this.playerInventory = playerInventory;
+		/*
+		 * Place Holders for additional inventories
+		 */
+		this.externalInventories = new ArrayList<IInventory>();
+		this.externalSlotInventories = new ArrayList<IInventory>();
 		int b0 = 140;
 		int l;
 		int i1;
@@ -175,14 +184,26 @@ public class ContainerProjectBench extends Container {
 		// plan slot
 		this.addSlotToContainer(new SlotPlan(new InventorySubUpdate(tileentity, 9, 1), 0, 17, 36));
 		
-		IInventory[] sourceInventories = new IInventory[2];
-		sourceInventories[0] = this.projectbench;
-		sourceInventories[1] = playerInventory;
+		// Gather source inventories for Craft Output refill logic
+		List<IInventory> sourceInventoryList = this.getSourceInventories(playerInventory.player);
+		IInventory[] sourceInventories = new IInventory[sourceInventoryList.size()];
+		int i = 0;
+		for (IInventory source : sourceInventoryList) {
+			try {
+				sourceInventories[i] = source;
+				i++;
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
+		}
 		
-		// crafting result
-		slotCraft = new SlotCraftRefill(playerInventory.player,
-				this.craftMatrix, this.craftResult, sourceInventories, this, 0, 143, 35);
-		this.addSlotToContainer(slotCraft);
+		if (sourceInventories != null && sourceInventories.length > 0) {
+			// crafting result
+			slotCraft = new SlotCraftRefill(playerInventory.player,
+					this.craftMatrix, this.craftResult, sourceInventories, this, 0, 143, 35);
+			this.addSlotToContainer(slotCraft);
+		}
 
 		
 		// bench inventory
@@ -208,6 +229,23 @@ public class ContainerProjectBench extends Container {
 		//add n,e,w,s inventories
 		fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
 		this.onCraftMatrixChanged(craftMatrix);
+	}
+	
+	public List<IInventory> getSourceInventories(EntityPlayer entityplayer) {
+		List<IInventory> sourceInventories = new ArrayList<IInventory>();
+		if (this.projectbench != null) {
+			sourceInventories.add(this.projectbench);
+		}
+		if (this.playerInventory != null /*!ConfigurationLib.isPlayerInventoryLocked(entityplayer)*/) {
+			sourceInventories.add(this.playerInventory);
+		}
+		// TODO :: Add additional Inventory Logic
+		if (this.externalInventories != null && this.externalInventories.size() > 0) {
+			for (IInventory externalInventory : this.externalInventories) {
+				sourceInventories.add(externalInventory);
+			}
+		}
+		return  sourceInventories;
 	}
 
 	public int getSatisfyMask() {
@@ -259,7 +297,7 @@ public class ContainerProjectBench extends Container {
 		if (bits == 511) {
 			return 511;
 		}
-		if (PBCore.playerInventoryLocked){
+		if (ConfigurationLib.isPlayerInventoryLocked(playerInventory.player)){
 			this.playerInventoryUsed = true;
 		}
 		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
@@ -306,6 +344,32 @@ public class ContainerProjectBench extends Container {
 		}
 		//TODO: add External Inventories
 		return null;
+	}
+
+	public ItemStack[] getPlanItems() {
+		ItemStack plan = this.projectbench.getStackInSlot(9);
+		if (plan == null)
+			return null;
+		else
+			return getShadowItems(plan);
+	}
+
+	public static ItemStack[] getShadowItems(ItemStack ist) {
+		if (ist.stackTagCompound == null)
+			return null;
+		NBTTagList require = ist.stackTagCompound.getTagList("requires");
+		if (require == null)
+			return null;
+		ItemStack tr[] = new ItemStack[9];
+		for (int i = 0; i < require.tagCount(); i++) {
+			NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
+			ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
+			int sl = item.getByte("Slot");
+			if (sl >= 0 && sl < 9)
+				tr[sl] = is2;
+		}
+
+		return tr;
 	}
     
 	@Override
@@ -358,32 +422,6 @@ public class ContainerProjectBench extends Container {
 		return this.projectbench.isUseableByPlayer(entityplayer);
 	}
 
-	public ItemStack[] getPlanItems() {
-		ItemStack plan = this.projectbench.getStackInSlot(9);
-		if (plan == null)
-			return null;
-		else
-			return getShadowItems(plan);
-	}
-
-	public static ItemStack[] getShadowItems(ItemStack ist) {
-		if (ist.stackTagCompound == null)
-			return null;
-		NBTTagList require = ist.stackTagCompound.getTagList("requires");
-		if (require == null)
-			return null;
-		ItemStack tr[] = new ItemStack[9];
-		for (int i = 0; i < require.tagCount(); i++) {
-			NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
-			ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
-			int sl = item.getByte("Slot");
-			if (sl >= 0 && sl < 9)
-				tr[sl] = is2;
-		}
-
-		return tr;
-	}
-
 	/**
 	 * Called when a player shift-clicks on a slot. You must override this or
 	 * you will crash when someone does that.
@@ -397,17 +435,17 @@ public class ContainerProjectBench extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stackInSlot = slot.getStack();
 			itemstackCopy = stackInSlot.copy();
-			if (slotShiftClicked != 9 && (stackInSlot.itemID == PBCore.itemPlanBlank.itemID
-					|| stackInSlot.itemID == PBCore.itemPlanFull.itemID)){
+			if (slotShiftClicked != 9 && (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID
+					|| stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)){
 				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot					
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)||!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
-						if ((slotShiftClicked >=29)||!this.mergeItemStack(stackInSlot, 29, 65, false)) {//else place in player inventory
+						if ((slotShiftClicked >= 29)||!this.mergeItemStack(stackInSlot, 29, 65, false)) {//else place in player inventory
 							return null;
 						}
 					}
 				}				
-			}else if (slotShiftClicked < 9 || slotShiftClicked==10) {
-				if (!this.mergeItemStack(stackInSlot, 11, 65, false)) {
+			} else if (slotShiftClicked < 9 || slotShiftClicked == 10) {
+				if (!this.mergeItemStack(stackInSlot, 11, 65, true)) {
 					return null;
 				}
 			} else if (slotShiftClicked < 29) { //if internal inventory shift click into player inventory
@@ -433,15 +471,15 @@ public class ContainerProjectBench extends Container {
 		return itemstackCopy;
 	}
 
-	protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer)
-    {
+	@Override
+	protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {
 		getSatisfyMask();
-		if(this.playerInventoryUsed){			
-			this.playerInventoryUsed=false;
-		}else{
-        super.retrySlotClick(par1, par2, par3, par4EntityPlayer);
+		if (this.playerInventoryUsed) {
+			this.playerInventoryUsed = false;
+		} else {
+			super.retrySlotClick(par1, par2, par3, par4EntityPlayer);
 		}
-    }
+	}
 
 	public class InventorySubCraft extends InventoryCrafting {
 		private Container eventHandler;
@@ -500,12 +538,11 @@ public class ContainerProjectBench extends Container {
 		if (!packet.getCommand().equals(CommandLib.CREATE_PROJECT_PLAN))
 			return;
 		ItemStack blank = this.projectbench.getStackInSlot(9);
-		if (blank == null || blank.itemID != PBCore.itemPlanBlank.itemID)
+		if (blank == null || blank.itemID != ConfigurationLib.itemPlanBlank.itemID)
 			return;
-		ItemStack plan = new ItemStack(PBCore.itemPlanFull);
+		ItemStack plan = new ItemStack(ConfigurationLib.itemPlanFull);
 		plan.stackTagCompound = new NBTTagCompound();
 		NBTTagCompound result = new NBTTagCompound();
-		System.out.println(craftResult.getStackInSlot(0));
 		craftResult.getStackInSlot(0).writeToNBT(result);
 		plan.stackTagCompound.setCompoundTag("result", result);
 		NBTTagList requires = new NBTTagList();

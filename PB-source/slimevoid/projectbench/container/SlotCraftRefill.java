@@ -19,8 +19,8 @@ public class SlotCraftRefill extends SlotCrafting {
 
 	public SlotCraftRefill(EntityPlayer entityplayer, IInventory matrix,
 			IInventory result, IInventory[] allinventories,
-			ContainerProjectBench evh, int i, int j, int k) {
-		super(entityplayer, matrix, result, i, j, k);
+			ContainerProjectBench evh, int slotIndex, int xDisplay, int yDisplay) {
+		super(entityplayer, matrix, result, slotIndex, xDisplay, yDisplay);
 		allInventories = allinventories;
 		craftingMatrix = matrix;
 		eventHandler = evh;

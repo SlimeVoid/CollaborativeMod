@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
@@ -20,7 +21,9 @@ import slimevoid.projectbench.container.ContainerProjectBench;
 import slimevoid.projectbench.core.PBCore;
 import slimevoid.projectbench.core.lib.CommandLib;
 import slimevoid.projectbench.core.lib.ConfigurationLib;
+import slimevoid.projectbench.core.lib.ContainerLib;
 import slimevoid.projectbench.core.lib.GuiLib;
+import slimevoid.projectbench.core.lib.PacketLib;
 import slimevoid.projectbench.network.packet.PacketProjectGui;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
 
@@ -29,7 +32,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 	TileEntityProjectBench projectBench;
 	private GuiButton lockButton;
 
-	public GuiProjectBench(InventoryPlayer playerInventory, World world,
+	public GuiProjectBench(EntityPlayer entityplayer, InventoryPlayer playerInventory, World world,
 			TileEntityProjectBench projectBench) {
 		super(new ContainerProjectBench(playerInventory, projectBench));
 		this.projectBench = projectBench;
@@ -42,7 +45,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		lockButton = new GuiButton(3, this.guiLeft + 60, this.guiTop + 127, 10,
 				10, "gui.lock");
 		buttonList.add(lockButton);
-		if (!PBCore.playerInventoryLocked) {
+		if (!ConfigurationLib.playerInventoryLocked) {
 			lockButton.displayString = "u";
 		} else {
 			lockButton.displayString = "l";
@@ -55,7 +58,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
     public void updateScreen()
     {
         super.updateScreen();
-        if (!PBCore.playerInventoryLocked) {
+        if (!ConfigurationLib.playerInventoryLocked) {
 			lockButton.displayString = "u";
 		} else {
 			lockButton.displayString = "l";
@@ -69,7 +72,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
         if(x >= 18 && y >= 55 && x <= 32 && y <= 69) {
             ItemStack plan = this.inventorySlots.getSlot(9).getStack();
             ItemStack craft = this.inventorySlots.getSlot(10).getStack();
-            if(plan == null || craft == null || plan.itemID != PBCore.itemPlanBlank.itemID) {
+            if(plan == null || craft == null || plan.itemID != ConfigurationLib.itemPlanBlank.itemID) {
             	System.out.print("No Plan");
                 return;
             }
@@ -82,7 +85,8 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
             PacketDispatcher.sendPacketToServer(pkt.getPacket());
         }
         if(x >= 60 && y >= 127 && x <= 70 && y <= 137) {            
-            ConfigurationLib.updateplayerInventoryLocked(!PBCore.playerInventoryLocked);
+            ConfigurationLib.updateplayerInventoryLocked(!ConfigurationLib.playerInventoryLocked);
+    		PacketLib.sendPlayerInventoryStatus(ConfigurationLib.playerInventoryLocked);
         }
         super.mouseClicked(i, j, k);
 
@@ -100,12 +104,12 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.func_110434_K().func_110577_a(GuiLib.GUI_PROJECT_BENCH);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		ItemStack plan = this.inventorySlots.getSlot(9).getStack();
-		ItemStack craft = this.inventorySlots.getSlot(10).getStack();
-		if (plan != null && craft != null && plan.getItem() != null && plan.getItem().itemID == PBCore.itemPlanBlank.itemID) {
+		ItemStack plan = this.inventorySlots.getSlot(ContainerLib.PROJECT_PLAN_SLOT).getStack();
+		ItemStack craft = this.inventorySlots.getSlot(ContainerLib.PROJECT_CRAFT_SLOT).getStack();
+		if (plan != null && craft != null && plan.getItem() != null && plan.getItem().itemID == ConfigurationLib.itemPlanBlank.itemID) {
 			this.drawTexturedModalRect(this.guiLeft + 18, this.guiTop + 55, 176, 0, 14, 14);
 		}
-		if (plan != null && plan.itemID == PBCore.itemPlanFull.itemID) {
+		if (plan != null && plan.itemID == ConfigurationLib.itemPlanFull.itemID) {
 			ContainerProjectBench cont = (ContainerProjectBench) this.inventorySlots;
 			//ContainerProjectBench _tmp = cont;
 			ItemStack ist[] = ContainerProjectBench.getShadowItems(plan);

@@ -149,6 +149,7 @@ public class ContainerProjectBench extends Container {
 	public InventoryCrafting craftMatrix;
 	
 	public int satisfyMask;
+	public boolean firstCraft;
 	public boolean playerInventoryUsed;
 	public boolean playerInventoryLocked = true;
 
@@ -419,6 +420,14 @@ public class ContainerProjectBench extends Container {
 			}
 			if (stackInSlot.stackSize != itemstackCopy.stackSize) {
 				slot.onPickupFromSlot(entityplayer, stackInSlot);
+				if(this.firstCraft){
+					this.firstCraft =false;
+				}else{
+					if(this.playerInventoryLocked && this.playerInventoryUsed){
+						this.firstCraft =true;
+						return null;
+					}
+				}
 			} else {
 				itemstackCopy = null;
 			}

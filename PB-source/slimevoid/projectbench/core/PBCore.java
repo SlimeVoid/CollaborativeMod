@@ -30,7 +30,7 @@ public class PBCore {
 				new Object[] {
 					"SBS",
 					"SCS",
-					"WSW",
+					"WWW",
 					Character.valueOf('S'), Block.cobblestone,
 					Character.valueOf('B'), Block.workbench,
 					Character.valueOf('C'), Block.chest,

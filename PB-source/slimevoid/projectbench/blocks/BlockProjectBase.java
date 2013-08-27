@@ -36,7 +36,6 @@ public class BlockProjectBase extends BlockBase {
 	public BlockProjectBase(int blockID) {
 		super(blockID, Material.rock);
 		this.setHardness(2.0F);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
 	}
 
 	@Override

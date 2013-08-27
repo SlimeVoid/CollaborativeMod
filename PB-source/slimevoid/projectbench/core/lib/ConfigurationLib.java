@@ -50,7 +50,7 @@ public class ConfigurationLib {
 		playerInventoryLocked = configuration.get(Configuration.CATEGORY_GENERAL,"playerInventoryLocked",false).getBoolean(false);
 		configuration.save();
 
-		customTab = new CreativeTabs("tab." + CoreLib.MOD_ID) {
+		customTab = new CreativeTabs(CoreLib.MOD_RESOURCES) {
 			public ItemStack getIconItemStack() {
 				return new ItemStack(blockProjectBase, 1, 0);
 			}

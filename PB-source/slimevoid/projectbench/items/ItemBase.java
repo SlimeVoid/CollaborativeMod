@@ -2,13 +2,10 @@ package slimevoid.projectbench.items;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 import slimevoid.projectbench.blocks.BlockBase;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -16,13 +13,13 @@ import net.minecraft.world.World;
 
 public class ItemBase extends ItemBlock {
 	
-	protected HashMap itemBlockNames;
-	protected ArrayList validItemBlocks;
+	protected HashMap<Integer, String> itemBlockNames;
+	protected ArrayList<Integer> validItemBlocks;
 
 	public ItemBase(int itemId) {
 		super(itemId);
-		itemBlockNames = new HashMap();
-		validItemBlocks = new ArrayList();
+		itemBlockNames = new HashMap<Integer, String>();
+		validItemBlocks = new ArrayList<Integer>();
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}

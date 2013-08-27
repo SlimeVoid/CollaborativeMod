@@ -40,8 +40,18 @@ public class PBCore {
 	
 	public static void registerItems() {
 		ConfigurationLib.itemPlanBlank = new Item(ConfigurationLib.itemPlanBlankID).func_111206_d(IconLib.PROJECT_PLAN_BLANK).setUnlocalizedName(ItemLib.PROJECT_PLAN_BLANK);
-		ConfigurationLib.itemPlanBlank.setCreativeTab(CreativeTabs.tabMisc);
+		ConfigurationLib.itemPlanBlank.setCreativeTab(ConfigurationLib.customTab);
 		ConfigurationLib.itemPlanFull = new ItemPlan(ConfigurationLib.itemPlanFullID);
-		ConfigurationLib.itemPlanFull.setCreativeTab(CreativeTabs.tabMisc);
+		ConfigurationLib.itemPlanFull.setCreativeTab(ConfigurationLib.customTab);
+		GameRegistry.addRecipe(new ItemStack(ConfigurationLib.itemPlanBlank, 5, 0),
+				new Object[] {
+					"P P",
+					" P ",
+					"P P",
+					Character.valueOf('P'), Item.paper
+		});
+		GameRegistry.addShapelessRecipe(
+				new ItemStack(Item.paper),
+				new ItemStack(ConfigurationLib.itemPlanBlank));
 	}
 }

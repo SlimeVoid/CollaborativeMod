@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import slimevoid.projectbench.core.lib.BlockLib;
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.RenderLib;
 import slimevoid.projectbench.items.ItemBase;
 import slimevoid.projectbench.tileentity.TileEntityBase;
@@ -19,13 +20,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockBase extends BlockContainer {
+public abstract class BlockBase extends BlockContainer {
 	
 	Class[] tileEntityMap;
 
 	protected BlockBase(int blockID, Material material) {
 		super(blockID, material);
 		this.tileEntityMap = new Class[BlockLib.BLOCK_BASE_MAX];
+		this.setCreativeTab(ConfigurationLib.customTab);
 	}
 	
 	@Override

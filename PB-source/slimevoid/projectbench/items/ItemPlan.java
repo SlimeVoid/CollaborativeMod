@@ -7,6 +7,7 @@ package slimevoid.projectbench.items;
 
 import java.util.*;
 
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.IconLib;
 import slimevoid.projectbench.core.lib.ItemLib;
 import slimevoid.projectbench.core.lib.LocaleLib;
@@ -29,10 +30,10 @@ public class ItemPlan extends Item {
 
 	public ItemPlan(int i) {
 		super(i);
-		setMaxDamage(0);
-		setHasSubtypes(true);
-		setUnlocalizedName(ItemLib.PROJECT_PLAN_FULL);
-		setMaxStackSize(1);
+		this.setMaxDamage(0);
+		this.setHasSubtypes(true);
+		this.setUnlocalizedName(ItemLib.PROJECT_PLAN_FULL);
+		this.setMaxStackSize(1);
 	}
 
 	@Override

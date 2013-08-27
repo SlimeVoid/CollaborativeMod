@@ -104,6 +104,12 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.func_110434_K().func_110577_a(GuiLib.GUI_PROJECT_BENCH);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+/*        if (!ConfigurationLib.playerInventoryLocked) {
+        	//(3, this.guiLeft + 60, this.guiTop + 127, 10,	10, "gui.lock")
+        	this.drawTexturedModalRect(this.guiLeft + 60, this.guiTop + 127, 176, 0, 14, 14);
+        } else {
+        	this.drawTexturedModalRect(this.guiLeft + 60, this.guiTop + 127, 176, 0, 14, 14);
+        }*/
 		ItemStack plan = this.inventorySlots.getSlot(ContainerLib.PROJECT_PLAN_SLOT).getStack();
 		ItemStack craft = this.inventorySlots.getSlot(ContainerLib.PROJECT_CRAFT_SLOT).getStack();
 		if (plan != null && craft != null && plan.getItem() != null && plan.getItem().itemID == ConfigurationLib.itemPlanBlank.itemID) {

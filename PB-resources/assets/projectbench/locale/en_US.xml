@@ -5,4 +5,5 @@
     <entry key="tile.project.bench.name">Project Bench</entry>
 	<entry key="item.project.plan.blank.name">Blank Project Plan</entry>
 	<entry key="item.project.plan.full.name">Project Plan</entry>
+	<entry key="itemGroup.projectbench">Collaboration Mod</entry>
 </properties>

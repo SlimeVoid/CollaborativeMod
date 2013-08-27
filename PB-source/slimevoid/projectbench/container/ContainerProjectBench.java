@@ -212,6 +212,7 @@ public class ContainerProjectBench extends Container {
 	}
 
 	public int getSatisfyMask() {
+		this.playerInventoryUsed = false;
 		ItemStack plan = this.projectbench.getStackInSlot(9);
 		ItemStack items[] = null;
 		if (plan != null) {
@@ -259,6 +260,9 @@ public class ContainerProjectBench extends Container {
 		if (bits == 511) {
 			return 511;
 		}
+		if (this.playerInventoryLocked){
+			this.playerInventoryUsed = true;
+		}
 		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
 			ItemStack test = this.playerInventory.getStackInSlot(i);
 			if (test == null || test.stackSize == 0) {
@@ -284,7 +288,7 @@ public class ContainerProjectBench extends Container {
 				}
 			}
 
-		}		
+		}
 		return bits;
 	}
 
@@ -398,7 +402,9 @@ public class ContainerProjectBench extends Container {
 					|| stackInSlot.itemID == PBCore.itemPlanFull.itemID)){
 				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot					
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)||!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
-						return null;
+						if ((slotShiftClicked >=29)||!this.mergeItemStack(stackInSlot, 29, 65, false)) {//else place in player inventory
+							return null;
+						}
 					}
 				}				
 			}else if (slotShiftClicked < 9 || slotShiftClicked==10) {
@@ -430,7 +436,8 @@ public class ContainerProjectBench extends Container {
 
 	protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer)
     {
-		if(this.playerInventoryUsed){
+		getSatisfyMask();
+		if(this.playerInventoryUsed){			
 			this.playerInventoryUsed=false;
 		}else{
         super.retrySlotClick(par1, par2, par3, par4EntityPlayer);

@@ -35,10 +35,7 @@ public class SlotCraftRefill extends SlotCrafting {
 				
 				ItemStack test = allInventories[j].getStackInSlot(i);
 				if (test != null && test.stackSize != 0
-						&& ItemLib.matchOre(itemstack, test)) {
-					if (j == 1 && this.eventHandler.playerInventoryLocked){						
-						this.eventHandler.playerInventoryUsed = true;
-					}
+						&& ItemLib.matchOre(itemstack, test)) {								
 					return new InventoryMatch(allInventories[j],i);
 				}
 

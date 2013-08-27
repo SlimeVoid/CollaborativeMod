@@ -15,6 +15,7 @@ public class SlotCraftRefill extends SlotCrafting {
 	IInventory[] allInventories;
 	IInventory craftingMatrix;
 	ContainerProjectBench eventHandler;
+	private boolean PlayerFirstCraft;
 
 	public SlotCraftRefill(EntityPlayer entityplayer, IInventory matrix,
 			IInventory result, IInventory[] allinventories,
@@ -31,10 +32,13 @@ public class SlotCraftRefill extends SlotCrafting {
 			for (int i = 0; i < allInventories[j].getSizeInventory(); i++) {
 				if (j == 0 && i == 0)
 					i = 10;
+				
 				ItemStack test = allInventories[j].getStackInSlot(i);
 				if (test != null && test.stackSize != 0
 						&& ItemLib.matchOre(itemstack, test)) {
-					
+					if (j == 1 && this.eventHandler.playerInventoryLocked){						
+						this.eventHandler.playerInventoryUsed = true;
+					}
 					return new InventoryMatch(allInventories[j],i);
 				}
 

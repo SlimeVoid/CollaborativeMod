@@ -28,7 +28,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 
 	TileEntityProjectBench projectBench;
 	private GuiButton lockButton;
-	private boolean locked;
+	private boolean locked = true;
 
 	public GuiProjectBench(InventoryPlayer playerInventory, World world,
 			TileEntityProjectBench projectBench) {

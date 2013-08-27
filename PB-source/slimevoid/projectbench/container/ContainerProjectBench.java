@@ -149,6 +149,8 @@ public class ContainerProjectBench extends Container {
 	public InventoryCrafting craftMatrix;
 	
 	public int satisfyMask;
+	public boolean playerInventoryUsed;
+	public boolean playerInventoryLocked = true;
 
 	public ContainerProjectBench(InventoryPlayer playerInventory, TileEntityProjectBench tileentity) {
 		super();
@@ -274,6 +276,7 @@ public class ContainerProjectBench extends Container {
 					continue;
 				}
 				bits |= 1 << j;
+				
 				if (--sc == 0) {
 					break;
 				}
@@ -380,37 +383,6 @@ public class ContainerProjectBench extends Container {
 	 * Called when a player shift-clicks on a slot. You must override this or
 	 * you will crash when someone does that.
 	 */
-/*	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
-			int slotShiftClicked) {
-		ItemStack itemstackCopy = null;
-		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
-
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stackInSlot = slot.getStack();
-			itemstackCopy = stackInSlot.copy();
-
-			if (slotShiftClicked < 2 * 9 + 11) {
-				if (!this.mergeItemStack(stackInSlot, 2 * 9 + 11,
-						this.inventorySlots.size(), true)) {
-					return null;
-				}
-				slot.onSlotChange(stackInSlot, itemstackCopy);
-			} else if (!this.mergeItemStack(stackInSlot, 10, 2 * 9 + 11, false)) {
-				return null;
-			}
-
-			if (stackInSlot.stackSize == 0) {
-				slot.putStack((ItemStack) null);
-			} else {
-				slot.onSlotChanged();
-			}
-
-			slot.onPickupFromSlot(entityplayer, stackInSlot);
-		}
-
-		return itemstackCopy;
-	}*/
-
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
 			int slotShiftClicked) {
@@ -424,20 +396,20 @@ public class ContainerProjectBench extends Container {
 					|| stackInSlot.itemID == PBCore.itemPlanFull.itemID)){
 				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot
 					if (!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
-					return null;
+						itemstackCopy = null;
 					}
 				}				
 			}else if (slotShiftClicked < 11) {
 				if (!this.mergeItemStack(stackInSlot, 11, 65, false)) {
-					return null;
+					itemstackCopy = null;
 				}
 			} else if (slotShiftClicked < 29) { //if internal inventory shift click into player inventory
 				if (!this.mergeItemStack(stackInSlot, 29, 65, true)) {
-					return null;
+					itemstackCopy = null;
 				}
 			} else if (!this.mergeItemStack(stackInSlot, 11, 29, false)) { //if player then go into internal inventory first
 				if (!this.mergeItemStack(stackInSlot, 0, 9, false)){//then crafting grid					
-						return null;					
+					itemstackCopy = null;					
 				}
 			}
 			if (stackInSlot.stackSize == 0) {
@@ -448,95 +420,20 @@ public class ContainerProjectBench extends Container {
 			if (stackInSlot.stackSize != itemstackCopy.stackSize) {
 				slot.onPickupFromSlot(entityplayer, stackInSlot);
 			} else {
-				return null;
+				itemstackCopy = null;
 			}
 		}
 		return itemstackCopy;
 	}
 
-	protected boolean canFit(ItemStack ist, int st, int ed) {
-		int ms = 0;
-		for (int i = st; i < ed; i++) {
-			Slot slot = (Slot) this.inventorySlots.get(i);
-			ItemStack is2 = slot.getStack();
-			if (is2 == null) {
-				return true;
-			}
-			if (ItemLib.compareItemStack(is2, ist) != 0) {
-				continue;
-			}
-			ms += is2.getMaxStackSize() - is2.stackSize;
-			if (ms >= ist.stackSize) {
-				return true;
-			}
+	protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer)
+    {
+		if(this.playerInventoryUsed){
+			this.playerInventoryUsed=false;
+		}else{
+        super.retrySlotClick(par1, par2, par3, par4EntityPlayer);
 		}
-
-		return false;
-	}
-
-	protected void fitItem(ItemStack ist, int st, int ed) {
-		if (ist.isStackable()) {
-			for (int i = st; i < ed; i++) {
-				Slot slot = (Slot) this.inventorySlots.get(i);
-				ItemStack is2 = slot.getStack();
-				if (is2 == null || ItemLib.compareItemStack(is2, ist) != 0) {
-					continue;
-				}
-				int n = Math.min(ist.stackSize, ist.getMaxStackSize() - is2.stackSize);
-				if (n == 0) {
-					continue;
-				}
-				ist.stackSize -= n;
-				is2.stackSize += n;
-				slot.onSlotChanged();
-				if (ist.stackSize == 0) {
-					return;
-				}
-			}
-
-		}
-		for (int i = st; i < ed; i++) {
-			Slot slot = (Slot) this.inventorySlots.get(i);
-			ItemStack is2 = slot.getStack();
-			if (is2 == null) {
-				slot.putStack(ist);
-				slot.onSlotChanged();
-				return;
-			}
-		}
-
-	}
-
-	protected void mergeCrafting(EntityPlayer player, Slot cslot, int st, int ed) {
-		int cc = 0;
-		ItemStack ist = cslot.getStack();
-		if (ist == null || ist.stackSize == 0) {
-			return;
-		}
-		ItemStack craftas = ist.copy();
-		int mss = craftas.getMaxStackSize();
-		if (mss == 1) {
-			mss = 16;
-		}
-		do {
-			if (!canFit(ist, st, ed)) {
-				return;
-			}
-			cc += ist.stackSize;
-			fitItem(ist, st, ed);
-			cslot.onPickupFromSlot(player, ist);
-			if (cc >= mss) {
-				return;
-			}
-			if (slotCraft.isLastUse()) {
-				return;
-			}
-			ist = cslot.getStack();
-			if (ist == null || ist.stackSize == 0) {
-				return;
-			}
-		} while (ItemLib.compareItemStack(ist, craftas) == 0);
-	}
+    }
 
 	public class InventorySubCraft extends InventoryCrafting {
 		private Container eventHandler;

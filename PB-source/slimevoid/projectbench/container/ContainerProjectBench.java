@@ -396,8 +396,8 @@ public class ContainerProjectBench extends Container {
 			itemstackCopy = stackInSlot.copy();
 			if (slotShiftClicked != 9 && (stackInSlot.itemID == PBCore.itemPlanBlank.itemID
 					|| stackInSlot.itemID == PBCore.itemPlanFull.itemID)){
-				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot
-					if (!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
+				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot					
+					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)||!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
 						return null;
 					}
 				}				
@@ -406,7 +406,7 @@ public class ContainerProjectBench extends Container {
 					return null;
 				}
 			} else if (slotShiftClicked < 29) { //if internal inventory shift click into player inventory
-				if (!this.mergeItemStack(stackInSlot, 28, 65, true)) {					
+				if (!this.mergeItemStack(stackInSlot, 29, 65, true)) {					
 						return null;					
 				}
 			} else if (!this.mergeItemStack(stackInSlot, 11, 29, false)) { //if player then go into internal inventory first

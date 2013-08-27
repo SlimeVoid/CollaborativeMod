@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
-
 import slimevoid.projectbench.container.ContainerProjectBench;
 import slimevoid.projectbench.core.PBCore;
 import slimevoid.projectbench.core.lib.CommandLib;
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.GuiLib;
 import slimevoid.projectbench.network.packet.PacketProjectGui;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
@@ -48,7 +48,20 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 			lockButton.displayString = "l";
 		}
 	}
-	
+	/*
+	 * Called from the main game loop to update the screen.
+     */
+	@Override
+    public void updateScreen()
+    {
+        super.updateScreen();
+        if (!PBCore.playerInventoryLocked) {
+			lockButton.displayString = "u";
+		} else {
+			lockButton.displayString = "l";
+		}
+    }
+        
 	@Override
 	protected void mouseClicked(int i, int j, int k) {
         int x = i - this.guiLeft;
@@ -67,6 +80,9 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
             		CommandLib.CREATE_PROJECT_PLAN,
             		this.inventorySlots.windowId);
             PacketDispatcher.sendPacketToServer(pkt.getPacket());
+        }
+        if(x >= 60 && y >= 127 && x <= 70 && y <= 137) {            
+            ConfigurationLib.updateplayerInventoryLocked(!PBCore.playerInventoryLocked);
         }
         super.mouseClicked(i, j, k);
 

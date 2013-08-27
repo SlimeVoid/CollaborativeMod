@@ -29,6 +29,12 @@ public class ConfigurationLib {
 				Configuration.CATEGORY_BLOCK,
 				"planFullID",
 				18901).getInt();
+		PBCore.playerInventoryLocked = PBCore.configuration.get(Configuration.CATEGORY_GENERAL,"playerInventoryLocked",false).getBoolean(false);
+		PBCore.configuration.save();
+	}
+	public static void updateplayerInventoryLocked(boolean newVal) {
+		PBCore.playerInventoryLocked =newVal;
+		PBCore.configuration.get(Configuration.CATEGORY_GENERAL,"playerInventoryLocked",false).set(newVal);
 		PBCore.configuration.save();
 	}
 

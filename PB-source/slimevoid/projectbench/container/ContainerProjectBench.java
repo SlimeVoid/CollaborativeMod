@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import slimevoid.projectbench.core.PBCore;
 import slimevoid.projectbench.core.lib.CommandLib;
+import slimevoid.projectbench.core.lib.InventoryMatch;
 import slimevoid.projectbench.core.lib.ItemLib;
 import slimevoid.projectbench.network.packet.PacketProjectGui;
 import slimevoid.projectbench.tileentity.TileEntityProjectBench;
@@ -139,10 +140,14 @@ public class ContainerProjectBench extends Container {
 	}
 
 	TileEntityProjectBench projectbench;
+	public IInventory playerInventory;
+	public IInventory externalInventories[];
+	public IInventory externalSlotInventories[];
 	SlotCraftRefill slotCraft;
 	public IInventory craftResult;
     public InventoryCrafting fakeInv;
 	public InventoryCrafting craftMatrix;
+	
 	public int satisfyMask;
 
 	public ContainerProjectBench(InventoryPlayer playerInventory, TileEntityProjectBench tileentity) {
@@ -150,6 +155,7 @@ public class ContainerProjectBench extends Container {
 		this.projectbench = tileentity;
 		this.craftMatrix = new InventorySubCraft(this, tileentity);
 		this.craftResult = new InventoryCraftResult();
+		this.playerInventory = playerInventory;
 		int b0 = 140;
 		int l;
 		int i1;
@@ -187,14 +193,16 @@ public class ContainerProjectBench extends Container {
 		// Player inventory
 		for (l = 0; l < 3; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
-				int slotIndex = i1 + (l * 9) + 9;
-				this.addSlotToContainer(new Slot(playerInventory, slotIndex, 8 + i1 * 18, l * 18 + b0));
+				int slotIndex = i1 + (l * 9);
+				this.addSlotToContainer(new Slot(new InventorySubUpdate(playerInventory, 9, 27), slotIndex, 8 + i1 * 18, l * 18 + b0));
 			}
 		}
 		// hotbar inventory
 		for (l = 0; l < 9; ++l) {
-			this.addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 58 + b0));
+			this.addSlotToContainer(new Slot(new InventorySubUpdate(playerInventory,0,9), l, 8 + l * 18, 58 + b0));
 		}
+		
+		//add n,e,w,s inventories
 		fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
 		this.onCraftMatrixChanged(craftMatrix);
 	}
@@ -244,19 +252,52 @@ public class ContainerProjectBench extends Container {
 			}
 
 		}
+		if (bits == 511) {
+			return 511;
+		}
+		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
+			ItemStack test = this.playerInventory.getStackInSlot(i);
+			if (test == null || test.stackSize == 0) {
+				continue;
+			}
+			int sc = test.stackSize;
+			for (int j = 0; j < 9; j++) {
+				if ((bits & 1 << j) > 0) {
+					continue;
+				}
+				ItemStack st = this.projectbench.getStackInSlot(j);
+				if (st != null) {
+					continue;
+				}
+				st = items[j];
+				if (st == null || !ItemLib.matchOre(st, test)) {
+					continue;
+				}
+				bits |= 1 << j;
+				if (--sc == 0) {
+					break;
+				}
+			}
 
+		}		
 		return bits;
 	}
 
-	private int findMatch(ItemStack a) {
+	private InventoryMatch findMatch(ItemStack a) {
 		for (int i = 0; i < 18; i++) {
 			ItemStack test = this.projectbench.getStackInSlot(10 + i);
 			if (test != null && test.stackSize != 0
 					&& ItemLib.matchOre(a, test))
-				return 10 + i;
+				return new InventoryMatch(this.projectbench,10 + i);
 		}
-
-		return -1;
+		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
+			ItemStack test = this.playerInventory.getStackInSlot(i);
+			if (test != null && test.stackSize != 0
+					&& ItemLib.matchOre(a, test))
+				return new InventoryMatch(this.playerInventory,i);
+		}
+		//TODO: add External Inventories
+		return null;
 	}
     
 	@Override
@@ -269,9 +310,9 @@ public class ContainerProjectBench extends Container {
 		for (int i = 0; i < 9; i++) {
 			ItemStack tos = this.projectbench.getStackInSlot(i);
 			if (tos == null && items != null && items[i] != null) {
-				int j = findMatch(items[i]);
-				if (j > 0) {
-					tos = this.projectbench.getStackInSlot(j);
+				InventoryMatch match = findMatch(items[i]);
+				if (match != null) {
+					tos = match.InventoryMatch.getStackInSlot(match.slotIndex);
 				}
 			}
 			this.fakeInv.setInventorySlotContents(i, tos);
@@ -379,21 +420,25 @@ public class ContainerProjectBench extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stackInSlot = slot.getStack();
 			itemstackCopy = stackInSlot.copy();
-			
-			if (slotShiftClicked == 9) {
-				mergeCrafting(entityplayer, slot, 29, 65);
-				return null;
-			}
-			if (slotShiftClicked < 9) {
-				if (!this.mergeItemStack(stackInSlot, 10, 29, false)) {
+			if (slotShiftClicked != 9 && (stackInSlot.itemID == PBCore.itemPlanBlank.itemID
+					|| stackInSlot.itemID == PBCore.itemPlanFull.itemID)){
+				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot
+					if (!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
+					return null;
+					}
+				}				
+			}else if (slotShiftClicked < 11) {
+				if (!this.mergeItemStack(stackInSlot, 11, 65, false)) {
 					return null;
 				}
-			} else if (slotShiftClicked < 29) {
+			} else if (slotShiftClicked < 29) { //if internal inventory shift click into player inventory
 				if (!this.mergeItemStack(stackInSlot, 29, 65, true)) {
 					return null;
 				}
-			} else if (!this.mergeItemStack(stackInSlot, 10, 29, false)) {
-				return null;
+			} else if (!this.mergeItemStack(stackInSlot, 11, 29, false)) { //if player then go into internal inventory first
+				if (!this.mergeItemStack(stackInSlot, 0, 9, false)){//then crafting grid					
+						return null;					
+				}
 			}
 			if (stackInSlot.stackSize == 0) {
 				slot.putStack(null);

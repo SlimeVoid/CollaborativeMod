@@ -152,7 +152,6 @@ public class ContainerProjectBench extends Container {
 	
 	public int satisfyMask;
 	public boolean playerInventoryUsed;
-	public boolean playerInventoryLocked = true;
 
 	public ContainerProjectBench(InventoryPlayer playerInventory, TileEntityProjectBench tileentity) {
 		super();
@@ -260,7 +259,7 @@ public class ContainerProjectBench extends Container {
 		if (bits == 511) {
 			return 511;
 		}
-		if (this.playerInventoryLocked){
+		if (PBCore.playerInventoryLocked){
 			this.playerInventoryUsed = true;
 		}
 		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {

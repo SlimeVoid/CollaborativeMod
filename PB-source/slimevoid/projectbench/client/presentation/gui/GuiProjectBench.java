@@ -28,7 +28,6 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 
 	TileEntityProjectBench projectBench;
 	private GuiButton lockButton;
-	private boolean locked = true;
 
 	public GuiProjectBench(InventoryPlayer playerInventory, World world,
 			TileEntityProjectBench projectBench) {
@@ -43,7 +42,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		lockButton = new GuiButton(3, this.guiLeft + 60, this.guiTop + 127, 10,
 				10, "gui.lock");
 		buttonList.add(lockButton);
-		if (!this.locked) {
+		if (!PBCore.playerInventoryLocked) {
 			lockButton.displayString = "u";
 		} else {
 			lockButton.displayString = "l";

@@ -24,6 +24,7 @@ public class PBCore {
 	public static Configuration configuration;
 	public static Item itemPlanBlank;
 	public static Item itemPlanFull;
+	public static boolean playerInventoryLocked;
 
 	public static void registerNames() {
 		LocaleLib.registerLanguages();

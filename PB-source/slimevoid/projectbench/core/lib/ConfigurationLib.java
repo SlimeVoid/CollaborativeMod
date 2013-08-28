@@ -50,7 +50,7 @@ public class ConfigurationLib {
 		playerInventoryLocked = configuration.get(
 				Configuration.CATEGORY_GENERAL,
 				"playerInventoryLocked",
-				false).getBoolean(false);
+				true).getBoolean(true);
 		configuration.save();
 
 		customTab = new CreativeTabs(CoreLib.MOD_RESOURCES) {

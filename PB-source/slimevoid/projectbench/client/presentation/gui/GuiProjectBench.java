@@ -79,7 +79,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.func_110434_K().func_110577_a(GuiLib.GUI_PROJECT_BENCH);
+		this.mc.renderEngine.bindTexture(GuiLib.GUI_PROJECT_BENCH);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 /*		if (!ConfigurationLib.playerInventoryLocked) {
         	this.drawTexturedModalRect(this.guiLeft + 63, this.guiTop + 125, 176, 28, 14, 14);
@@ -118,7 +118,7 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 			GL11.glDisable(2896);
 			GL11.glDisable(2929);
 			GL11.glEnable(3042);
-			this.mc.func_110434_K().func_110577_a(GuiLib.GUI_PROJECT_BENCH);
+			this.mc.renderEngine.bindTexture(GuiLib.GUI_PROJECT_BENCH);
 			for (int n = 0; n < 9; n++) {
 				if (ist == null || ist[n] == null)
 					continue;

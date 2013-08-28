@@ -39,7 +39,7 @@ public class PBCore {
 	}
 	
 	public static void registerItems() {
-		ConfigurationLib.itemPlanBlank = new Item(ConfigurationLib.itemPlanBlankID).func_111206_d(IconLib.PROJECT_PLAN_BLANK).setUnlocalizedName(ItemLib.PROJECT_PLAN_BLANK);
+		ConfigurationLib.itemPlanBlank = new Item(ConfigurationLib.itemPlanBlankID).setUnlocalizedName(IconLib.PROJECT_PLAN_BLANK);
 		ConfigurationLib.itemPlanBlank.setCreativeTab(ConfigurationLib.customTab);
 		ConfigurationLib.itemPlanFull = new ItemPlan(ConfigurationLib.itemPlanFullID);
 		ConfigurationLib.itemPlanFull.setCreativeTab(ConfigurationLib.customTab);

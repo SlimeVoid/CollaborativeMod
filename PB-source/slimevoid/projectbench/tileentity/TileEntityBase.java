@@ -6,7 +6,7 @@ import java.util.Iterator;
 import slimevoid.projectbench.core.lib.BlockLib;
 import slimevoid.projectbench.core.lib.NBTLib;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,7 +24,7 @@ public abstract class TileEntityBase extends TileEntity {
 		
 	}
 	
-	public void onBlockPlaced(ItemStack itemstack, int side, EntityLivingBase entity) {
+	public void onBlockPlaced(ItemStack itemstack, int side, EntityLiving entity) {
 		
 	}
 	

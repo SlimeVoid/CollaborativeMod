@@ -280,12 +280,13 @@ public class ContainerProjectBench extends Container {
 	/**
 	 * Called when the container is closed.
 	 */
-	public void onContainerClosed(EntityPlayer entityplayer) {
+	@Override
+	public void onCraftGuiClosed(EntityPlayer entityplayer) {
 		// TODO :: try to shove as many items found in crafting matrix into
 		// internal storage before dumping to world
-		super.onContainerClosed(entityplayer);
+		super.onCraftGuiClosed(entityplayer);
 
-		if (!this.projectbench.worldObj.isRemote) {
+		/*if (!this.projectbench.worldObj.isRemote) {
 			for (int i = 0; i < 9; ++i) {
 				ItemStack itemstack = this.craftMatrix
 						.getStackInSlotOnClosing(i);
@@ -294,7 +295,7 @@ public class ContainerProjectBench extends Container {
 					entityplayer.dropPlayerItem(itemstack);
 				}
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -494,7 +495,7 @@ public class ContainerProjectBench extends Container {
 		}
 
 		@Override
-		public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+		public boolean isStackValidForSlot(int i, ItemStack itemstack) {
 			return true;
 		}
 	}

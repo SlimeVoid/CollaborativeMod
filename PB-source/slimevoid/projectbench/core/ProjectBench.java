@@ -6,8 +6,10 @@ import slimevoid.projectbench.network.CommonPacketHandler;
 import slimevoid.projectbench.network.ConnectionHandler;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -40,15 +42,15 @@ public class ProjectBench {
 	@Instance(CoreLib.MOD_ID)
 	public static ProjectBench instance;
 
-	@EventHandler
+	@PreInit
 	public void ProjectBenchPreInit(FMLPreInitializationEvent event) {
 	}
 
-	@EventHandler
+	@Init
 	public void ProjectBenchInit(FMLInitializationEvent event) {
 	}
 
-	@EventHandler
+	@PostInit
 	public void ProjectBenchPostInit(FMLPostInitializationEvent event) {
 		PBInit.initialize();
 	}

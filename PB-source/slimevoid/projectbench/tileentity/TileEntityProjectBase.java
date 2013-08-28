@@ -1,6 +1,6 @@
 package slimevoid.projectbench.tileentity;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
@@ -20,7 +20,7 @@ public class TileEntityProjectBase extends TileEntityBase {
 	}
 	
 	@Override
-	public void onBlockPlaced(ItemStack itemstack, int side, EntityLivingBase entity) {
+	public void onBlockPlaced(ItemStack itemstack, int side, EntityLiving entity) {
 		this.rotation = (int) Math.floor((double)((entity.rotationYaw * 4F) / 360F) + 0.5D) & 3;
 	}
 

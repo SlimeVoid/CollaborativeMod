@@ -45,7 +45,7 @@ rmdir "%packagedir%\ProjectBench" /S /Q
 )
 mkdir "%packagedir%\ProjectBench\slimevoid\projectbench"
 xcopy "%mcpdir%\reobf\minecraft\slimevoid\projectbench\*.*" "%packagedir%\ProjectBench\slimevoid\projectbench\" /S
-xcopy "%projectbench%\PR-resources\*.*" "%packagedir%\ProjectBench\" /S
+xcopy "%projectbench%\PB-resources\*.*" "%packagedir%\ProjectBench\" /S
 echo "Project Bench Packaged Successfully
 pause
 ren "%mcpdir%\src" src-old

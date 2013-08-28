@@ -210,15 +210,15 @@ public class ContainerProjectBench extends Container {
 	private InventoryMatch findMatch(ItemStack a) {
 		for (int i = 0; i < 18; i++) {
 			ItemStack test = this.projectbench.getStackInSlot(10 + i);
-			if (test != null && test.stackSize != 0
-					&& ItemLib.matchOre(a, test))
-				return new InventoryMatch(this.projectbench,10 + i);
+			if (test != null && test.stackSize != 0	&& ItemLib.matchOre(a, test)) {
+				return new InventoryMatch(this.projectbench, 10 + i);
+			}
 		}
 		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
 			ItemStack test = this.playerInventory.getStackInSlot(i);
-			if (test != null && test.stackSize != 0
-					&& ItemLib.matchOre(a, test))
-				return new InventoryMatch(this.playerInventory,i);
+			if (test != null && test.stackSize != 0 && ItemLib.matchOre(a, test)) {
+				return new InventoryMatch(this.playerInventory, i);
+			}
 		}
 		//TODO: add External Inventories
 		return null;
@@ -226,10 +226,11 @@ public class ContainerProjectBench extends Container {
 
 	public ItemStack[] getPlanItems() {
 		ItemStack plan = this.projectbench.getStackInSlot(9);
-		if (plan == null)
+		if (plan == null) {
 			return null;
-		else
+		} else {
 			return getShadowItems(plan);
+		}
 	}
 
 	public static ItemStack[] getShadowItems(ItemStack ist) {
@@ -261,9 +262,9 @@ public class ContainerProjectBench extends Container {
 		for (int i = 0; i < 9; i++) {
 			ItemStack tos = this.projectbench.getStackInSlot(i);
 			if (tos == null && items != null && items[i] != null) {
-				InventoryMatch match = findMatch(items[i]);
+				InventoryMatch match = this.findMatch(items[i]);
 				if (match != null) {
-					tos = match.InventoryMatch.getStackInSlot(match.slotIndex);
+					tos = match.inventoryMatch.getStackInSlot(match.slotIndex);
 				}
 			}
 			this.fakeInv.setInventorySlotContents(i, tos);

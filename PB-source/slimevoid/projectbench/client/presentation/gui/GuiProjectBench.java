@@ -38,32 +38,6 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		this.projectBench = projectBench;
 		this.ySize = 222;
 	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-/*		lockButton = new GuiButton(3, this.guiLeft + 60, this.guiTop + 127, 10,
-				10, "gui.lock");
-		buttonList.add(lockButton);
-		if (!ConfigurationLib.playerInventoryLocked) {
-			lockButton.displayString = "u";
-		} else {
-			lockButton.displayString = "l";
-		}*/
-	}
-	/*
-	 * Called from the main game loop to update the screen.
-     */
-	@Override
-    public void updateScreen()
-    {
-        super.updateScreen();
-/*        if (!ConfigurationLib.playerInventoryLocked) {
-			lockButton.displayString = "u";
-		} else {
-			lockButton.displayString = "l";
-		}*/
-    }
         
 	@Override
 	protected void mouseClicked(int i, int j, int k) {
@@ -73,7 +47,6 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
             ItemStack plan = this.inventorySlots.getSlot(9).getStack();
             ItemStack craft = this.inventorySlots.getSlot(10).getStack();
             if(plan == null || craft == null || plan.itemID != ConfigurationLib.itemPlanBlank.itemID) {
-            	System.out.print("No Plan");
                 return;
             }
             PacketProjectGui pkt = new PacketProjectGui(
@@ -84,7 +57,8 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
             		this.inventorySlots.windowId);
             PacketDispatcher.sendPacketToServer(pkt.getPacket());
         }
-        if(x >= 63 && y >= 125 && x <= 77 && y <= 139) {            
+        //if(x >= 63 && y >= 125 && x <= 77 && y <= 139) {
+        if(x >= 8 && y >= (this.ySize - 96) + 2 && x <= 8 + 50 && y <= (this.ySize - 96) + 2 + 10) {
             ConfigurationLib.updateplayerInventoryLocked(!ConfigurationLib.playerInventoryLocked);
     		PacketLib.sendPlayerInventoryStatus(ConfigurationLib.playerInventoryLocked);
         }
@@ -95,8 +69,11 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int i, int j) {
 		fontRenderer.drawString("Project Bench", 60, 6, 0x404040);
-		fontRenderer.drawString("Inventory", 8, (this.ySize - 96) + 2, 0x404040);
-		//this.drawProjectBench(i, j, k, l);
+		if (!ConfigurationLib.playerInventoryLocked) {
+			fontRenderer.drawString("Inventory", 8, (this.ySize - 96) + 2, 0x404040);
+		} else {
+			fontRenderer.drawString("Inventory", 8, (this.ySize - 96) + 2, 0x400000);
+		}
 	}
 
 	@Override
@@ -104,12 +81,11 @@ public class GuiProjectBench extends GuiContainer implements ICrafting {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.func_110434_K().func_110577_a(GuiLib.GUI_PROJECT_BENCH);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		if (!ConfigurationLib.playerInventoryLocked) {
-        	//(3, this.guiLeft + 60, this.guiTop + 127, 10,	10, "gui.lock")
+/*		if (!ConfigurationLib.playerInventoryLocked) {
         	this.drawTexturedModalRect(this.guiLeft + 63, this.guiTop + 125, 176, 28, 14, 14);
         } else {
         	this.drawTexturedModalRect(this.guiLeft + 63, this.guiTop + 125, 176, 14, 14, 14);
-        }
+        }*/
 		ItemStack plan = this.inventorySlots.getSlot(ContainerLib.PROJECT_PLAN_SLOT).getStack();
 		ItemStack craft = this.inventorySlots.getSlot(ContainerLib.PROJECT_CRAFT_SLOT).getStack();
 		if (plan != null && craft != null && plan.getItem() != null && plan.getItem().itemID == ConfigurationLib.itemPlanBlank.itemID) {

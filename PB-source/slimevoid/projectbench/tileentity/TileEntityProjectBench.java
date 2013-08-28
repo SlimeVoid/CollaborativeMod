@@ -32,7 +32,6 @@ public class TileEntityProjectBench extends TileEntityProjectBase implements
 
 	@Override
 	public boolean onBlockActivated(EntityPlayer entityplayer) {
-		System.out.println("Bench Activated");
 		if (entityplayer.isSneaking()) {
 			return false;
 		}

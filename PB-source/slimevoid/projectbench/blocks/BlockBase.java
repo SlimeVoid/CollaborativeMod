@@ -140,7 +140,6 @@ public abstract class BlockBase extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityplayer, int side, float xHit, float yHit, float zHit) {
-		System.out.println("Base Activated");
 		TileEntityBase tileentitybase = (TileEntityBase) BlockLib
 				.getTileEntity(world, x, y, z, TileEntityBase.class);
 		if (tileentitybase == null) {

@@ -1,6 +1,8 @@
 package slimevoid.projectbench.core;
 
+import net.minecraftforge.common.Configuration;
 import slimevoid.projectbench.client.network.ClientPacketHandler;
+import slimevoid.projectbench.core.lib.ConfigurationLib;
 import slimevoid.projectbench.core.lib.CoreLib;
 import slimevoid.projectbench.network.CommonPacketHandler;
 import slimevoid.projectbench.network.ConnectionHandler;
@@ -44,6 +46,11 @@ public class ProjectBench {
 
 	@PreInit
 	public void ProjectBenchPreInit(FMLPreInitializationEvent event) {
+		ConfigurationLib.configuration = new Configuration(event.getSuggestedConfigurationFile());
+		// loading the configuration from its file
+		ConfigurationLib.configuration.load();
+		// saving the configuration to its file
+		ConfigurationLib.configuration.save();
 	}
 
 	@Init

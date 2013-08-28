@@ -44,14 +44,6 @@ public class ItemBase extends ItemBlock {
 		}
 	}
 	
-/*	@Override
-	public void getSubItems(int itemId, CreativeTabs creativeTabs, List creativeList) {
-		Integer i;
-		for (Iterator item = validItemBlocks.iterator(); item.hasNext(); creativeList.add(new ItemStack(this, 1, i.intValue()))) {
-			i = (Integer) item.next();
-		}
-	}*/
-	
 	@Override
 	public boolean placeBlockAt(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
 		if (!world.setBlock(x, y, z, this.itemID, metadata, 0x3)) {

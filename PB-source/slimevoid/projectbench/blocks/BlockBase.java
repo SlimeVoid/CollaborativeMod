@@ -49,10 +49,6 @@ public abstract class BlockBase extends BlockContainer {
 		return metadata;
 	}
 	
-	public float getHardness() {
-		return this.blockHardness;
-	}
-	
 	@Override
 	public ArrayList getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> harvestList = new ArrayList<ItemStack>();

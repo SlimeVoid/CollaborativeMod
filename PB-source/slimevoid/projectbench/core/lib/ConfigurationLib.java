@@ -47,7 +47,10 @@ public class ConfigurationLib {
 				Configuration.CATEGORY_BLOCK,
 				"planFullID",
 				18901).getInt();
-		playerInventoryLocked = configuration.get(Configuration.CATEGORY_GENERAL,"playerInventoryLocked",false).getBoolean(false);
+		playerInventoryLocked = configuration.get(
+				Configuration.CATEGORY_GENERAL,
+				"playerInventoryLocked",
+				false).getBoolean(false);
 		configuration.save();
 
 		customTab = new CreativeTabs(CoreLib.MOD_RESOURCES) {

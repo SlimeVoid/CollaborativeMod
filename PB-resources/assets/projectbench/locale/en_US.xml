@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties version="1.0">
-	<comment>English (US) Localization File</comment>
-    <entry key="tile.project.bench.name">Project Bench</entry>
-	<entry key="item.project.plan.blank.name">Blank Project Plan</entry>
-	<entry key="item.project.plan.full.name">Project Plan</entry>
-	<entry key="itemGroup.projectbench">Collaboration Mod</entry>
-</properties>

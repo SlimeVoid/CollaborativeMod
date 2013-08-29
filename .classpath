@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="PB-source"/>
-	<classpathentry kind="src" path="PB-resources"/>
+	<classpathentry kind="src" path="CM-source"/>
+	<classpathentry kind="src" path="CM-resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EurysCore-FML"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Forge-MC1.6.2"/>

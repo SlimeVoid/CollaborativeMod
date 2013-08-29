@@ -2,7 +2,6 @@ package slimevoid.collaborative.client.presentation.gui;
 
 import java.util.List;
 
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -18,7 +17,6 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import slimevoid.collaborative.container.ContainerWorkBench;
-import slimevoid.collaborative.core.CMCore;
 import slimevoid.collaborative.core.lib.CommandLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.ContainerLib;
@@ -30,7 +28,6 @@ import slimevoid.collaborative.tileentity.TileEntityWorkBench;
 public class GuiCollaborativeWorkBench extends GuiContainer implements ICrafting {
 
 	TileEntityWorkBench workBench;
-	private GuiButton lockButton;
 
 	public GuiCollaborativeWorkBench(EntityPlayer entityplayer, InventoryPlayer playerInventory, World world,
 			TileEntityWorkBench workBench) {
@@ -68,7 +65,11 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements ICrafting
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int i, int j) {
-		fontRenderer.drawString("Collaborative WorkBench", 60, 6, 0x404040);
+		fontRenderer.drawString(
+				GuiLib.TITLE_WORK_BENCH,
+				(this.xSize / 2) - (fontRenderer.getStringWidth(GuiLib.TITLE_WORK_BENCH) / 2),
+				6,
+				0x404040);
 		if (!ConfigurationLib.playerInventoryLocked) {
 			fontRenderer.drawString("Inventory", 8, (this.ySize - 96) + 2, 0x404040);
 		} else {

@@ -10,4 +10,6 @@ public class GuiLib {
 	
 	public static final String WORK_BENCH = GUI_PREFIX + BlockLib.BLOCK_WORK_BENCH + ".png";
 	public static final ResourceLocation GUI_WORK_BENCH = new ResourceLocation(CoreLib.MOD_RESOURCES, WORK_BENCH);
+
+	public static final String TITLE_WORK_BENCH = "Collaborative Work Bench";
 }

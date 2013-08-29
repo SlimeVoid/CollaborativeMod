@@ -5,7 +5,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemLib {
 
-	public static final String ITEM_PREFIX = "collab.";
+	public static final String ITEM_PREFIX = "cm.";
 	public static final String ITEM_PLAN = ITEM_PREFIX + "plan.";
 	public static final String PLAN_BLANK = ITEM_PLAN + "blank";
 	public static final String PLAN_FULL = ITEM_PLAN + "full";

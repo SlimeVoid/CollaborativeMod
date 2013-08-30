@@ -1,11 +1,9 @@
 package slimevoid.collaborative.core;
 
-import net.minecraftforge.common.Configuration;
 import slimevoid.collaborative.client.network.ClientPacketHandler;
-import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.CoreLib;
 import slimevoid.collaborative.network.CommonPacketHandler;
-import slimevoid.collaborative.network.ConnectionHandler;
+import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -31,7 +29,7 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		serverPacketHandlerSpec = @SidedPacketHandler(
 				channels = { CoreLib.MOD_CHANNEL },
 				packetHandler = CommonPacketHandler.class),
-		connectionHandler = ConnectionHandler.class
+		connectionHandler = CommonProxy.class
 )
 public class CollaborativeMod {
 	@SidedProxy(
@@ -44,11 +42,9 @@ public class CollaborativeMod {
 
 	@EventHandler
 	public void CollaborativePreInit(FMLPreInitializationEvent event) {
-		ConfigurationLib.configuration = new Configuration(event.getSuggestedConfigurationFile());
-		// loading the configuration from its file
-		ConfigurationLib.configuration.load();
-		// saving the configuration to its file
-		ConfigurationLib.configuration.save();
+		CollaborativeMod.proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
+
+		CollaborativeMod.proxy.preInit();
 	}
 
 	@EventHandler

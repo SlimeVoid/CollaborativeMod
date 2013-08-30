@@ -7,9 +7,9 @@ import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.IconLib;
 import slimevoid.collaborative.core.lib.ItemLib;
 import slimevoid.collaborative.core.lib.LocaleLib;
-import slimevoid.collaborative.items.ItemBase;
 import slimevoid.collaborative.items.ItemPlan;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
+import slimevoidlib.items.ItemBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -22,7 +22,7 @@ public class CMCore {
 	
 	public static void registerBlocks() {
 		ConfigurationLib.blockCollaborativeBase = new BlockCollaborativeBase(ConfigurationLib.blockCollaborativeBaseID);
-		GameRegistry.registerBlock(ConfigurationLib.blockCollaborativeBase, ItemBase.class, BlockLib.BLOCK_COLLABORATIVE_BASE);
+		GameRegistry.registerBlock(ConfigurationLib.blockCollaborativeBase, ItemBlockBase.class, BlockLib.BLOCK_COLLABORATIVE_BASE);
 		GameRegistry.registerTileEntity(TileEntityWorkBench.class, BlockLib.BLOCK_WORK_BENCH);
 		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(BlockLib.BLOCK_WORK_BENCH_ID, TileEntityWorkBench.class);
 		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_BENCH_ID, BlockLib.BLOCK_WORK_BENCH);

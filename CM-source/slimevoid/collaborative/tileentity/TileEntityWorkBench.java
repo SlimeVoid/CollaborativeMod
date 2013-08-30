@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
 import slimevoid.collaborative.core.CollaborativeMod;
 import slimevoid.collaborative.core.lib.BlockLib;
+import slimevoidlib.core.lib.ItemLib;
 import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoidlib.util.SlimevoidHelper;
 
@@ -50,7 +51,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		for (int i = 0; i < 27; i++) {
 			ItemStack itemstack = this.contents[i];
 			if (itemstack != null && itemstack.stackSize > 0) {
-				BlockLib.dropItem(this.worldObj, this.xCoord, this.yCoord,
+				ItemLib.dropItem(this.worldObj, this.xCoord, this.yCoord,
 						this.zCoord, itemstack);
 			}
 		}
@@ -69,7 +70,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	@Override
 	public int getSizeInventory() {
-		// this is the intenral persistent inventory 2 rows of 9 and the plan
+		// this is the internal persistent inventory 2 rows of 9 and the plan
 		// slot
 		return 28;
 	}

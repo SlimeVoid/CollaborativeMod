@@ -1,16 +1,9 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   ItemPlan.java
-
 package slimevoid.collaborative.items;
 
 import java.util.*;
 
-import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.IconLib;
 import slimevoid.collaborative.core.lib.ItemLib;
-import slimevoid.collaborative.core.lib.LocaleLib;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;

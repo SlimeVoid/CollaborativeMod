@@ -1,5 +1,6 @@
 package slimevoid.collaborative.core.lib;
 
+import java.io.File;
 import java.util.HashMap;
 
 import slimevoid.collaborative.blocks.BlockCollaborativeBase;
@@ -27,11 +28,13 @@ public class ConfigurationLib {
 
 	
 	@SideOnly(Side.CLIENT)
-	public static void ClientConfig() {
-		CommonConfig();
+	public static void ClientConfig(File configFile) {
+		CommonConfig(configFile);
 	}
 	
-	public static void CommonConfig() {
+	public static void CommonConfig(File configFile) {
+		configuration = new Configuration(configFile);
+		
 		configuration.load();
 		
 		blockCollaborativeBaseID = configuration.get(

@@ -1,5 +1,7 @@
 package slimevoid.collaborative.client.proxy;
 
+import java.io.File;
+
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
@@ -21,8 +23,8 @@ import slimevoidlib.util.SlimevoidHelper;
 public class ClientProxy extends CommonProxy {
 
 	@Override
-	public void registerConfigurationProperties() {
-		ConfigurationLib.ClientConfig();
+	public void registerConfigurationProperties(File configFile) {
+		ConfigurationLib.ClientConfig(configFile);
 	}
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
@@ -42,10 +44,9 @@ public class ClientProxy extends CommonProxy {
 		ClientPacketHandler.init();
 		PacketLib.registerClientPacketHandlers();
 	}
-
+	
 	@Override
-	public void login(NetHandler handler, INetworkManager manager,
-			Packet1Login login) {
+	public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
 		// This Sends the Local Player settings to the server, for persistent user settings
 		PacketSettings packet = new PacketSettings();
 		packet.setCommand(CommandLib.UPDATE_SETTINGS);

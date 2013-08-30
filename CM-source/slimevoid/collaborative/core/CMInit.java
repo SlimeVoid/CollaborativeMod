@@ -8,18 +8,14 @@ public class CMInit {
 	private static boolean initialized;
 	
 	public static void initialize() {
-		if (initialized)
+		if (initialized) {
 			return;
+		}
 		initialized = true;
-		CollaborativeMod.proxy.preInit();
 		load();
 	}
 	
-	public static void load() {
-		CollaborativeMod.proxy.registerConfigurationProperties();
-		
-		CollaborativeMod.proxy.preInit();
-		
+	public static void load() {		
 		SlimevoidCore.console(CoreLib.MOD_ID, "Registering names...");
 		CMCore.registerNames();
 		

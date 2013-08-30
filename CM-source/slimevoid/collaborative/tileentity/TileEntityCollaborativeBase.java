@@ -8,6 +8,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.NBTLib;
+import slimevoidlib.tileentity.TileEntityBase;
 
 public class TileEntityCollaborativeBase extends TileEntityBase {
 	
@@ -62,6 +63,7 @@ public class TileEntityCollaborativeBase extends TileEntityBase {
 		return packet;
 	}
 
+	@Override
 	public int getBlockTexture(int x, int y, int z, int side) {
 		// TODO :: Side based on Rotation
 		switch (rotation) {

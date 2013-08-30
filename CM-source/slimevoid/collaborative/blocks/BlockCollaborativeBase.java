@@ -1,12 +1,13 @@
 package slimevoid.collaborative.blocks;
 
 import slimevoid.collaborative.core.lib.BlockLib;
+import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.tileentity.TileEntityCollaborativeBase;
+import slimevoidlib.blocks.BlockBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess;
 
 public class BlockCollaborativeBase extends BlockBase {
 	
@@ -14,18 +15,8 @@ public class BlockCollaborativeBase extends BlockBase {
 	
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
-		iconList = new Icon[BlockLib.BLOCK_BASE_MAX][6];
+		iconList = new Icon[BlockLib.BLOCK_MAX_TILES][6];
 		iconList = BlockLib.registerIcons(iconRegister, iconList);
-	}
-	
-	@Override
-	public Icon getBlockTexture(IBlockAccess iblockaccess, int x, int y, int z, int side) {
-		int metadata = iblockaccess.getBlockMetadata(x, y, z);
-		TileEntityCollaborativeBase tileentity = (TileEntityCollaborativeBase) BlockLib.getTileEntity(iblockaccess, x, y, z, this.tileEntityMap[metadata]);
-		if (tileentity != null) {
-			return this.getIcon(tileentity.getBlockTexture(x, y, z, side), metadata);
-		}
-		return this.getIcon(side, metadata);
 	}
 	
 	@Override
@@ -34,17 +25,8 @@ public class BlockCollaborativeBase extends BlockBase {
 	}
 
 	public BlockCollaborativeBase(int blockID) {
-		super(blockID, Material.rock);
+		super(blockID, Material.rock, BlockLib.BLOCK_MAX_TILES);
 		this.setHardness(2.0F);
-	}
-
-	@Override
-	public int getLightValue(IBlockAccess iblockaccess, int x, int y, int z) {
-		TileEntityCollaborativeBase tileentitybase = (TileEntityCollaborativeBase) BlockLib.getTileEntity(iblockaccess, x, y, z, TileEntityCollaborativeBase.class);
-		if (tileentitybase == null)
-			return super.getLightValue(iblockaccess, x, y, z);
-		else
-			return tileentitybase.getLightValue();
 	}
 	
 	@Override
@@ -69,6 +51,16 @@ public class BlockCollaborativeBase extends BlockBase {
 	@Override
 	public int damageDropped(int metadata) {
 		return metadata;
+	}
+
+	@Override
+	public CreativeTabs getCreativeTab() {
+		return ConfigurationLib.customTab;
+	}
+
+	@Override
+	protected Class getAssociatedTileEntityClass() {
+		return TileEntityCollaborativeBase.class;
 	}
 
 }

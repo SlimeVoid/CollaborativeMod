@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
 import slimevoid.collaborative.core.CollaborativeMod;
 import slimevoid.collaborative.core.lib.BlockLib;
-import slimevoidlib.core.lib.ItemLib;
+import slimevoidlib.core.lib.ItemHelper;
 import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoidlib.util.SlimevoidHelper;
 
@@ -22,7 +22,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	}
 
 	@Override
-	public int getDamageValue() {
+	public int getExtendedBlockID() {
 		return 0;
 	}
 
@@ -51,7 +51,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		for (int i = 0; i < 27; i++) {
 			ItemStack itemstack = this.contents[i];
 			if (itemstack != null && itemstack.stackSize > 0) {
-				ItemLib.dropItem(this.worldObj, this.xCoord, this.yCoord,
+				ItemHelper.dropItem(this.worldObj, this.xCoord, this.yCoord,
 						this.zCoord, itemstack);
 			}
 		}

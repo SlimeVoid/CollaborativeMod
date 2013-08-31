@@ -2,7 +2,6 @@ package slimevoid.collaborative.blocks;
 
 import slimevoid.collaborative.core.lib.BlockLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
-import slimevoid.collaborative.tileentity.TileEntityCollaborativeBase;
 import slimevoidlib.blocks.BlockBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -56,11 +55,6 @@ public class BlockCollaborativeBase extends BlockBase {
 	@Override
 	public CreativeTabs getCreativeTab() {
 		return ConfigurationLib.customTab;
-	}
-
-	@Override
-	protected Class getAssociatedTileEntityClass() {
-		return TileEntityCollaborativeBase.class;
 	}
 
 }

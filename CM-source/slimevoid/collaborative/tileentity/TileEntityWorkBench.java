@@ -8,9 +8,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
 import slimevoid.collaborative.core.CollaborativeMod;
 import slimevoid.collaborative.core.lib.BlockLib;
-import slimevoidlib.core.lib.ItemHelper;
 import slimevoid.collaborative.core.lib.GuiLib;
-import slimevoidlib.util.SlimevoidHelper;
+import slimevoidlib.util.helpers.ItemHelper;
+import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		ISidedInventory {

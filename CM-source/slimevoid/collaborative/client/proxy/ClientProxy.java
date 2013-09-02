@@ -18,7 +18,7 @@ import slimevoid.collaborative.core.lib.PacketLib;
 import slimevoid.collaborative.network.packet.PacketSettings;
 import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import slimevoidlib.util.SlimevoidHelper;
+import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class ClientProxy extends CommonProxy {
 

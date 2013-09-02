@@ -22,7 +22,7 @@ import slimevoid.collaborative.network.CommonPacketHandler;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import slimevoidlib.ICommonProxy;
 import slimevoidlib.IPacketHandling;
-import slimevoidlib.util.SlimevoidHelper;
+import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class CommonProxy implements ICommonProxy {
 

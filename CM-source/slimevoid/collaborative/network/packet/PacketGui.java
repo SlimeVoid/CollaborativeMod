@@ -4,7 +4,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import slimevoid.collaborative.core.lib.CoreLib;
 import slimevoidlib.network.PacketGuiEvent;
-import slimevoidlib.util.SlimevoidHelper;
+import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class PacketGui extends PacketGuiEvent {
 	

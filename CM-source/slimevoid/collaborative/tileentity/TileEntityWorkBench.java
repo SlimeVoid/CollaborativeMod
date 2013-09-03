@@ -47,7 +47,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	}
 
 	@Override
-	public void onBlockRemoval() {
+	public void onBlockRemoval(int side, int metadata) {
 		for (int i = 0; i < 27; i++) {
 			ItemStack itemstack = this.contents[i];
 			if (itemstack != null && itemstack.stackSize > 0) {

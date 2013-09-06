@@ -304,6 +304,24 @@ public class ContainerWorkBench extends Container {
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return this.workbench.isUseableByPlayer(entityplayer);
 	}
+	
+	public boolean putPlanInSlot(ItemStack stackInSource, int validSlots, int targetSlot, boolean force, EntityPlayer entityplayer) {
+		// TODO :: Plan Slot Shift Click logic
+		Slot slot = (Slot) this.inventorySlots.get(validSlots);
+		if (slot.getStack() != null) {
+			transferStackInSlot(entityplayer, validSlots);
+		}
+		
+		if (stackInSource.stackSize == 1) {		
+			return this.mergeItemStack(stackInSource, validSlots, targetSlot, force);
+		} else {
+			stackInSource.stackSize -= 1;
+			ItemStack destinationStack = stackInSource.copy();
+			destinationStack.stackSize = 1;
+			slot.putStack(destinationStack);			
+			return true;
+		}
+	}
 
 	/**
 	 * Called when a player shift-clicks on a slot. You must override this or
@@ -320,7 +338,7 @@ public class ContainerWorkBench extends Container {
 			itemstackCopy = stackInSlot.copy();
 			if (slotShiftClicked != 9 && (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID
 					|| stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)){
-				if (!this.mergeItemStack(stackInSlot, 9, 10, true)) {//try to place into plan slot					
+				if (!this.putPlanInSlot(stackInSlot, 9, 10, true, entityplayer)) {//try to place into plan slot					
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)||!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
 						if ((slotShiftClicked >= 29)||!this.mergeItemStack(stackInSlot, 29, 65, false)) {//else place in player inventory
 							return null;

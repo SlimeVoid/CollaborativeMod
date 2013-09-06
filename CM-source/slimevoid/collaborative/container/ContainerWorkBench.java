@@ -305,38 +305,22 @@ public class ContainerWorkBench extends Container {
 		return this.workbench.isUseableByPlayer(entityplayer);
 	}
 	
-	public boolean putPlanInSlot(ItemStack stackInSource, int validSlots, int targetSlot, boolean force) {
+	public boolean putPlanInSlot(ItemStack stackInSource, int validSlots, int targetSlot, boolean force, EntityPlayer entityplayer) {
 		// TODO :: Plan Slot Shift Click logic
-		return this.mergeItemStack(stackInSource, validSlots, targetSlot, force);
-		/*boolean stackPlacedInSlot = false;
-		int destination = validSlots;
-
-		if (force) {
-			destination = targetSlot - 1;
+		Slot slot = (Slot) this.inventorySlots.get(validSlots);
+		if (slot.getStack() != null) {
+			transferStackInSlot(entityplayer, validSlots);
 		}
-
-		Slot slot;
-		ItemStack stackInTarget;
-
-		if (stackInSource.isStackable()) {
-			while (stackInSource.stackSize > 0 && (!force && destination < targetSlot || force && destination >= validSlots)) {
-				slot = (Slot) this.inventorySlots.get(destination);
-				stackInTarget = slot.getStack();
-
-				if (stackInTarget != null) {
-					stackPlacedInSlot = false;
-				} else {
-					ItemStack singleStack = stackInSource.copy();
-					singleStack.stackSize = 1;
-					stackInSource.stackSize--;
-					slot.putStack(singleStack);
-					slot.onSlotChanged();
-					stackPlacedInSlot = true;
-				}
-			}
+		
+		if (stackInSource.stackSize == 1) {		
+			return this.mergeItemStack(stackInSource, validSlots, targetSlot, force);
+		} else {
+			stackInSource.stackSize -= 1;
+			ItemStack destinationStack = stackInSource.copy();
+			destinationStack.stackSize = 1;
+			slot.putStack(destinationStack);			
+			return true;
 		}
-
-		return stackPlacedInSlot;*/
 	}
 
 	/**
@@ -354,7 +338,7 @@ public class ContainerWorkBench extends Container {
 			itemstackCopy = stackInSlot.copy();
 			if (slotShiftClicked != 9 && (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID
 					|| stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)){
-				if (!this.putPlanInSlot(stackInSlot, 9, 10, true)) {//try to place into plan slot					
+				if (!this.putPlanInSlot(stackInSlot, 9, 10, true, entityplayer)) {//try to place into plan slot					
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)||!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
 						if ((slotShiftClicked >= 29)||!this.mergeItemStack(stackInSlot, 29, 65, false)) {//else place in player inventory
 							return null;

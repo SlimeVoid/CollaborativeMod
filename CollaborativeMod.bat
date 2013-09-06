@@ -30,7 +30,7 @@ GOTO :PBFAIL
 
 :COPYPB
 xcopy "%euryscore%\SV-common\*.*" "%mcpdir%\src\minecraft\" /S
-xcopy "%projectbench%\PB-source\*.*" "%mcpdir%\src\minecraft\" /S
+xcopy "%projectbench%\CM-source\*.*" "%mcpdir%\src\minecraft\" /S
 pause
 call %mcpdir%\recompile.bat
 call %mcpdir%\reobfuscate.bat
@@ -43,9 +43,9 @@ if exist "%packagedir%\ProjectBench" (
 del "%packagedir%\ProjectBench\*.*" /S /Q
 rmdir "%packagedir%\ProjectBench" /S /Q
 )
-mkdir "%packagedir%\ProjectBench\slimevoid\projectbench"
-xcopy "%mcpdir%\reobf\minecraft\slimevoid\projectbench\*.*" "%packagedir%\ProjectBench\slimevoid\projectbench\" /S
-xcopy "%projectbench%\PB-resources\*.*" "%packagedir%\ProjectBench\" /S
+mkdir "%packagedir%\Collaborative\slimevoid\projectbench"
+xcopy "%mcpdir%\reobf\minecraft\slimevoid\collaborative\*.*" "%packagedir%\Collaborative\slimevoid\collaborative\" /S
+xcopy "%projectbench%\CM-resources\*.*" "%packagedir%\Collaborative\" /S
 echo "Project Bench Packaged Successfully
 pause
 ren "%mcpdir%\src" src-old

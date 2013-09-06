@@ -280,26 +280,6 @@ public class ContainerWorkBench extends Container {
 		}
 	}
 
-	/**
-	 * Called when the container is closed.
-	 */
-	public void onContainerClosed(EntityPlayer entityplayer) {
-		// TODO :: try to shove as many items found in crafting matrix into
-		// internal storage before dumping to world
-		super.onContainerClosed(entityplayer);
-
-		if (!this.workbench.worldObj.isRemote) {
-			for (int i = 0; i < 9; ++i) {
-				ItemStack itemstack = this.craftMatrix
-						.getStackInSlotOnClosing(i);
-
-				if (itemstack != null) {
-					entityplayer.dropPlayerItem(itemstack);
-				}
-			}
-		}
-	}
-
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return this.workbench.isUseableByPlayer(entityplayer);
@@ -497,7 +477,7 @@ public class ContainerWorkBench extends Container {
 		}
 
 		@Override
-		public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+		public boolean isStackValidForSlot(int i, ItemStack itemstack) {
 			return true;
 		}
 	}

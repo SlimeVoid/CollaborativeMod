@@ -39,7 +39,7 @@ public class CMCore {
 	}
 	
 	public static void registerItems() {
-		ConfigurationLib.itemPlanBlank = new Item(ConfigurationLib.itemPlanBlankID).setTextureName(IconLib.PLAN_BLANK).setUnlocalizedName(ItemLib.PLAN_BLANK);
+		ConfigurationLib.itemPlanBlank = new Item(ConfigurationLib.itemPlanBlankID).setUnlocalizedName(IconLib.PLAN_BLANK);
 		ConfigurationLib.itemPlanBlank.setCreativeTab(ConfigurationLib.customTab);
 		ConfigurationLib.itemPlanFull = new ItemPlan(ConfigurationLib.itemPlanFullID);
 		ConfigurationLib.itemPlanFull.setCreativeTab(ConfigurationLib.customTab);

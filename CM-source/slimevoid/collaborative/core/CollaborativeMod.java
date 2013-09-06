@@ -6,8 +6,9 @@ import slimevoid.collaborative.network.CommonPacketHandler;
 import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -40,18 +41,14 @@ public class CollaborativeMod {
 	@Instance(CoreLib.MOD_ID)
 	public static CollaborativeMod instance;
 
-	@EventHandler
+	@PreInit
 	public void CollaborativePreInit(FMLPreInitializationEvent event) {
 		CollaborativeMod.proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
 
 		CollaborativeMod.proxy.preInit();
 	}
-
-	@EventHandler
-	public void CollaborativeInit(FMLInitializationEvent event) {
-	}
-
-	@EventHandler
+	
+	@PostInit
 	public void CollaborativePostInit(FMLPostInitializationEvent event) {
 		CMInit.initialize();
 	}

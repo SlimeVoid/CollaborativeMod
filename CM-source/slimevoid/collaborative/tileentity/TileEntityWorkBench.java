@@ -151,7 +151,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
 		// TODO :: Auto-generated method stub
 		return false;
 	}

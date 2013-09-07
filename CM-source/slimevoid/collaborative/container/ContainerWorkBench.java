@@ -109,7 +109,7 @@ public class ContainerWorkBench extends Container {
 		
 		//add n,e,w,s inventories
 		this.fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
-		this.onCraftMatrixChanged(this.craftMatrix);
+		//this.onCraftMatrixChanged(this.craftMatrix);
 	}
 	
 	public List<IInventory> getSourceInventories(EntityPlayer entityplayer) {

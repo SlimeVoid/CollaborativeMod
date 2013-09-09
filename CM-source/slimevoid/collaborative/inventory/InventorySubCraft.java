@@ -43,7 +43,7 @@ public class InventorySubCraft extends InventoryCrafting {
 	public ItemStack decrStackSize(int i, int j) {
 		ItemStack tr = parent.decrStackSize(i, j);
 		if (tr != null) {
-			eventHandler.onCraftMatrixChanged(this);
+			//eventHandler.onCraftMatrixChanged(this);
 		}
 		return tr;
 	}
@@ -51,6 +51,6 @@ public class InventorySubCraft extends InventoryCrafting {
 	@Override
 	public void setInventorySlotContents(int i, ItemStack ist) {
 		parent.setInventorySlotContents(i, ist);
-		eventHandler.onCraftMatrixChanged(this);
+		//eventHandler.onCraftMatrixChanged(this);
 	}
 }

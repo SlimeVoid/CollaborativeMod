@@ -44,7 +44,7 @@ public class ItemPlan extends Item {
 		} else {
 			NBTTagCompound res = ist.stackTagCompound.getCompoundTag("result");
 			ItemStack result = ItemStack.loadItemStackFromNBT(res);
-			return (new StringBuilder()).append(result.getItem().getItemDisplayName(result))
+			return (new StringBuilder()).append(result != null ? result.getItem().getItemDisplayName(result) : "Unknown")
 					.append(" Plan").toString();
 		}
 	}

@@ -25,6 +25,7 @@ public class ConfigurationLib {
 	public static boolean playerInventoryLocked;
 	public static HashMap<EntityPlayer, Boolean> playersInventoryLocked = new HashMap<EntityPlayer, Boolean>();
 	public static CreativeTabs customTab;
+	public static boolean debug;
 
 	
 	@SideOnly(Side.CLIENT)
@@ -54,6 +55,10 @@ public class ConfigurationLib {
 				Configuration.CATEGORY_GENERAL,
 				"playerInventoryLocked",
 				true).getBoolean(true);
+		debug = configuration.get(
+				Configuration.CATEGORY_GENERAL,
+				"debug",
+				false).getBoolean(true);
 		configuration.save();
 
 		customTab = new CreativeTabs(CoreLib.MOD_RESOURCES) {

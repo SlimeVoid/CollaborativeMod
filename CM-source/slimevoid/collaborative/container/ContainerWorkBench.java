@@ -22,6 +22,7 @@ import slimevoid.collaborative.core.lib.ContainerLib;
 import slimevoid.collaborative.core.lib.ItemLib;
 import slimevoid.collaborative.inventory.InventoryMatch;
 import slimevoid.collaborative.inventory.InventorySubCraft;
+import slimevoid.collaborative.items.ItemPlan;
 import slimevoid.collaborative.network.packet.PacketGui;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
 
@@ -33,7 +34,7 @@ public class ContainerWorkBench extends Container {
 	public List<IInventory> externalSlotInventories;
 	SlotCraftRefill slotCraft;
 	public IInventory craftResult;
-    public InventoryCrafting fakeInv;
+	public InventoryCrafting fakeInv;
 	public InventoryCrafting craftMatrix;
 	
 	public int satisfyMask;
@@ -82,8 +83,7 @@ public class ContainerWorkBench extends Container {
 		
 		if (sourceInventories != null && sourceInventories.length > 0) {
 			// crafting result
-			slotCraft = new SlotCraftRefill(playerInventory.player,
-					this.craftMatrix, this.craftResult, sourceInventories, this, 0, 143, 35);
+			slotCraft = new SlotCraftRefill(playerInventory.player, this.craftMatrix, this.craftResult, sourceInventories, this, 0, 143, 35);
 			this.addSlotToContainer(this.slotCraft);
 		}
 
@@ -91,7 +91,7 @@ public class ContainerWorkBench extends Container {
 		// bench inventory
 		for (l = 0; l < 2; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
-				int slotIndex = i1 + (l * 9);
+				int slotIndex = 10 + i1 + (l * 9);
 				this.addSlotToContainer(new Slot(tileentity/*new InventorySubUpdate(tileentity, 10, 18)*/, slotIndex, 8 + i1 * 18, l * 18 + 90));
 			}
 		}
@@ -112,13 +112,15 @@ public class ContainerWorkBench extends Container {
 		
 		//add n,e,w,s inventories
 		this.fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
-		//this.onCraftMatrixChanged(this.craftMatrix);
+		this.onCraftMatrixChanged(this.craftMatrix);
 	}
 	
 	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer) {
 		ItemStack stack = super.slotClick(par1, par2, par3, par4EntityPlayer);
-		this.onCraftMatrixChanged(this.craftMatrix);
+		if (par1 != ContainerLib.CRAFT_SLOT) {
+			this.onCraftMatrixChanged(this.craftMatrix);
+		}
 		return stack;
 	}
 	
@@ -341,6 +343,90 @@ public class ContainerWorkBench extends Container {
 		}
 	}
 
+	protected boolean canFit(ItemStack ist, int st, int ed) {
+		int ms = 0;
+		for (int i = st; i < ed; i++) {
+			Slot slot = (Slot) this.inventorySlots.get(i);
+			ItemStack is2 = slot.getStack();
+			if (is2 == null) {
+				return true;
+			}
+			if (ItemLib.compareItemStack(is2, ist) != 0) {
+				continue;
+			}
+			ms += is2.getMaxStackSize() - is2.stackSize;
+			if (ms >= ist.stackSize) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected void fitItem(ItemStack ist, int st, int ed) {
+		if (ist.isStackable()) {
+			for (int i = st; i < ed; i++) {
+				Slot slot = (Slot) this.inventorySlots.get(i);
+				ItemStack is2 = slot.getStack();
+				if (is2 == null || ItemLib.compareItemStack(is2, ist) != 0) {
+					continue;
+				}
+				int n = Math.min(ist.stackSize, ist.getMaxStackSize() - is2.stackSize);
+				if (n == 0) {
+					continue;
+				}
+				ist.stackSize -= n;
+				is2.stackSize += n;
+				slot.onSlotChanged();
+				if (ist.stackSize == 0) {
+					return;
+				}
+			}
+
+		}
+		for (int i = st; i < ed; i++) {
+			Slot slot = (Slot) this.inventorySlots.get(i);
+			ItemStack is2 = slot.getStack();
+			if (is2 == null) {
+				slot.putStack(ist);
+				slot.onSlotChanged();
+				return;
+			}
+		}
+
+	}
+
+	protected void mergeCrafting(EntityPlayer player, Slot cslot, int st, int ed) {
+		int cc = 0;
+		ItemStack ist = cslot.getStack();
+		if (ist == null || ist.stackSize == 0) {
+			return;
+		}
+		ItemStack craftas = ist.copy();
+		int mss = craftas.getMaxStackSize();
+		if (mss == 1) {
+			mss = 16;
+		}
+		do {
+			if (!canFit(ist, st, ed)) {
+				return;
+			}
+			cc += ist.stackSize;
+			fitItem(ist, st, ed);
+			cslot.onPickupFromSlot(player, ist);
+			if (cc >= mss) {
+				return;
+			}
+			if (slotCraft.isLastUse()) {
+				return;
+			}
+			ist = cslot.getStack();
+			if (ist == null || ist.stackSize == 0) {
+				return;
+			}
+		} while (ItemLib.compareItemStack(ist, craftas) == 0);
+	}
+	
 	/**
 	 * Called when a player shift-clicks on a slot. You must override this or
 	 * you will crash when someone does that.
@@ -354,6 +440,10 @@ public class ContainerWorkBench extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stackInSlot = slot.getStack();
 			itemstackCopy = stackInSlot.copy();
+			if (slotShiftClicked ==ContainerLib.CRAFT_SLOT) {
+				this.mergeCrafting(entityplayer, slot, 29, 65);
+				return null;
+			}
 			if (slotShiftClicked != 9 && (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID
 					|| stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)){
 				if (!this.putPlanInSlot(stackInSlot, 9, 10, true, entityplayer)) {//try to place into plan slot					

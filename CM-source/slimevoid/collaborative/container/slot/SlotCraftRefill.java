@@ -1,6 +1,5 @@
 package slimevoid.collaborative.container.slot;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -56,8 +55,6 @@ public class SlotCraftRefill extends SlotCrafting {
 	}
 
 	public boolean isLastUse() {
-		if (ConfigurationLib.debug) System.out.println("isLastUse: " + FMLCommonHandler.instance().getSide());
-		
 		int bits = 0;
 
 		for (int i = 0; i < 9; i++) {
@@ -79,7 +76,7 @@ public class SlotCraftRefill extends SlotCrafting {
 			return false;
 		}
 		for (int k = 0; k < this.allInventories.length; k++) {
-			if (k == 1 && eventHandler.getPlanItems() == null/** && ConfigurationLib.isPlayerInventoryLocked(this.playerInventory.player)**/) {
+			if (k == 1 && eventHandler.getPlanItems() == null && ConfigurationLib.isPlayerInventoryLocked(this.playerInventory.player)) {
 				continue;
 			}
 			for (int i = 0; i < this.allInventories[k].getSizeInventory(); i++) {
@@ -122,9 +119,8 @@ public class SlotCraftRefill extends SlotCrafting {
 				cur[i] = st.copy();
 			}
 		}
-		
+
 		boolean last = isLastUse();
-		
 		if (plan != null) {
 			for (int i = 0; i < 9; i++) {
 				if (cur[i] != null || plan[i] == null) {
@@ -169,6 +165,9 @@ public class SlotCraftRefill extends SlotCrafting {
 					continue;
 				}
 				p = findMatch(cur[i]);
+				if (p == null) {
+					continue;
+				}
 				if (p.slotIndex >= 0) {
 					ItemStack i1 = p.inventoryMatch.getStackInSlot(p.slotIndex);
 					p.inventoryMatch.setInventorySlotContents(p.slotIndex, nsl);
@@ -178,6 +177,9 @@ public class SlotCraftRefill extends SlotCrafting {
 				continue;
 			}
 			p = findMatch(cur[i]);
+			if (p == null) {
+				continue;
+			}
 			if (p.slotIndex >= 0) {
 				ItemStack i1 = p.inventoryMatch.getStackInSlot(p.slotIndex);
 				this.craftingMatrix.setInventorySlotContents(

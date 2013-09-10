@@ -343,8 +343,6 @@ public class ContainerWorkBench extends Container {
 		}
 	}
 
-
-
 	protected boolean canFit(ItemStack ist, int st, int ed) {
 		int ms = 0;
 		for (int i = st; i < ed; i++) {

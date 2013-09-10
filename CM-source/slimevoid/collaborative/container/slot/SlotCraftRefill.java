@@ -165,6 +165,9 @@ public class SlotCraftRefill extends SlotCrafting {
 					continue;
 				}
 				p = findMatch(cur[i]);
+				if (p == null) {
+					continue;
+				}
 				if (p.slotIndex >= 0) {
 					ItemStack i1 = p.inventoryMatch.getStackInSlot(p.slotIndex);
 					p.inventoryMatch.setInventorySlotContents(p.slotIndex, nsl);
@@ -174,6 +177,9 @@ public class SlotCraftRefill extends SlotCrafting {
 				continue;
 			}
 			p = findMatch(cur[i]);
+			if (p == null) {
+				continue;
+			}
 			if (p.slotIndex >= 0) {
 				ItemStack i1 = p.inventoryMatch.getStackInSlot(p.slotIndex);
 				this.craftingMatrix.setInventorySlotContents(

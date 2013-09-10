@@ -39,13 +39,13 @@ pause
 
 :REPACKAGE
 if not exist "%mcpdir%\reobf" GOTO :PBFAIL
-if exist "%packagedir%\ProjectBench" (
-del "%packagedir%\ProjectBench\*.*" /S /Q
-rmdir "%packagedir%\ProjectBench" /S /Q
+if exist "%packagedir%\CollaborativeMod" (
+del "%packagedir%\CollaborativeMod\*.*" /S /Q
+rmdir "%packagedir%\CollaborativeMod" /S /Q
 )
-mkdir "%packagedir%\Collaborative\slimevoid\projectbench"
-xcopy "%mcpdir%\reobf\minecraft\slimevoid\collaborative\*.*" "%packagedir%\Collaborative\slimevoid\collaborative\" /S
-xcopy "%projectbench%\CM-resources\*.*" "%packagedir%\Collaborative\" /S
+mkdir "%packagedir%\CollaborativeMod\slimevoid\collaborative"
+xcopy "%mcpdir%\reobf\minecraft\slimevoid\collaborative\*.*" "%packagedir%\CollaborativeMod\slimevoid\collaborative\" /S
+xcopy "%projectbench%\CM-resources\*.*" "%packagedir%\CollaborativeMod\" /S
 echo "Project Bench Packaged Successfully
 pause
 ren "%mcpdir%\src" src-old

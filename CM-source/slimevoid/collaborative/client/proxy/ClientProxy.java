@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import slimevoid.collaborative.client.network.ClientPacketHandler;
 import slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkBench;
+import slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkChest;
 import slimevoid.collaborative.core.lib.CommandLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.GuiLib;
@@ -18,6 +19,7 @@ import slimevoid.collaborative.core.lib.PacketLib;
 import slimevoid.collaborative.network.packet.PacketSettings;
 import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
+import slimevoid.collaborative.tileentity.TileEntityWorkChest;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class ClientProxy extends CommonProxy {
@@ -36,6 +38,11 @@ public class ClientProxy extends CommonProxy {
 																		z);
 			if (tileentity != null && tileentity instanceof TileEntityWorkBench) {
 				return new GuiCollaborativeWorkBench(player, player.inventory, world, (TileEntityWorkBench) tileentity);
+			}
+		}else if (ID == GuiLib.GUIID_WORK_CHEST) {
+			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
+			if (tileentity != null && tileentity instanceof TileEntityWorkChest) {
+				return new GuiCollaborativeWorkChest((TileEntityWorkChest) tileentity, player.inventory);
 			}
 		}
 		return null;

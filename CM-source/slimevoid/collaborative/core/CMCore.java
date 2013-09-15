@@ -1,19 +1,18 @@
 package slimevoid.collaborative.core;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import slimevoid.collaborative.blocks.BlockCollaborativeBase;
 import slimevoid.collaborative.core.lib.BlockLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.IconLib;
-import slimevoid.collaborative.core.lib.ItemLib;
 import slimevoid.collaborative.core.lib.LocaleLib;
 import slimevoid.collaborative.items.ItemPlan;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
+import slimevoid.collaborative.tileentity.TileEntityWorkChest;
 import slimevoidlib.items.ItemBlockBase;
-import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CMCore {
 	public static void registerNames() {
@@ -31,6 +30,12 @@ public class CMCore {
 																		TileEntityWorkBench.class);
 		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_BENCH_ID,
 															BlockLib.BLOCK_WORK_BENCH);
+		GameRegistry.registerTileEntity(TileEntityWorkChest.class,
+										BlockLib.BLOCK_WORK_CHEST);
+		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.BLOCK_WORK_CHEST_ID,
+																		TileEntityWorkChest.class);
+		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_CHEST_ID,
+															BlockLib.BLOCK_WORK_CHEST);
 		GameRegistry.addRecipe(	new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.BLOCK_WORK_BENCH_ID),
 								new Object[] {
 										"SBS",

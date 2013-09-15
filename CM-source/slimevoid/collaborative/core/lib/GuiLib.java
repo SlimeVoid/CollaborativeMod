@@ -7,6 +7,7 @@ public class GuiLib {
 														+ "/textures/gui/";
 
 	public static final int		GUIID_WORK_BENCH	= 0;
+	public static final int		GUIID_WORK_CHEST	= 1;
 
 	public static final String	WORK_BENCH			= GUI_PREFIX
 														+ BlockLib.BLOCK_WORK_BENCH

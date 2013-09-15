@@ -17,7 +17,7 @@ public class BlockLib {
 																+ "chest";
 
 	// TODO :: Add more Work Blocks (e.g. work chests)
-	public static final int		BLOCK_MAX_TILES				= 1;
+	public static final int		BLOCK_MAX_TILES				= 2;
 	public static final int		BLOCK_WORK_BENCH_ID			= 0;
 	public static final int		BLOCK_WORK_CHEST_ID			= 1;
 
@@ -28,6 +28,12 @@ public class BlockLib {
 		iconList[BLOCK_WORK_BENCH_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
 		iconList[BLOCK_WORK_BENCH_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
 		iconList[BLOCK_WORK_BENCH_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
+		iconList[BLOCK_WORK_CHEST_ID][0] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
+		iconList[BLOCK_WORK_CHEST_ID][1] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
+		iconList[BLOCK_WORK_CHEST_ID][2] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BLOCK_WORK_CHEST_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BLOCK_WORK_CHEST_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BLOCK_WORK_CHEST_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
 		return iconList;
 	}
 }

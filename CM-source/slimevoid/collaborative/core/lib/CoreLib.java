@@ -9,7 +9,7 @@ public class CoreLib {
 	public static final String MOD_ID = "CollaborativeMod";
 	public static final String MOD_RESOURCES = "collaborative";
 	public static final String MOD_NAME = "Collaborative Mod";
-	public static final String MOD_VERSION = "0.0.0.2";
+	public static final String MOD_VERSION = "0.0.0.3";
 	public static final String MOD_DEPENDENCIES = "required-after:SlimevoidLib";
 	public static final String MOD_CHANNEL = "COLLABORATIVE";
 	public static final String CLIENT_PROXY = "slimevoid.collaborative.client.proxy.ClientProxy";

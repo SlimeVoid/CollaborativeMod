@@ -3,6 +3,7 @@ package slimevoid.collaborative.blocks;
 import slimevoid.collaborative.core.lib.BlockLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoidlib.blocks.BlockBase;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,6 +27,7 @@ public class BlockCollaborativeBase extends BlockBase {
 	public BlockCollaborativeBase(int blockID) {
 		super(blockID, Material.rock, BlockLib.BLOCK_MAX_TILES);
 		this.setHardness(2.0F);
+		this.setStepSound(Block.soundStoneFootstep);
 	}
 	
 	@Override

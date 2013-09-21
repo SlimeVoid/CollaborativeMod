@@ -12,27 +12,34 @@ import slimevoid.collaborative.network.packet.executor.PacketSettingsExecutor;
 import slimevoidlib.network.PacketIds;
 
 public class PacketLib {
-	
+
 	@SideOnly(Side.CLIENT)
 	public static void registerClientPacketHandlers() {
-		
+
 	}
-	
+
 	public static void registerPacketHandlers() {
 		PacketGuiHandler packetGuiHandler = new PacketGuiHandler();
-		packetGuiHandler.registerPacketHandler(CommandLib.CREATE_PLAN, new PacketGuiExecutor());
-		
-		CommonPacketHandler.registerPacketHandler(PacketIds.GUI, packetGuiHandler);
-		
+		packetGuiHandler.registerPacketHandler(	CommandLib.CREATE_PLAN,
+												new PacketGuiExecutor());
+
+		CommonPacketHandler.registerPacketHandler(	PacketIds.GUI,
+													packetGuiHandler);
+
 		PacketSettingsHandler packetSettingsHandler = new PacketSettingsHandler();
-		packetSettingsHandler.registerPacketHandler(CommandLib.UPDATE_SETTINGS, new PacketSettingsExecutor());
-		
-		CommonPacketHandler.registerPacketHandler(PacketIds.PLAYER, packetSettingsHandler);
+		packetSettingsHandler.registerPacketHandler(CommandLib.UPDATE_SETTINGS,
+													new PacketSettingsExecutor());
+
+		CommonPacketHandler.registerPacketHandler(	PacketIds.PLAYER,
+													packetSettingsHandler);
 	}
 
 	public static void sendPlayerInventoryStatus(boolean newVal) {
 		PacketSettings packet = new PacketSettings();
-		packet.setPosition(0, 0, 0, newVal ? 1 : 0);
+		packet.setPosition(	0,
+							0,
+							0,
+							newVal ? 1 : 0);
 		packet.setCommand(CommandLib.UPDATE_SETTINGS);
 		PacketDispatcher.sendPacketToServer(packet.getPacket());
 	}

@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.Icon;
 
 public class ItemPlan extends Item {
-	
+
 	@Override
 	public void registerIcons(IconRegister iconregister) {
 		this.itemIcon = iconregister.registerIcon(IconLib.PLAN_FULL);
@@ -44,8 +44,7 @@ public class ItemPlan extends Item {
 		} else {
 			NBTTagCompound res = ist.stackTagCompound.getCompoundTag("result");
 			ItemStack result = ItemStack.loadItemStackFromNBT(res);
-			return (new StringBuilder()).append(result != null ? result.getItem().getItemDisplayName(result) : "Unknown")
-					.append(" Plan").toString();
+			return (new StringBuilder()).append(result != null ? result.getItem().getItemDisplayName(result) : "Unknown").append(" Plan").toString();
 		}
 	}
 
@@ -55,30 +54,28 @@ public class ItemPlan extends Item {
 			return;
 		}
 		NBTTagList require = ist.stackTagCompound.getTagList("requires");
-		if (require == null)
-			return;
+		if (require == null) return;
 		HashMap counts = new HashMap();
 		for (int i = 0; i < require.tagCount(); i++) {
 			NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
 			ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
-			List l1 = Arrays.asList(new Integer[] { Integer.valueOf(is2.itemID),
+			List l1 = Arrays.asList(new Integer[] {
+					Integer.valueOf(is2.itemID),
 					Integer.valueOf(is2.getItemDamage()) });
 			Integer lc = (Integer) counts.get(l1);
 			if (lc == null) {
 				lc = Integer.valueOf(0);
 			}
-			counts.put(l1, Integer.valueOf(lc.intValue() + 1));
+			counts.put(	l1,
+						Integer.valueOf(lc.intValue() + 1));
 		}
 
 		java.util.Map.Entry kv;
 		ItemStack i2d;
-		for (Iterator i$ = counts.entrySet().iterator(); i$.hasNext(); lines
-				.add((new StringBuilder()).append(kv.getValue()).append(" x ")
-						.append(i2d.getItem().getItemDisplayName(i2d)).toString())) {
+		for (Iterator i$ = counts.entrySet().iterator(); i$.hasNext(); lines.add((new StringBuilder()).append(kv.getValue()).append(" x ").append(i2d.getItem().getItemDisplayName(i2d)).toString())) {
 			kv = (java.util.Map.Entry) i$.next();
 			List li = (List) kv.getKey();
-			i2d = new ItemStack(((Integer) li.get(0)).intValue(), 1,
-					((Integer) li.get(1)).intValue());
+			i2d = new ItemStack(((Integer) li.get(0)).intValue(), 1, ((Integer) li.get(1)).intValue());
 		}
 
 	}

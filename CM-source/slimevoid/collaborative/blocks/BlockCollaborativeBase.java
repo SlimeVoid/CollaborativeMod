@@ -10,15 +10,16 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.Icon;
 
 public class BlockCollaborativeBase extends BlockBase {
-	
-	protected Icon[][] iconList;
-	
+
+	protected Icon[][]	iconList;
+
 	@Override
 	public void registerIcons(IconRegister iconRegister) {
 		iconList = new Icon[BlockLib.BLOCK_MAX_TILES][6];
-		iconList = BlockLib.registerIcons(iconRegister, iconList);
+		iconList = BlockLib.registerIcons(	iconRegister,
+											iconList);
 	}
-	
+
 	@Override
 	public Icon getIcon(int side, int metadata) {
 		return this.iconList[metadata][side];
@@ -29,26 +30,26 @@ public class BlockCollaborativeBase extends BlockBase {
 		this.setHardness(2.0F);
 		this.setStepSound(Block.soundStoneFootstep);
 	}
-	
+
 	@Override
 	public int getRenderType() {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean renderAsNormalBlock() {
 		return true;
 	}
-	
+
 	public boolean isCube() {
 		return true;
 	}
-	
+
 	@Override
 	public int damageDropped(int metadata) {
 		return metadata;

@@ -30,16 +30,15 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		serverPacketHandlerSpec = @SidedPacketHandler(
 				channels = { CoreLib.MOD_CHANNEL },
 				packetHandler = CommonPacketHandler.class),
-		connectionHandler = CommonProxy.class
-)
+		connectionHandler = CommonProxy.class)
 public class CollaborativeMod {
 	@SidedProxy(
 			clientSide = CoreLib.CLIENT_PROXY,
 			serverSide = CoreLib.COMMON_PROXY)
-	public static ICommonProxy proxy;
-	
+	public static ICommonProxy		proxy;
+
 	@Instance(CoreLib.MOD_ID)
-	public static CollaborativeMod instance;
+	public static CollaborativeMod	instance;
 
 	@PreInit
 	public void CollaborativePreInit(FMLPreInitializationEvent event) {
@@ -47,7 +46,7 @@ public class CollaborativeMod {
 
 		CollaborativeMod.proxy.preInit();
 	}
-	
+
 	@PostInit
 	public void CollaborativePostInit(FMLPostInitializationEvent event) {
 		CMInit.initialize();

@@ -27,10 +27,12 @@ import slimevoidlib.util.helpers.SlimevoidHelper;
 public class CommonProxy implements ICommonProxy {
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GuiLib.GUIID_WORK_BENCH) {
-			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
+			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(	world,
+																		x,
+																		y,
+																		z);
 			if (tileentity != null && tileentity instanceof TileEntityWorkBench) {
 				return new ContainerWorkBench(player.inventory, (TileEntityWorkBench) tileentity);
 			}
@@ -39,8 +41,7 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		// TODO :: Auto-generated method stub
 		return null;
 	}
@@ -54,19 +55,20 @@ public class CommonProxy implements ICommonProxy {
 	public void preInit() {
 		CommonPacketHandler.init();
 		PacketLib.registerPacketHandlers();
-		NetworkRegistry.instance().registerGuiHandler(CollaborativeMod.instance, CollaborativeMod.proxy);
+		NetworkRegistry.instance().registerGuiHandler(	CollaborativeMod.instance,
+														CollaborativeMod.proxy);
 	}
 
 	@Override
 	public void registerTickHandler() {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void registerRenderInformation() {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -74,12 +76,11 @@ public class CommonProxy implements ICommonProxy {
 		// TODO :: Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
-	public void onPacketData(INetworkManager manager,
-			Packet250CustomPayload packet, Player player) {
+	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -89,10 +90,9 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public void registerTileEntitySpecialRenderer(
-			Class<? extends TileEntity> clazz) {
+	public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -102,44 +102,39 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public void playerLoggedIn(Player player, NetHandler netHandler,
-			INetworkManager manager) {
+	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public String connectionReceived(NetLoginHandler netHandler,
-			INetworkManager manager) {
+	public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager) {
 		// TODO :: Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void connectionOpened(NetHandler netClientHandler, String server,
-			int port, INetworkManager manager) {
+	public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void connectionOpened(NetHandler netClientHandler,
-			MinecraftServer server, INetworkManager manager) {
+	public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void connectionClosed(INetworkManager manager) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void clientLoggedIn(NetHandler clientHandler,
-			INetworkManager manager, Packet1Login login) {
+	public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
 		// TODO :: Auto-generated method stub
-		
+
 	}
 
 }

@@ -28,17 +28,17 @@ import slimevoid.collaborative.tileentity.TileEntityWorkBench;
 
 public class ContainerWorkBench extends Container {
 
-	TileEntityWorkBench workbench;
-	public InventoryPlayer playerInventory;
-	public List<IInventory> externalInventories;
-	public List<IInventory> externalSlotInventories;
-	SlotCraftRefill slotCraft;
-	public IInventory craftResult;
-	public InventoryCrafting fakeInv;
-	public InventoryCrafting craftMatrix;
-	
-	public int satisfyMask;
-	public boolean playerInventoryUsed;
+	TileEntityWorkBench			workbench;
+	public InventoryPlayer		playerInventory;
+	public List<IInventory>		externalInventories;
+	public List<IInventory>		externalSlotInventories;
+	SlotCraftRefill				slotCraft;
+	public IInventory			craftResult;
+	public InventoryCrafting	fakeInv;
+	public InventoryCrafting	craftMatrix;
+
+	public int					satisfyMask;
+	public boolean				playerInventoryUsed;
 
 	public ContainerWorkBench(InventoryPlayer playerInventory, TileEntityWorkBench tileentity) {
 		super();
@@ -66,7 +66,7 @@ public class ContainerWorkBench extends Container {
 		}
 		// plan slot
 		this.addSlotToContainer(new SlotPlan(new InventorySubUpdate(tileentity, 9, 1), 0, 17, 36));
-		
+
 		// Gather source inventories for Craft Output refill logic
 		List<IInventory> sourceInventoryList = this.getSourceInventories(playerInventory.player);
 		IInventory[] sourceInventories = new IInventory[sourceInventoryList.size()];
@@ -80,65 +80,89 @@ public class ContainerWorkBench extends Container {
 				break;
 			}
 		}
-		
+
 		if (sourceInventories != null && sourceInventories.length > 0) {
 			// crafting result
 			slotCraft = new SlotCraftRefill(playerInventory.player, this.craftMatrix, this.craftResult, sourceInventories, this, 0, 143, 35);
 			this.addSlotToContainer(this.slotCraft);
 		}
 
-		
 		// bench inventory
 		for (l = 0; l < 2; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
 				int slotIndex = 10 + i1 + (l * 9);
-				this.addSlotToContainer(new Slot(tileentity/*new InventorySubUpdate(tileentity, 10, 18)*/, slotIndex, 8 + i1 * 18, l * 18 + 90));
+				this.addSlotToContainer(new Slot(tileentity/*
+															 * new
+															 * InventorySubUpdate
+															 * (tileentity, 10,
+															 * 18)
+															 */, slotIndex, 8 + i1 * 18, l * 18 + 90));
 			}
 		}
-		
+
 		// Player inventory
 		for (l = 0; l < 3; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
 				int slotIndex = 9 + i1 + (l * 9);
-				this.addSlotToContainer(new Slot(playerInventory/*new InventorySubUpdate(playerInventory, 9, 27)*/, slotIndex, 8 + i1 * 18, l * 18 + b0));
+				this.addSlotToContainer(new Slot(playerInventory/*
+																 * new
+																 * InventorySubUpdate
+																 * (
+																 * playerInventory
+																 * , 9, 27)
+																 */, slotIndex, 8 + i1 * 18, l
+																								* 18
+																								+ b0));
 			}
 		}
-		
+
 		// hotbar inventory
 		for (l = 0; l < 9; ++l) {
 			int slotIndex = l;
-			this.addSlotToContainer(new Slot(playerInventory/*new InventorySubUpdate(playerInventory, 0, 9)*/, slotIndex, 8 + l * 18, 58 + b0));
+			this.addSlotToContainer(new Slot(playerInventory/*
+															 * new
+															 * InventorySubUpdate
+															 * (playerInventory,
+															 * 0, 9)
+															 */, slotIndex, 8 + l * 18, 58 + b0));
 		}
-		
-		//add n,e,w,s inventories
+
+		// add n,e,w,s inventories
 		this.fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
 		this.onCraftMatrixChanged(this.craftMatrix);
 	}
-	
+
 	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer) {
-		ItemStack stack = super.slotClick(par1, par2, par3, par4EntityPlayer);
+		ItemStack stack = super.slotClick(	par1,
+											par2,
+											par3,
+											par4EntityPlayer);
 		if (par1 != ContainerLib.CRAFT_SLOT) {
 			this.onCraftMatrixChanged(this.craftMatrix);
 		}
 		return stack;
 	}
-	
+
 	public List<IInventory> getSourceInventories(EntityPlayer entityplayer) {
 		List<IInventory> sourceInventories = new ArrayList<IInventory>();
 		if (this.workbench != null) {
 			sourceInventories.add(this.workbench);
 		}
-		if (this.playerInventory != null /*!ConfigurationLib.isPlayerInventoryLocked(entityplayer)*/) {
+		if (this.playerInventory != null /*
+										 * !ConfigurationLib.isPlayerInventoryLocked
+										 * (entityplayer)
+										 */) {
 			sourceInventories.add(this.playerInventory);
 		}
 		// TODO :: Add additional Inventory Logic
-		if (this.externalInventories != null && this.externalInventories.size() > 0) {
+		if (this.externalInventories != null
+			&& this.externalInventories.size() > 0) {
 			for (IInventory externalInventory : this.externalInventories) {
 				sourceInventories.add(externalInventory);
 			}
 		}
-		return  sourceInventories;
+		return sourceInventories;
 	}
 
 	public int getSatisfyMask() {
@@ -155,8 +179,7 @@ public class ContainerWorkBench extends Container {
 				bits |= 1 << i;
 				continue;
 			}
-			if (items == null || items[i] == null)
-				bits |= 1 << i;
+			if (items == null || items[i] == null) bits |= 1 << i;
 		}
 
 		if (bits == 511) {
@@ -177,7 +200,8 @@ public class ContainerWorkBench extends Container {
 					continue;
 				}
 				st = items[j];
-				if (st == null || !ItemLib.matchOre(st, test)) {
+				if (st == null || !ItemLib.matchOre(st,
+													test)) {
 					continue;
 				}
 				bits |= 1 << j;
@@ -190,9 +214,11 @@ public class ContainerWorkBench extends Container {
 		if (bits == 511) {
 			return 511;
 		}
-		/*if (ConfigurationLib.isPlayerInventoryLocked(playerInventory.player)){
-			this.playerInventoryUsed = true;
-		}*/
+		/*
+		 * if
+		 * (ConfigurationLib.isPlayerInventoryLocked(playerInventory.player)){
+		 * this.playerInventoryUsed = true; }
+		 */
 		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
 			ItemStack test = this.playerInventory.getStackInSlot(i);
 			if (test == null || test.stackSize == 0) {
@@ -208,11 +234,12 @@ public class ContainerWorkBench extends Container {
 					continue;
 				}
 				st = items[j];
-				if (st == null || !ItemLib.matchOre(st, test)) {
+				if (st == null || !ItemLib.matchOre(st,
+													test)) {
 					continue;
 				}
 				bits |= 1 << j;
-				
+
 				if (--sc == 0) {
 					break;
 				}
@@ -225,17 +252,19 @@ public class ContainerWorkBench extends Container {
 	private InventoryMatch findMatch(ItemStack a) {
 		for (int i = 0; i < 18; i++) {
 			ItemStack test = this.workbench.getStackInSlot(10 + i);
-			if (test != null && test.stackSize != 0	&& ItemLib.matchOre(a, test)) {
+			if (test != null && test.stackSize != 0 && ItemLib.matchOre(a,
+																		test)) {
 				return new InventoryMatch(this.workbench, 10 + i);
 			}
 		}
 		for (int i = 0; i < this.playerInventory.getSizeInventory(); i++) {
 			ItemStack test = this.playerInventory.getStackInSlot(i);
-			if (test != null && test.stackSize != 0 && ItemLib.matchOre(a, test)) {
+			if (test != null && test.stackSize != 0 && ItemLib.matchOre(a,
+																		test)) {
 				return new InventoryMatch(this.playerInventory, i);
 			}
 		}
-		//TODO: add External Inventories
+		// TODO: add External Inventories
 		return null;
 	}
 
@@ -249,8 +278,7 @@ public class ContainerWorkBench extends Container {
 	}
 
 	public static ItemStack[] getShadowItems(ItemStack ist) {
-		if (ist.stackTagCompound == null)
-			return null;
+		if (ist.stackTagCompound == null) return null;
 		NBTTagList require = ist.stackTagCompound.getTagList("requires");
 		if (require == null) {
 			return null;
@@ -260,17 +288,16 @@ public class ContainerWorkBench extends Container {
 			NBTTagCompound item = (NBTTagCompound) require.tagAt(i);
 			ItemStack is2 = ItemStack.loadItemStackFromNBT(item);
 			int sl = item.getByte("Slot");
-			if (sl >= 0 && sl < 9)
-				tr[sl] = is2;
+			if (sl >= 0 && sl < 9) tr[sl] = is2;
 		}
 
 		return tr;
 	}
-    
+
 	@Override
 	public void onCraftMatrixChanged(IInventory inventory) {
 		long startTime = System.nanoTime();
-		
+
 		ItemStack plan = this.workbench.getStackInSlot(ContainerLib.PLAN_SLOT);
 		ItemStack items[] = null;
 		if (plan != null) {
@@ -284,61 +311,63 @@ public class ContainerWorkBench extends Container {
 					tos = match.inventoryMatch.getStackInSlot(match.slotIndex);
 				}
 			}
-			this.fakeInv.setInventorySlotContents(i, tos);
+			this.fakeInv.setInventorySlotContents(	i,
+													tos);
 		}
 
 		this.satisfyMask = getSatisfyMask();
-		//long firstTime = System.nanoTime() - startTime;
-		//if (ConfigurationLib.debug) System.out.println("getSatisfyMask: " + firstTime);
+		// long firstTime = System.nanoTime() - startTime;
+		// if (ConfigurationLib.debug) System.out.println("getSatisfyMask: " +
+		// firstTime);
 		if (this.satisfyMask == 511) {
-			this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(fakeInv, workbench.worldObj));
+			this.craftResult.setInventorySlotContents(	0,
+														CraftingManager.getInstance().findMatchingRecipe(	fakeInv,
+																											workbench.worldObj));
 		} else {
-			this.craftResult.setInventorySlotContents(0, null);
+			this.craftResult.setInventorySlotContents(	0,
+														null);
 		}
 
 		long lastTime = System.nanoTime() - startTime;
-		if (ConfigurationLib.debug) System.out.println("onCraftMatrixChanged	: " + lastTime);
+		if (ConfigurationLib.debug) System.out.println("onCraftMatrixChanged	: "
+														+ lastTime);
 	}
 
 	/**
 	 * Called when the container is closed.
 	 */
-/*	public void onContainerClosed(EntityPlayer entityplayer) {
-		// TODO :: try to shove as many items found in crafting matrix into
-		// internal storage before dumping to world
-		super.onContainerClosed(entityplayer);
-
-		if (!this.workbench.worldObj.isRemote) {
-			for (int i = 0; i < 9; ++i) {
-				ItemStack itemstack = this.craftMatrix
-						.getStackInSlotOnClosing(i);
-
-				if (itemstack != null) {
-					entityplayer.dropPlayerItem(itemstack);
-				}
-			}
-		}
-	}*/
+	/*
+	 * public void onContainerClosed(EntityPlayer entityplayer) { // TODO :: try
+	 * to shove as many items found in crafting matrix into // internal storage
+	 * before dumping to world super.onContainerClosed(entityplayer); if
+	 * (!this.workbench.worldObj.isRemote) { for (int i = 0; i < 9; ++i) {
+	 * ItemStack itemstack = this.craftMatrix .getStackInSlotOnClosing(i); if
+	 * (itemstack != null) { entityplayer.dropPlayerItem(itemstack); } } } }
+	 */
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return this.workbench.isUseableByPlayer(entityplayer);
 	}
-	
+
 	public boolean putPlanInSlot(ItemStack stackInSource, int validSlots, int targetSlot, boolean force, EntityPlayer entityplayer) {
 		// TODO :: Plan Slot Shift Click logic
 		Slot slot = (Slot) this.inventorySlots.get(validSlots);
 		if (slot.getStack() != null) {
-			transferStackInSlot(entityplayer, validSlots);
+			transferStackInSlot(entityplayer,
+								validSlots);
 		}
-		
-		if (stackInSource.stackSize == 1) {		
-			return this.mergeItemStack(stackInSource, validSlots, targetSlot, force);
+
+		if (stackInSource.stackSize == 1) {
+			return this.mergeItemStack(	stackInSource,
+										validSlots,
+										targetSlot,
+										force);
 		} else {
 			stackInSource.stackSize -= 1;
 			ItemStack destinationStack = stackInSource.copy();
 			destinationStack.stackSize = 1;
-			slot.putStack(destinationStack);			
+			slot.putStack(destinationStack);
 			return true;
 		}
 	}
@@ -351,7 +380,8 @@ public class ContainerWorkBench extends Container {
 			if (is2 == null) {
 				return true;
 			}
-			if (ItemLib.compareItemStack(is2, ist) != 0) {
+			if (ItemLib.compareItemStack(	is2,
+											ist) != 0) {
 				continue;
 			}
 			ms += is2.getMaxStackSize() - is2.stackSize;
@@ -368,10 +398,12 @@ public class ContainerWorkBench extends Container {
 			for (int i = st; i < ed; i++) {
 				Slot slot = (Slot) this.inventorySlots.get(i);
 				ItemStack is2 = slot.getStack();
-				if (is2 == null || ItemLib.compareItemStack(is2, ist) != 0) {
+				if (is2 == null || ItemLib.compareItemStack(is2,
+															ist) != 0) {
 					continue;
 				}
-				int n = Math.min(ist.stackSize, ist.getMaxStackSize() - is2.stackSize);
+				int n = Math.min(	ist.stackSize,
+									ist.getMaxStackSize() - is2.stackSize);
 				if (n == 0) {
 					continue;
 				}
@@ -408,12 +440,17 @@ public class ContainerWorkBench extends Container {
 			mss = 16;
 		}
 		do {
-			if (!canFit(ist, st, ed)) {
+			if (!canFit(ist,
+						st,
+						ed)) {
 				return;
 			}
 			cc += ist.stackSize;
-			fitItem(ist, st, ed);
-			cslot.onPickupFromSlot(player, ist);
+			fitItem(ist,
+					st,
+					ed);
+			cslot.onPickupFromSlot(	player,
+									ist);
 			if (cc >= mss) {
 				return;
 			}
@@ -424,46 +461,81 @@ public class ContainerWorkBench extends Container {
 			if (ist == null || ist.stackSize == 0) {
 				return;
 			}
-		} while (ItemLib.compareItemStack(ist, craftas) == 0);
+		} while (ItemLib.compareItemStack(	ist,
+											craftas) == 0);
 	}
-	
+
 	/**
 	 * Called when a player shift-clicks on a slot. You must override this or
 	 * you will crash when someone does that.
 	 */
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer entityplayer,
-			int slotShiftClicked) {
+	public ItemStack transferStackInSlot(EntityPlayer entityplayer, int slotShiftClicked) {
 		ItemStack itemstackCopy = null;
 		Slot slot = (Slot) this.inventorySlots.get(slotShiftClicked);
-		
+
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stackInSlot = slot.getStack();
 			itemstackCopy = stackInSlot.copy();
-			if (slotShiftClicked ==ContainerLib.CRAFT_SLOT) {
-				this.mergeCrafting(entityplayer, slot, 29, 65);
+			if (slotShiftClicked == ContainerLib.CRAFT_SLOT) {
+				this.mergeCrafting(	entityplayer,
+									slot,
+									29,
+									65);
 				return null;
 			}
-			if (slotShiftClicked != 9 && (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID
-					|| stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)){
-				if (!this.putPlanInSlot(stackInSlot, 9, 10, true, entityplayer)) {//try to place into plan slot					
-					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)||!this.mergeItemStack(stackInSlot, 11, 29, false)) {//else place in internal inventory
-						if ((slotShiftClicked >= 29)||!this.mergeItemStack(stackInSlot, 29, 65, false)) {//else place in player inventory
+			if (slotShiftClicked != 9
+				&& (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID || stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)) {
+				if (!this.putPlanInSlot(stackInSlot,
+										9,
+										10,
+										true,
+										entityplayer)) {// try to place into
+														// plan slot
+					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)
+						|| !this.mergeItemStack(stackInSlot,
+												11,
+												29,
+												false)) {// else place in
+															// internal
+															// inventory
+						if ((slotShiftClicked >= 29)
+							|| !this.mergeItemStack(stackInSlot,
+													29,
+													65,
+													false)) {// else place in
+																// player
+																// inventory
 							return null;
 						}
 					}
-				}				
+				}
 			} else if (slotShiftClicked < 9 || slotShiftClicked == 10) {
-				if (!this.mergeItemStack(stackInSlot, 11, 65, true)) {
+				if (!this.mergeItemStack(	stackInSlot,
+											11,
+											65,
+											true)) {
 					return null;
 				}
-			} else if (slotShiftClicked < 29) { //if internal inventory shift click into player inventory
-				if (!this.mergeItemStack(stackInSlot, 29, 65, true)) {					
-						return null;					
+			} else if (slotShiftClicked < 29) { // if internal inventory shift
+												// click into player inventory
+				if (!this.mergeItemStack(	stackInSlot,
+											29,
+											65,
+											true)) {
+					return null;
 				}
-			} else if (!this.mergeItemStack(stackInSlot, 11, 29, false)) { //if player then go into internal inventory first
-				if (!this.mergeItemStack(stackInSlot, 0, 9, false)){//then crafting grid					
-					return null;					
+			} else if (!this.mergeItemStack(stackInSlot,
+											11,
+											29,
+											false)) { // if player then go into
+														// internal inventory
+														// first
+				if (!this.mergeItemStack(	stackInSlot,
+											0,
+											9,
+											false)) {// then crafting grid
+					return null;
 				}
 			}
 			if (stackInSlot.stackSize == 0) {
@@ -472,7 +544,8 @@ public class ContainerWorkBench extends Container {
 				slot.onSlotChanged();
 			}
 			if (stackInSlot.stackSize != itemstackCopy.stackSize) {
-				slot.onPickupFromSlot(entityplayer, stackInSlot);
+				slot.onPickupFromSlot(	entityplayer,
+										stackInSlot);
 			} else {
 				return null;
 			}
@@ -486,13 +559,17 @@ public class ContainerWorkBench extends Container {
 		if (this.playerInventoryUsed) {
 			this.playerInventoryUsed = false;
 		} else {
-			super.retrySlotClick(par1, par2, par3, par4EntityPlayer);
+			super.retrySlotClick(	par1,
+									par2,
+									par3,
+									par4EntityPlayer);
 		}
 	}
 
 	@Override
 	public void putStackInSlot(int par1, ItemStack par2ItemStack) {
-		super.putStackInSlot(par1, par2ItemStack);
+		super.putStackInSlot(	par1,
+								par2ItemStack);
 	}
 
 	@Override
@@ -509,7 +586,8 @@ public class ContainerWorkBench extends Container {
 			return;
 		}
 		ItemStack blankplan = this.workbench.getStackInSlot(ContainerLib.PLAN_SLOT);
-		if (blankplan == null || blankplan.itemID != ConfigurationLib.itemPlanBlank.itemID) {
+		if (blankplan == null
+			|| blankplan.itemID != ConfigurationLib.itemPlanBlank.itemID) {
 			return;
 		}
 		ItemStack plan = new ItemStack(ConfigurationLib.itemPlanFull);
@@ -520,7 +598,8 @@ public class ContainerWorkBench extends Container {
 			return;
 		}
 		tempstack.writeToNBT(result);
-		plan.stackTagCompound.setCompoundTag("result", result);
+		plan.stackTagCompound.setCompoundTag(	"result",
+												result);
 		NBTTagList requires = new NBTTagList();
 		for (int i = 0; i < 9; i++) {
 			ItemStack is1 = craftMatrix.getStackInSlot(i);
@@ -528,18 +607,21 @@ public class ContainerWorkBench extends Container {
 				ItemStack ist = new ItemStack(is1.itemID, 1, is1.getItemDamage());
 				NBTTagCompound item = new NBTTagCompound();
 				ist.writeToNBT(item);
-				item.setByte("Slot", (byte) i);
+				item.setByte(	"Slot",
+								(byte) i);
 				requires.appendTag(item);
 			}
 		}
 
-		plan.stackTagCompound.setTag("requires", requires);
-		this.workbench.setInventorySlotContents(ContainerLib.PLAN_SLOT, plan);
+		plan.stackTagCompound.setTag(	"requires",
+										requires);
+		this.workbench.setInventorySlotContents(ContainerLib.PLAN_SLOT,
+												plan);
 	}
 
 	/**
 	 * Facade classes used in facilitating updates for the crafting output
-	 *
+	 * 
 	 */
 
 	protected static class ContainerNull extends Container {
@@ -559,13 +641,12 @@ public class ContainerWorkBench extends Container {
 
 	protected class InventorySubUpdate implements IInventory {
 
-		int size;
-		int start;
-		IInventory parent;
-		final ContainerWorkBench containerWorkBench;
+		int							size;
+		int							start;
+		IInventory					parent;
+		final ContainerWorkBench	containerWorkBench;
 
-		public InventorySubUpdate(IInventory parentInventory, int startSlot,
-				int inventorySize) {
+		public InventorySubUpdate(IInventory parentInventory, int startSlot, int inventorySize) {
 			super();
 			containerWorkBench = ContainerWorkBench.this;
 			parent = parentInventory;
@@ -585,7 +666,8 @@ public class ContainerWorkBench extends Container {
 
 		@Override
 		public ItemStack decrStackSize(int slot, int amount) {
-			ItemStack itemstack = parent.decrStackSize(slot + start, amount);
+			ItemStack itemstack = parent.decrStackSize(	slot + start,
+														amount);
 			if (itemstack != null) {
 				ContainerWorkBench.this.onCraftMatrixChanged(this);
 			}
@@ -599,8 +681,9 @@ public class ContainerWorkBench extends Container {
 
 		@Override
 		public void setInventorySlotContents(int slot, ItemStack ist) {
-			parent.setInventorySlotContents(slot + start, ist);
-			//ContainerWorkBench.this.onCraftMatrixChanged(this);
+			parent.setInventorySlotContents(slot + start,
+											ist);
+			// ContainerWorkBench.this.onCraftMatrixChanged(this);
 		}
 
 		@Override
@@ -616,7 +699,7 @@ public class ContainerWorkBench extends Container {
 		@Override
 		public void onInventoryChanged() {
 			parent.onInventoryChanged();
-			//ContainerWorkBench.this.onCraftMatrixChanged(this);
+			// ContainerWorkBench.this.onCraftMatrixChanged(this);
 		}
 
 		@Override

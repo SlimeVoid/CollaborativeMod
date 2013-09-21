@@ -16,6 +16,7 @@ public class PacketSettings extends PacketUpdate {
 	public boolean targetExists(World world) {
 		return false;
 	}
+
 	public boolean getInventoryMode() {
 		return this.side == 1;
 	}

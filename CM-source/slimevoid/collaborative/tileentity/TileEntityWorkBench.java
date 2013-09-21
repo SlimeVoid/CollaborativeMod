@@ -15,7 +15,7 @@ import slimevoidlib.util.helpers.SlimevoidHelper;
 public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		ISidedInventory {
 
-	private ItemStack[] contents;
+	private ItemStack[]	contents;
 
 	public TileEntityWorkBench() {
 		contents = new ItemStack[28];
@@ -39,9 +39,12 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		if (this.worldObj.isRemote) {
 			return true;
 		} else {
-			entityplayer.openGui(CollaborativeMod.instance,
-					GuiLib.GUIID_WORK_BENCH, this.worldObj, this.xCoord,
-					this.yCoord, this.zCoord);
+			entityplayer.openGui(	CollaborativeMod.instance,
+									GuiLib.GUIID_WORK_BENCH,
+									this.worldObj,
+									this.xCoord,
+									this.yCoord,
+									this.zCoord);
 			return true;
 		}
 	}
@@ -51,8 +54,11 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		for (int i = 0; i < 27; i++) {
 			ItemStack itemstack = this.contents[i];
 			if (itemstack != null && itemstack.stackSize > 0) {
-				ItemHelper.dropItem(this.worldObj, this.xCoord, this.yCoord,
-						this.zCoord, itemstack);
+				ItemHelper.dropItem(this.worldObj,
+									this.xCoord,
+									this.yCoord,
+									this.zCoord,
+									itemstack);
 			}
 		}
 
@@ -115,7 +121,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 		contents[i] = itemstack;
 		if (itemstack != null
-				&& itemstack.stackSize > this.getInventoryStackLimit()) {
+			&& itemstack.stackSize > this.getInventoryStackLimit()) {
 			itemstack.stackSize = this.getInventoryStackLimit();
 		}
 		this.onInventoryChanged();
@@ -138,8 +144,15 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return SlimevoidHelper.isUseableByPlayer(this.worldObj, entityplayer,
-				this.xCoord, this.yCoord, this.zCoord, 0.5D, 0.5D, 0.5D, 64D);
+		return SlimevoidHelper.isUseableByPlayer(	this.worldObj,
+													entityplayer,
+													this.xCoord,
+													this.yCoord,
+													this.zCoord,
+													0.5D,
+													0.5D,
+													0.5D,
+													64D);
 	}
 
 	@Override
@@ -192,12 +205,14 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		for (int i = 0; i < contents.length; i++) {
 			if (contents[i] != null) {
 				NBTTagCompound item = new NBTTagCompound();
-				item.setByte("Slot", (byte) i);
+				item.setByte(	"Slot",
+								(byte) i);
 				this.contents[i].writeToNBT(item);
 				items.appendTag(item);
 			}
 		}
-		nbttagcompound.setTag("Items", items);
+		nbttagcompound.setTag(	"Items",
+								items);
 	}
 
 }

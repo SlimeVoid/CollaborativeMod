@@ -5,18 +5,20 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemLib {
 
-	public static final String ITEM_PREFIX = "cm.";
-	public static final String ITEM_PLAN = ITEM_PREFIX + "plan.";
-	public static final String PLAN_BLANK = ITEM_PLAN + "blank";
-	public static final String PLAN_FULL = ITEM_PLAN + "full";
+	public static final String	ITEM_PREFIX	= "cm.";
+	public static final String	ITEM_PLAN	= ITEM_PREFIX + "plan.";
+	public static final String	PLAN_BLANK	= ITEM_PLAN + "blank";
+	public static final String	PLAN_FULL	= ITEM_PLAN + "full";
 
 	public static boolean matchOre(ItemStack a, ItemStack b) {
 		String s1 = OreDictionary.getOreName(OreDictionary.getOreID(a));
 		String s2 = OreDictionary.getOreName(OreDictionary.getOreID(b));
-		if (s1 != null && !s1.equals("Unknown") && s2 != null && !s2.equals("Unknown") && s1.equals(s2)) {
+		if (s1 != null && !s1.equals("Unknown") && s2 != null
+			&& !s2.equals("Unknown") && s1.equals(s2)) {
 			return true;
 		} else {
-			return compareItemStack(a, b) == 0;
+			return compareItemStack(a,
+									b) == 0;
 		}
 	}
 

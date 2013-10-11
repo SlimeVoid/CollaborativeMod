@@ -1,13 +1,13 @@
 @echo off
 
-set programdir="C:\Programming"
+set programdir="C:\Programming\Minecraft\1.5.2"
 set packagedir="%programdir%\Packages"
-set repodir="%programdir%\Repositories"
-set forgedir="%repodir%\MinecraftForge-1.5.2"
+set repodir="%programdir%\Git"
+set forgedir="%programdir%\forge"
 set fmldir="%forgedir%\fml"
 set mcpdir="%forgedir%\mcp"
-set projectbench="%repodir%\ProjectBench"
-set euryscore="%repodir%\EurysCore-FML"
+set projectbench="%repodir%\CollaborativeMod"
+set euryscore="%repodir%\SlimevoidLibrary"
 cd %mcpdir%
 
 if not exist %euryscore% GOTO :PBFAIL

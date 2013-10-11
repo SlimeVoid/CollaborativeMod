@@ -91,12 +91,7 @@ public class ContainerWorkBench extends Container {
 		for (l = 0; l < 2; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
 				int slotIndex = 10 + i1 + (l * 9);
-				this.addSlotToContainer(new Slot(tileentity/*
-															 * new
-															 * InventorySubUpdate
-															 * (tileentity, 10,
-															 * 18)
-															 */, slotIndex, 8 + i1 * 18, l * 18 + 90));
+				this.addSlotToContainer(new Slot(tileentity, slotIndex, 8 + i1 * 18, l * 18 + 90));
 			}
 		}
 
@@ -104,27 +99,14 @@ public class ContainerWorkBench extends Container {
 		for (l = 0; l < 3; ++l) {
 			for (i1 = 0; i1 < 9; ++i1) {
 				int slotIndex = 9 + i1 + (l * 9);
-				this.addSlotToContainer(new Slot(playerInventory/*
-																 * new
-																 * InventorySubUpdate
-																 * (
-																 * playerInventory
-																 * , 9, 27)
-																 */, slotIndex, 8 + i1 * 18, l
-																								* 18
-																								+ b0));
+				this.addSlotToContainer(new Slot(playerInventory, slotIndex, 8 + i1 * 18, l	* 18 + b0));
 			}
 		}
 
 		// hotbar inventory
 		for (l = 0; l < 9; ++l) {
 			int slotIndex = l;
-			this.addSlotToContainer(new Slot(playerInventory/*
-															 * new
-															 * InventorySubUpdate
-															 * (playerInventory,
-															 * 0, 9)
-															 */, slotIndex, 8 + l * 18, 58 + b0));
+			this.addSlotToContainer(new Slot(playerInventory, slotIndex, 8 + l * 18, 58 + b0));
 		}
 
 		// add n,e,w,s inventories

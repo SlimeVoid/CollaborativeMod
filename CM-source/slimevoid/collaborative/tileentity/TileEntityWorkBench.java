@@ -8,6 +8,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
 import slimevoid.collaborative.core.CollaborativeMod;
 import slimevoid.collaborative.core.lib.BlockLib;
+import slimevoid.collaborative.core.lib.ConfigurationLib;
+import slimevoid.collaborative.core.lib.ContainerLib;
 import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoidlib.util.helpers.ItemHelper;
 import slimevoidlib.util.helpers.SlimevoidHelper;
@@ -64,31 +66,26 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	}
 
-	public int getStartInventorySide(ForgeDirection side) {
-		// TODO :: Start Inventory
-		return 1;
-	}
-
-	public int getSizeInventorySide(ForgeDirection side) {
-		// TODO :: Size Inventory
-		return 18;
-	}
-
 	@Override
 	public int getSizeInventory() {
-		// this is the internal persistent inventory 2 rows of 9 and the plan
-		// slot
+		// this is the internal persistent inventory
+		// 3 * 3 crafting window
+		// 1 plan slot
+		// 2 rows of 9
 		return 28;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		return this.contents[i];
+		if (isValidSlot(i)) {
+			return this.contents[i];
+		}
+		return null;
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-		if (this.contents[slot] == null) {
+		if (this.getStackInSlot(slot) == null) {
 			return null;
 		}
 		ItemStack itemstack;
@@ -108,7 +105,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		if (this.contents[i] == null) {
+		if (this.getStackInSlot(i) == null) {
 			return null;
 		} else {
 			ItemStack itemstack = this.contents[i];
@@ -162,29 +159,36 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	@Override
 	public void closeChest() {
 	}
+	
+	public boolean isValidSlot(int i) {
+		return i >= 0 && i < this.getSizeInventory();
+	}
 
 	@Override
 	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-		// TODO :: Auto-generated method stub
+		if (isValidSlot(i)) {
+			return itemstack == null ? false : i == ContainerLib.PLAN_SLOT ? itemstack.itemID == ConfigurationLib.itemPlanBlankID ? true : itemstack.itemID == ConfigurationLib.itemPlanFullID ? true : false : true;
+		}
 		return false;
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int var1) {
-		// TODO :: Auto-generated method stub
-		return null;
+	public int[] getAccessibleSlotsFromSide(int side) {
+		return new int[] {27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10};
+	}
+
+	private boolean isInventorySlot(int slot) {
+		return slot >= 10 && slot < this.getSizeInventory();
 	}
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
-		// TODO :: Auto-generated method stub
-		return false;
+		return isInventorySlot(slot) && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		// TODO :: Auto-generated method stub
-		return false;
+	public boolean canExtractItem(int slot, ItemStack itemstack, int side) {
+		return isInventorySlot(slot) && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
 	}
 
 	public void readFromNBT(NBTTagCompound nbttagcompound) {

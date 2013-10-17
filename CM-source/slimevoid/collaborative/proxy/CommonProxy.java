@@ -67,9 +67,15 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public void registerTickHandler() {
+	public void registerTickHandlers() {
 		// TODO :: Auto-generated method stub
 
+	}
+
+	@Override
+	public void registerEventHandlers() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

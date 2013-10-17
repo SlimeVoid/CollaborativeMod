@@ -3,15 +3,9 @@
   "modid": "CollaborativeMod",
   "name": "Collaboration Mod - Alpha",
   "description": "The Collaboration Mod is so named for the beliefs of it's creators.",
-<<<<<<< HEAD
-  "version": "0.0.0.2",
-  "mcversion": "1.6.2",
-  "url": "https://github.com/SlimeVoid/ProjectBench",
-=======
-  "version": "0.0.0.4",
+  "version": "0.0.0.5",
   "mcversion": "1.5.2",
   "url": "https://github.com/SlimeVoid/CollaborativeMod",
->>>>>>> MC1.5
   "updateUrl": "",
   "credits": "Eurymachus, Tarig",
   "authors": ["Slime Void Crew"],

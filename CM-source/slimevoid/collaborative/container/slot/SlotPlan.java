@@ -15,7 +15,7 @@ public class SlotPlan extends Slot {
 	// isItemValid
 	public boolean isItemValid(ItemStack itemstack) {
 		return itemstack.itemID == ConfigurationLib.itemPlanBlank.itemID
-		|| itemstack.itemID == ConfigurationLib.itemPlanFull.itemID;
+				|| itemstack.itemID == ConfigurationLib.itemPlanFull.itemID;
 	}
 
 	public int getSlotStackLimit() {

@@ -4,9 +4,9 @@ import slimevoid.collaborative.core.lib.CoreLib;
 import slimevoidlib.core.SlimevoidCore;
 
 public class CMInit {
-	
-	private static boolean initialized;
-	
+
+	private static boolean	initialized;
+
 	public static void initialize() {
 		if (initialized) {
 			return;
@@ -14,17 +14,20 @@ public class CMInit {
 		initialized = true;
 		load();
 	}
-	
-	public static void load() {		
-		SlimevoidCore.console(CoreLib.MOD_ID, "Registering names...");
+
+	public static void load() {
+		SlimevoidCore.console(	CoreLib.MOD_ID,
+								"Registering names...");
 		CMCore.registerNames();
-		
-		SlimevoidCore.console(CoreLib.MOD_ID, "Registering blocks...");
+
+		SlimevoidCore.console(	CoreLib.MOD_ID,
+								"Registering blocks...");
 		CMCore.registerBlocks();
 
-		SlimevoidCore.console(CoreLib.MOD_ID, "Registering items...");
+		SlimevoidCore.console(	CoreLib.MOD_ID,
+								"Registering items...");
 		CMCore.registerItems();
-		
+
 		CollaborativeMod.proxy.registerRenderInformation();
 	}
 

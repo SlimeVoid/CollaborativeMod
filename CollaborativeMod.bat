@@ -1,13 +1,13 @@
 @echo off
 
-set programdir="C:\Programming"
+set programdir="C:\Programming\Minecraft\1.5.2"
 set packagedir="%programdir%\Packages"
-set repodir="%programdir%\Repositories"
-set forgedir="%repodir%\MinecraftForge"
-set fmldir="%repodir%\MinecraftForge\fml"
+set repodir="%programdir%\Git"
+set forgedir="%programdir%\forge"
+set fmldir="%forgedir%\fml"
 set mcpdir="%forgedir%\mcp"
-set projectbench="%repodir%\ProjectBench"
-set euryscore="%repodir%\EurysCore-FML"
+set projectbench="%repodir%\CollaborativeMod"
+set euryscore="%repodir%\SlimevoidLibrary"
 cd %mcpdir%
 
 if not exist %euryscore% GOTO :PBFAIL
@@ -30,7 +30,7 @@ GOTO :PBFAIL
 
 :COPYPB
 xcopy "%euryscore%\SV-common\*.*" "%mcpdir%\src\minecraft\" /S
-xcopy "%projectbench%\PB-source\*.*" "%mcpdir%\src\minecraft\" /S
+xcopy "%projectbench%\CM-source\*.*" "%mcpdir%\src\minecraft\" /S
 pause
 call %mcpdir%\recompile.bat
 call %mcpdir%\reobfuscate.bat
@@ -39,13 +39,13 @@ pause
 
 :REPACKAGE
 if not exist "%mcpdir%\reobf" GOTO :PBFAIL
-if exist "%packagedir%\ProjectBench" (
-del "%packagedir%\ProjectBench\*.*" /S /Q
-rmdir "%packagedir%\ProjectBench" /S /Q
+if exist "%packagedir%\CollaborativeMod" (
+del "%packagedir%\CollaborativeMod\*.*" /S /Q
+rmdir "%packagedir%\CollaborativeMod" /S /Q
 )
-mkdir "%packagedir%\ProjectBench\slimevoid\projectbench"
-xcopy "%mcpdir%\reobf\minecraft\slimevoid\projectbench\*.*" "%packagedir%\ProjectBench\slimevoid\projectbench\" /S
-xcopy "%projectbench%\PB-resources\*.*" "%packagedir%\ProjectBench\" /S
+mkdir "%packagedir%\CollaborativeMod\slimevoid\collaborative"
+xcopy "%mcpdir%\reobf\minecraft\slimevoid\collaborative\*.*" "%packagedir%\CollaborativeMod\slimevoid\collaborative\" /S
+xcopy "%projectbench%\CM-resources\*.*" "%packagedir%\CollaborativeMod\" /S
 echo "Project Bench Packaged Successfully
 pause
 ren "%mcpdir%\src" src-old

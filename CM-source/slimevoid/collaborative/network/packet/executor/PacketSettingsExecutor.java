@@ -14,8 +14,10 @@ public class PacketSettingsExecutor implements IPacketExecutor {
 	public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
 		if (packet instanceof PacketSettings) {
 			PacketSettings packetSettings = (PacketSettings) packet;
-			ConfigurationLib.updatePlayersInventoryLocked(entityplayer, packetSettings.getInventoryMode());
-			if (entityplayer.openContainer != null && entityplayer.openContainer instanceof ContainerWorkBench) {
+			ConfigurationLib.updatePlayersInventoryLocked(	entityplayer,
+															packetSettings.getInventoryMode());
+			if (entityplayer.openContainer != null
+				&& entityplayer.openContainer instanceof ContainerWorkBench) {
 				ContainerWorkBench bench = ((ContainerWorkBench) entityplayer.openContainer);
 				bench.onCraftMatrixChanged(bench.playerInventory);
 			}

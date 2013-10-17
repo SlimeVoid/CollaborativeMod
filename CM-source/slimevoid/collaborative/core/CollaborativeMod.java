@@ -6,8 +6,9 @@ import slimevoid.collaborative.network.CommonPacketHandler;
 import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -29,29 +30,24 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		serverPacketHandlerSpec = @SidedPacketHandler(
 				channels = { CoreLib.MOD_CHANNEL },
 				packetHandler = CommonPacketHandler.class),
-		connectionHandler = CommonProxy.class
-)
+		connectionHandler = CommonProxy.class)
 public class CollaborativeMod {
 	@SidedProxy(
 			clientSide = CoreLib.CLIENT_PROXY,
 			serverSide = CoreLib.COMMON_PROXY)
-	public static ICommonProxy proxy;
-	
-	@Instance(CoreLib.MOD_ID)
-	public static CollaborativeMod instance;
+	public static ICommonProxy		proxy;
 
-	@EventHandler
+	@Instance(CoreLib.MOD_ID)
+	public static CollaborativeMod	instance;
+
+	@PreInit
 	public void CollaborativePreInit(FMLPreInitializationEvent event) {
 		CollaborativeMod.proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
 
 		CollaborativeMod.proxy.preInit();
 	}
 
-	@EventHandler
-	public void CollaborativeInit(FMLInitializationEvent event) {
-	}
-
-	@EventHandler
+	@PostInit
 	public void CollaborativePostInit(FMLPostInitializationEvent event) {
 		CMInit.initialize();
 	}

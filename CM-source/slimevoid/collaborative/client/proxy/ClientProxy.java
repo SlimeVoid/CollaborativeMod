@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import slimevoid.collaborative.client.network.ClientPacketHandler;
 import slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkBench;
+import slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkChest;
 import slimevoid.collaborative.core.lib.CommandLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.GuiLib;
@@ -18,6 +19,7 @@ import slimevoid.collaborative.core.lib.PacketLib;
 import slimevoid.collaborative.network.packet.PacketSettings;
 import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
+import slimevoid.collaborative.tileentity.TileEntityWorkChest;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class ClientProxy extends CommonProxy {
@@ -26,13 +28,21 @@ public class ClientProxy extends CommonProxy {
 	public void registerConfigurationProperties(File configFile) {
 		ConfigurationLib.ClientConfig(configFile);
 	}
+
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GuiLib.GUIID_WORK_BENCH) {
-			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
+			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(	world,
+																		x,
+																		y,
+																		z);
 			if (tileentity != null && tileentity instanceof TileEntityWorkBench) {
-				return new GuiCollaborativeWorkBench(player, player.inventory,world, (TileEntityWorkBench) tileentity);
+				return new GuiCollaborativeWorkBench(player, player.inventory, world, (TileEntityWorkBench) tileentity);
+			}
+		}else if (ID == GuiLib.GUIID_WORK_CHEST) {
+			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
+			if (tileentity != null && tileentity instanceof TileEntityWorkChest) {
+				return new GuiCollaborativeWorkChest((TileEntityWorkChest) tileentity, player.inventory);
 			}
 		}
 		return null;
@@ -44,13 +54,17 @@ public class ClientProxy extends CommonProxy {
 		ClientPacketHandler.init();
 		PacketLib.registerClientPacketHandlers();
 	}
-	
+
 	@Override
 	public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
-		// This Sends the Local Player settings to the server, for persistent user settings
+		// This Sends the Local Player settings to the server, for persistent
+		// user settings
 		PacketSettings packet = new PacketSettings();
 		packet.setCommand(CommandLib.UPDATE_SETTINGS);
-		packet.setPosition(0, 0, 0, ConfigurationLib.playerInventoryLocked ? 1 : 0);
+		packet.setPosition(	0,
+							0,
+							0,
+							ConfigurationLib.playerInventoryLocked ? 1 : 0);
 		PacketDispatcher.sendPacketToServer(packet.getPacket());
 	}
 

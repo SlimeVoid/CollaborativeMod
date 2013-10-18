@@ -165,7 +165,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	}
 
 	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		if (isValidSlot(i)) {
 			return itemstack == null ? false : i == ContainerLib.PLAN_SLOT ? itemstack.itemID == ConfigurationLib.itemPlanBlankID ? true : itemstack.itemID == ConfigurationLib.itemPlanFullID ? true : false : true;
 		}

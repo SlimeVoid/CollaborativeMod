@@ -2,7 +2,7 @@ package slimevoid.collaborative.tileentity;
 
 import java.util.ArrayList;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -159,7 +159,7 @@ public abstract class TileEntityWorkChestBase extends
 	}
 
 	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return itemstack.getItem().itemID == ConfigurationLib.itemPlanFull.itemID;
 	}
 
@@ -184,7 +184,7 @@ public abstract class TileEntityWorkChestBase extends
 	}
 
 	@Override
-	public void onBlockPlacedBy(ItemStack itemstack, EntityLiving entity) {
+	public void onBlockPlacedBy(ItemStack itemstack, EntityLivingBase entity) {
 		super.onBlockPlacedBy(	itemstack,
 								entity);
 		this.storedPlans = new ItemStack[ChestLib.getChestSize(this.getExtendedBlockID())];

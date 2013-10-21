@@ -20,6 +20,11 @@ public class BlockLib {
 	public static final int		BLOCK_MAX_TILES				= 2;
 	public static final int		BLOCK_WORK_BENCH_ID			= 0;
 	public static final int		BLOCK_WORK_CHEST_ID			= 1;
+	public static final int		WORK_CHEST_WOOD_ID			= 0;
+	public static final int		WORK_CHEST_STONE_ID			= 1;
+	public static final int		WORK_CHEST_IRON_ID			= 2;
+	public static final int		WORK_CHEST_GOLD_ID			= 3;
+	public static final int		WORK_CHEST_DIAMOND_ID		= 4;
 
 	public static Icon[][] registerIcons(IconRegister iconRegister, Icon[][] iconList) {
 		iconList[BLOCK_WORK_BENCH_ID][0] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);

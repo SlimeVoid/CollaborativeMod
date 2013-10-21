@@ -7,17 +7,17 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
-import slimevoid.collaborative.tileentity.TileEntityWorkChest;
+import slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 
 public class ContainerWorkChest extends Container {
 
 	private int				numRows;
-	TileEntityWorkChest		workchest;
+	TileEntityWorkChestBase	workchest;
 	public InventoryPlayer	playerInventory;
 
 	public ContainerWorkChest(IInventory playerInventory, IInventory tileentity) {
 		super();
-		this.workchest = (TileEntityWorkChest) tileentity;
+		this.workchest = (TileEntityWorkChestBase) tileentity;
 		this.playerInventory = (InventoryPlayer) playerInventory;
 		this.numRows = tileentity.getSizeInventory() / 9;
 		/*

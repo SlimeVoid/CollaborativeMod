@@ -19,7 +19,7 @@ import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoid.collaborative.core.lib.PacketLib;
 import slimevoid.collaborative.network.CommonPacketHandler;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import slimevoid.collaborative.tileentity.TileEntityWorkChest;
+import slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 import slimevoidlib.ICommonProxy;
 import slimevoidlib.IPacketHandling;
 import slimevoidlib.util.helpers.BlockHelper;
@@ -40,11 +40,11 @@ public class CommonProxy implements ICommonProxy {
 				return new ContainerWorkBench(player.inventory, tileentity);
 			}
 		} else if (ID == GuiLib.GUIID_WORK_CHEST) {
-			TileEntityWorkChest tileentity = (TileEntityWorkChest) BlockHelper.getTileEntity(	world,
+			TileEntityWorkChestBase tileentity = (TileEntityWorkChestBase) BlockHelper.getTileEntity(	world,
 																								x,
 																								y,
 																								z,
-																								TileEntityWorkChest.class);
+																								TileEntityWorkChestBase.class);
 			if (tileentity != null) {
 				return new ContainerWorkChest(player.inventory, tileentity);
 			}

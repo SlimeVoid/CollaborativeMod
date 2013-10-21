@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import slimevoid.collaborative.container.ContainerWorkChest;
 import slimevoid.collaborative.core.lib.GuiLib;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 // import net.minecraft.client.resources.I18n;
 // import net.minecraft.util.ResourceLocation;
 
@@ -31,9 +32,10 @@ public class GuiCollaborativeWorkChest extends GuiContainer {
 	 * the items)
 	 */
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		fontRenderer.drawString(GuiLib.TITLE_WORK_BENCH,
+		String title = LanguageRegistry.instance().getStringLocalization(this.workChestInventory.getInvName());
+		fontRenderer.drawString(title,
 								(this.xSize / 2)
-										- (fontRenderer.getStringWidth(GuiLib.TITLE_WORK_BENCH) / 2),
+										- (fontRenderer.getStringWidth(title) / 2),
 								6,
 								0x404040);
 		fontRenderer.drawString("Inventory",

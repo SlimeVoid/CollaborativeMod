@@ -25,7 +25,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	@Override
 	public int getExtendedBlockID() {
-		return 0;
+		return BlockLib.BLOCK_WORK_BENCH_ID;
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	@Override
 	public void closeChest() {
 	}
-	
+
 	public boolean isValidSlot(int i) {
 		return i >= 0 && i < this.getSizeInventory();
 	}
@@ -174,7 +174,25 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return new int[] {27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10};
+		return new int[] {
+				27,
+				26,
+				25,
+				24,
+				23,
+				22,
+				21,
+				20,
+				19,
+				18,
+				17,
+				16,
+				15,
+				14,
+				13,
+				12,
+				11,
+				10 };
 	}
 
 	private boolean isInventorySlot(int slot) {
@@ -183,12 +201,14 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
-		return isInventorySlot(slot) && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
+		return isInventorySlot(slot)
+				&& ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemstack, int side) {
-		return isInventorySlot(slot) && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
+		return isInventorySlot(slot)
+				&& ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
 	}
 
 	public void readFromNBT(NBTTagCompound nbttagcompound) {

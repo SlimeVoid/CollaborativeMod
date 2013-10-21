@@ -19,7 +19,7 @@ import slimevoid.collaborative.core.lib.PacketLib;
 import slimevoid.collaborative.network.packet.PacketSettings;
 import slimevoid.collaborative.proxy.CommonProxy;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import slimevoid.collaborative.tileentity.TileEntityWorkChest;
+import slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class ClientProxy extends CommonProxy {
@@ -44,8 +44,8 @@ public class ClientProxy extends CommonProxy {
 																		x,
 																		y,
 																		z);
-			if (tileentity != null && tileentity instanceof TileEntityWorkChest) {
-				return new GuiCollaborativeWorkChest(player, player.inventory, (TileEntityWorkChest) tileentity);
+			if (tileentity != null && tileentity instanceof TileEntityWorkChestBase) {
+				return new GuiCollaborativeWorkChest(player, player.inventory, (TileEntityWorkChestBase) tileentity);
 			}
 		}
 		return null;

@@ -41,8 +41,8 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
 		int x = i - this.guiLeft;
 		int y = j - this.guiTop;
 		if (x >= 18 && y >= 55 && x <= 32 && y <= 69) {
-			ItemStack plan = this.inventorySlots.getSlot(9).getStack();
-			ItemStack craft = this.inventorySlots.getSlot(10).getStack();
+			ItemStack plan = this.inventorySlots.getSlot(ContainerLib.PLAN_SLOT).getStack();
+			ItemStack craft = this.inventorySlots.getSlot(ContainerLib.CRAFT_SLOT).getStack();
 			if (plan == null || craft == null
 				|| plan.itemID != ConfigurationLib.itemPlanBlank.itemID) {
 				return;

@@ -13,6 +13,11 @@ public class GuiLib {
 														+ BlockLib.BLOCK_WORK_BENCH
 														+ ".png";
 	public static final String	GUI_WORK_BENCH		= WORK_BENCH;
+	
+	public static final String	WORK_CHEST			= GUI_PREFIX
+														+ BlockLib.BLOCK_WORK_CHEST
+														+ ".png";
+	public static final String	GUI_WORK_CHEST		= WORK_CHEST;
 
 	public static final String	TITLE_WORK_BENCH	= "Collaborative Work Bench";
 }

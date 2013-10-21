@@ -22,7 +22,7 @@ import slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import slimevoid.collaborative.tileentity.TileEntityWorkChest;
 import slimevoidlib.ICommonProxy;
 import slimevoidlib.IPacketHandling;
-import slimevoidlib.util.helpers.SlimevoidHelper;
+import slimevoidlib.util.helpers.BlockHelper;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.Player;
 
@@ -31,17 +31,22 @@ public class CommonProxy implements ICommonProxy {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GuiLib.GUIID_WORK_BENCH) {
-			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(	world,
-																		x,
-																		y,
-																		z);
-			if (tileentity != null && tileentity instanceof TileEntityWorkBench) {
-				return new ContainerWorkBench(player.inventory, (TileEntityWorkBench) tileentity);
+			TileEntityWorkBench tileentity = (TileEntityWorkBench) BlockHelper.getTileEntity(	world,
+																								x,
+																								y,
+																								z,
+																								TileEntityWorkBench.class);
+			if (tileentity != null) {
+				return new ContainerWorkBench(player.inventory, tileentity);
 			}
-		}else if (ID == GuiLib.GUIID_WORK_CHEST) {
-			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
-			if (tileentity != null && tileentity instanceof TileEntityWorkChest) {
-				return new ContainerWorkChest(player.inventory,(TileEntityWorkChest) tileentity);
+		} else if (ID == GuiLib.GUIID_WORK_CHEST) {
+			TileEntityWorkChest tileentity = (TileEntityWorkChest) BlockHelper.getTileEntity(	world,
+																								x,
+																								y,
+																								z,
+																								TileEntityWorkChest.class);
+			if (tileentity != null) {
+				return new ContainerWorkChest(player.inventory, tileentity);
 			}
 		}
 		return null;
@@ -75,7 +80,7 @@ public class CommonProxy implements ICommonProxy {
 	@Override
 	public void registerEventHandlers() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

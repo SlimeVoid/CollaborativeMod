@@ -21,21 +21,23 @@ public class CMCore {
 
 	public static void registerBlocks() {
 		ConfigurationLib.blockCollaborativeBase = new BlockCollaborativeBase(ConfigurationLib.blockCollaborativeBaseID);
+		
 		GameRegistry.registerBlock(	ConfigurationLib.blockCollaborativeBase,
 									ItemBlockBase.class,
 									BlockLib.BLOCK_COLLABORATIVE_BASE);
+		
+		/**
+		 * WORK BENCH
+		 */
 		GameRegistry.registerTileEntity(TileEntityWorkBench.class,
 										BlockLib.BLOCK_WORK_BENCH);
+		
 		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.BLOCK_WORK_BENCH_ID,
 																		TileEntityWorkBench.class);
+		
 		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_BENCH_ID,
 															BlockLib.BLOCK_WORK_BENCH);
-		GameRegistry.registerTileEntity(TileEntityWorkChest.class,
-										BlockLib.BLOCK_WORK_CHEST);
-		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.BLOCK_WORK_CHEST_ID,
-																		TileEntityWorkChest.class);
-		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_CHEST_ID,
-															BlockLib.BLOCK_WORK_CHEST);
+		
 		GameRegistry.addRecipe(	new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.BLOCK_WORK_BENCH_ID),
 								new Object[] {
 										"SBS",
@@ -49,6 +51,30 @@ public class CMCore {
 										Block.chest,
 										Character.valueOf('W'),
 										Block.woodSingleSlab });
+		
+		/**
+		 * WORK CHEST
+		 */
+		GameRegistry.registerTileEntity(TileEntityWorkChest.class,
+										BlockLib.BLOCK_WORK_CHEST);
+		
+		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.BLOCK_WORK_CHEST_ID,
+																		TileEntityWorkChest.class);
+		
+		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_CHEST_ID,
+															BlockLib.BLOCK_WORK_CHEST);
+
+		GameRegistry.addRecipe(	new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.BLOCK_WORK_CHEST_ID),
+								new Object[] {
+										"WWW",
+										"WCW",
+										"SSS",
+										Character.valueOf('W'),
+										Block.woodSingleSlab,
+										Character.valueOf('C'),
+										Block.chest,
+										Character.valueOf('S'),
+										Block.cobblestone });
 	}
 
 	public static void registerItems() {

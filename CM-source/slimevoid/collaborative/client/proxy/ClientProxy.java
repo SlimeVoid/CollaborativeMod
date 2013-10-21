@@ -39,10 +39,13 @@ public class ClientProxy extends CommonProxy {
 			if (tileentity != null && tileentity instanceof TileEntityWorkBench) {
 				return new GuiCollaborativeWorkBench(player, player.inventory, world, (TileEntityWorkBench) tileentity);
 			}
-		}else if (ID == GuiLib.GUIID_WORK_CHEST) {
-			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(world, x, y, z);
+		} else if (ID == GuiLib.GUIID_WORK_CHEST) {
+			TileEntity tileentity = SlimevoidHelper.getBlockTileEntity(	world,
+																		x,
+																		y,
+																		z);
 			if (tileentity != null && tileentity instanceof TileEntityWorkChest) {
-				return new GuiCollaborativeWorkChest((TileEntityWorkChest) tileentity, player.inventory);
+				return new GuiCollaborativeWorkChest(player, player.inventory, (TileEntityWorkChest) tileentity);
 			}
 		}
 		return null;

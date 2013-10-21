@@ -9,16 +9,18 @@ import net.minecraftforge.common.ForgeDirection;
 import slimevoid.collaborative.core.CollaborativeMod;
 import slimevoid.collaborative.core.lib.BlockLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
+import slimevoid.collaborative.core.lib.ContainerLib;
 import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoidlib.util.helpers.ItemHelper;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 		ISidedInventory {
-	private ItemStack[]	contents;
+
+	private ItemStack[]	storedPlans;
 
 	public TileEntityWorkChest() {
-		contents = new ItemStack[255];
+		storedPlans = new ItemStack[ContainerLib.WORK_CHEST_SLOTS];
 	}
 
 	@Override
@@ -51,8 +53,8 @@ public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 
 	@Override
 	public void onBlockRemoval(int side, int metadata) {
-		for (int i = 0; i < 255; i++) {
-			ItemStack itemstack = this.contents[i];
+		for (int slot = 0; slot < this.storedPlans.length; slot++) {
+			ItemStack itemstack = this.storedPlans[slot];
 			if (itemstack != null && itemstack.stackSize > 0) {
 				ItemHelper.dropItem(this.worldObj,
 									this.xCoord,
@@ -65,42 +67,38 @@ public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 	}
 
 	public int getStartInventorySide(ForgeDirection side) {
-		// TODO :: Start Inventory
 		return 0;
 	}
 
 	public int getSizeInventorySide(ForgeDirection side) {
-		// TODO :: Size Inventory
-		return 255;
+		return this.storedPlans.length;
 	}
 
 	@Override
 	public int getSizeInventory() {
-		// this is the internal persistent inventory 2 rows of 9 and the plan
-		// slot
-		return 255;
+		return this.storedPlans.length;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		return this.contents[i];
+		return this.storedPlans[i];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-		if (this.contents[slot] == null) {
+		if (this.storedPlans[slot] == null) {
 			return null;
 		}
 		ItemStack itemstack;
-		if (this.contents[slot].stackSize <= amount) {
-			itemstack = this.contents[slot];
-			this.contents[slot] = null;
+		if (this.storedPlans[slot].stackSize <= amount) {
+			itemstack = this.storedPlans[slot];
+			this.storedPlans[slot] = null;
 			this.onInventoryChanged();
 			return itemstack;
 		}
-		itemstack = contents[slot].splitStack(amount);
-		if (contents[slot].stackSize == 0) {
-			contents[slot] = null;
+		itemstack = storedPlans[slot].splitStack(amount);
+		if (storedPlans[slot].stackSize == 0) {
+			storedPlans[slot] = null;
 		}
 		this.onInventoryChanged();
 		return itemstack;
@@ -108,18 +106,18 @@ public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		if (this.contents[i] == null) {
+		if (this.storedPlans[i] == null) {
 			return null;
 		} else {
-			ItemStack itemstack = this.contents[i];
-			contents[i] = null;
+			ItemStack itemstack = this.storedPlans[i];
+			storedPlans[i] = null;
 			return itemstack;
 		}
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		contents[i] = itemstack;
+		storedPlans[i] = itemstack;
 		if (itemstack != null
 			&& itemstack.stackSize > this.getInventoryStackLimit()) {
 			itemstack.stackSize = this.getInventoryStackLimit();
@@ -165,54 +163,54 @@ public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 
 	@Override
 	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-		// TODO :: Auto-generated method stub
 		return itemstack.getItem().itemID == ConfigurationLib.itemPlanFullID;
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int var1) {
-		// TODO :: Auto-generated method stub
-		return null;
+	public int[] getAccessibleSlotsFromSide(int side) {
+		int[] slots = new int[this.storedPlans.length];
+		for (int i = 0; i < slots.length; i++) {
+			slots[i] = i;
+		}
+		return slots;
 	}
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
-		// TODO :: Auto-generated method stub
-		return false;
+		return ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		// TODO :: Auto-generated method stub
-		return false;
+	public boolean canExtractItem(int slot, ItemStack itemstack, int side) {
+		return ForgeDirection.getOrientation(side) == ForgeDirection.DOWN;
 	}
 
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
-		NBTTagList items = nbttagcompound.getTagList("Items");
-		for (int i = 0; i < items.tagCount(); i++) {
-			NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
-			int j = item.getByte("Slot") & 0xff;
-			if (j >= 0 && j < this.contents.length) {
-				this.contents[j] = ItemStack.loadItemStackFromNBT(item);
+		NBTTagList plans = nbttagcompound.getTagList("Plans");
+		for (int i = 0; i < plans.tagCount(); i++) {
+			NBTTagCompound plan = (NBTTagCompound) plans.tagAt(i);
+			int j = plan.getByte("Plan") & 0xff;
+			if (j >= 0 && j < this.storedPlans.length) {
+				this.storedPlans[j] = ItemStack.loadItemStackFromNBT(plan);
 			}
 		}
 	}
 
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
-		NBTTagList items = new NBTTagList();
-		for (int i = 0; i < contents.length; i++) {
-			if (contents[i] != null) {
-				NBTTagCompound item = new NBTTagCompound();
-				item.setByte(	"Slot",
+		NBTTagList plans = new NBTTagList();
+		for (int i = 0; i < storedPlans.length; i++) {
+			if (storedPlans[i] != null) {
+				NBTTagCompound plan = new NBTTagCompound();
+				plan.setByte(	"Plan",
 								(byte) i);
-				this.contents[i].writeToNBT(item);
-				items.appendTag(item);
+				this.storedPlans[i].writeToNBT(plan);
+				plans.appendTag(plan);
 			}
 		}
-		nbttagcompound.setTag(	"Items",
-								items);
+		nbttagcompound.setTag(	"Plans",
+								plans);
 	}
 
 }

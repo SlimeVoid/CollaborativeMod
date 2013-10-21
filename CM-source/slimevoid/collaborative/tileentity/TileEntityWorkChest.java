@@ -163,7 +163,7 @@ public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 
 	@Override
 	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-		return itemstack.getItem().itemID == ConfigurationLib.itemPlanFullID;
+		return itemstack.getItem().itemID == ConfigurationLib.itemPlanFull.itemID;
 	}
 
 	@Override
@@ -177,7 +177,8 @@ public class TileEntityWorkChest extends TileEntityCollaborativeBase implements
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
-		return ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
+		return itemstack.itemID == ConfigurationLib.itemPlanFull.itemID
+				&& ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
 	}
 
 	@Override

@@ -2,59 +2,32 @@ package slimevoid.collaborative.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import slimevoid.collaborative.container.slot.SlotPlan;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
+import slimevoidlib.inventory.ContainerBase;
 
-public class ContainerWorkChest extends Container {
+public class ContainerWorkChest extends ContainerBase {
 
-	private int				numRows;
-	TileEntityWorkChestBase	workchest;
-	public InventoryPlayer	playerInventory;
+	private int	numRows;
 
-	public ContainerWorkChest(IInventory playerInventory, IInventory tileentity) {
-		super();
-		this.workchest = (TileEntityWorkChestBase) tileentity;
-		this.playerInventory = (InventoryPlayer) playerInventory;
+	public ContainerWorkChest(InventoryPlayer playerInventory, TileEntityWorkChestBase tileentity) {
+		super(playerInventory, tileentity, tileentity.worldObj, 0, 140);
 		this.numRows = tileentity.getSizeInventory() / 9;
-		/*
-		 * Place Holders for additional inventories
-		 */
-
-		int offSet = 140;
-
-		// chest inventory
-		for (int row = 0; row < 6; ++row) {
-			for (int column = 0; column < 9; ++column) {
-				int slotIndex = column + (row * 9);
-				this.addSlotToContainer(new Slot(tileentity, slotIndex, 8 + column * 18, row * 18 + 18));
-			}
-		}
-
-		// Player inventory
-		for (int row = 0; row < 3; ++row) {
-			for (int column = 0; column < 9; ++column) {
-				int slotIndex = 9 + column + (row * 9);
-				this.addSlotToContainer(new Slot(playerInventory, slotIndex, 8 + column * 18, row
-																								* 18
-																								+ offSet));
-			}
-		}
-
-		// hotbar inventory
-		for (int row = 0; row < 9; ++row) {
-			int slotIndex = row;
-			this.addSlotToContainer(new Slot(playerInventory, slotIndex, 8 + row * 18, 58 + offSet));
-		}
-
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return this.workchest.isUseableByPlayer(entityplayer);
+	public void bindLocalInventory() {
+
+		// Chest inventory
+		for (int row = 0; row < 6; ++row) {
+			for (int column = 0; column < 9; ++column) {
+				int slotIndex = column + (row * 9);
+				this.addSlotToContainer(new SlotPlan(this.customInventory, slotIndex, 8 + column * 18, row * 18 + 18));
+			}
+		}
 	}
 
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int slotShiftClicked) {
@@ -63,7 +36,7 @@ public class ContainerWorkChest extends Container {
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stackInSlot = slot.getStack();
-			if (stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID) {
+			if (this.isPlan(stackInSlot)) {
 				stackCopy = stackInSlot.copy();
 				if (slotShiftClicked < this.numRows * 9) {
 					if (!this.mergeItemStack(	stackInSlot,
@@ -88,5 +61,10 @@ public class ContainerWorkChest extends Container {
 		}
 
 		return stackCopy;
+	}
+
+	private boolean isPlan(ItemStack stackInSlot) {
+		// TODO Auto-generated method stub
+		return stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID;
 	}
 }

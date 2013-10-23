@@ -5,17 +5,13 @@ import java.util.List;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
 import slimevoid.collaborative.container.ContainerWorkBench;
 import slimevoid.collaborative.core.lib.CommandLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
@@ -24,15 +20,17 @@ import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoid.collaborative.core.lib.PacketLib;
 import slimevoid.collaborative.network.packet.PacketGui;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
+import slimevoidlib.inventory.ContainerBase;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiCollaborativeWorkBench extends GuiContainer implements
 		ICrafting {
 
 	TileEntityWorkBench	workBench;
 
-	public GuiCollaborativeWorkBench(EntityPlayer entityplayer, InventoryPlayer playerInventory, World world, TileEntityWorkBench workBench) {
-		super(new ContainerWorkBench(playerInventory, workBench));
-		this.workBench = workBench;
+	public GuiCollaborativeWorkBench(ContainerBase container) {
+		super(container);
+		this.workBench = (TileEntityWorkBench) container.getInventoryData();
 		this.ySize = 222;
 	}
 
@@ -113,7 +111,7 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
 										14);
 		}
 		if (plan != null && plan.itemID == ConfigurationLib.itemPlanFull.itemID) {
-			ContainerWorkBench cont = (ContainerWorkBench) this.inventorySlots;
+			ContainerWorkBench bench = (ContainerWorkBench) this.inventorySlots;
 			// ContainerWorkBench _tmp = cont;
 			ItemStack ist[] = ContainerWorkBench.getShadowItems(plan);
 			RenderHelper.enableGUIStandardItemLighting();
@@ -158,7 +156,7 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
 				if (sl.getStack() != null) continue;
 				int slx = sl.xDisplayPosition;
 				int sly = sl.yDisplayPosition;
-				if ((cont.satisfyMask & 1 << n) > 0) {
+				if ((bench.satisfyMask & 1 << n) > 0) {
 					GL11.glColor4f(	1.0F,
 									1.0F,
 									1.0F,

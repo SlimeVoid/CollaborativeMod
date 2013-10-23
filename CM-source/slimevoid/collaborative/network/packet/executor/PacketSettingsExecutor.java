@@ -19,7 +19,7 @@ public class PacketSettingsExecutor implements IPacketExecutor {
 			if (entityplayer.openContainer != null
 				&& entityplayer.openContainer instanceof ContainerWorkBench) {
 				ContainerWorkBench bench = ((ContainerWorkBench) entityplayer.openContainer);
-				bench.onCraftMatrixChanged(bench.playerInventory);
+				bench.onCraftMatrixChanged(bench.getPlayerInventory());
 			}
 		}
 	}

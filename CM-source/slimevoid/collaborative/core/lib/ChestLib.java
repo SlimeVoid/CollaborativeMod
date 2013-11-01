@@ -1,22 +1,130 @@
 package slimevoid.collaborative.core.lib;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
+import slimevoid.collaborative.tileentity.TileEntityWorkChestStone;
+import slimevoid.collaborative.tileentity.TileEntityWorkChestWood;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class ChestLib {
+	public enum EnumWorkChest {
+		workChest_wood(
+				BlockLib.WORK_CHEST_WOOD_ID,
+				BlockLib.BLOCK_WORK_CHEST + ".wood",
+				BlockLib.DEFAULT_CHEST_SIZE * 1),
 
-	private static final String[]	chestNames			= {
-			BlockLib.BLOCK_WORK_CHEST + ".wood",
-			BlockLib.BLOCK_WORK_CHEST + ".stone",
-			BlockLib.BLOCK_WORK_CHEST + ".iron",
-			BlockLib.BLOCK_WORK_CHEST + ".gold",
-			BlockLib.BLOCK_WORK_CHEST + ".diamond"		};
+		workChest_stone(
+				BlockLib.WORK_CHEST_STONE_ID,
+				BlockLib.BLOCK_WORK_CHEST + ".stone",
+				BlockLib.DEFAULT_CHEST_SIZE * 2),
 
-	public static final int			DEFAULT_CHEST_SIZE	= 6 * 9;
+		workChest_iron(
+				BlockLib.WORK_CHEST_IRON_ID,
+				BlockLib.BLOCK_WORK_CHEST + ".iron",
+				BlockLib.DEFAULT_CHEST_SIZE * 3),
+
+		workChest_gold(
+				BlockLib.WORK_CHEST_GOLD_ID,
+				BlockLib.BLOCK_WORK_CHEST + ".gold",
+				BlockLib.DEFAULT_CHEST_SIZE * 4),
+
+		workChest_diamond(
+				BlockLib.WORK_CHEST_DIAMOND_ID,
+				BlockLib.BLOCK_WORK_CHEST + ".diamond",
+				BlockLib.DEFAULT_CHEST_SIZE * 5);
+
+		private int		chestID;
+		private String	chestName;
+		private int		chestSize;
+
+		private EnumWorkChest(int id, String name, int size) {
+			this.chestID = id;
+			this.chestName = name;
+			this.chestSize = size;
+		}
+	}
+
+	private static EnumWorkChest getChestFromID(int id) {
+		for (EnumWorkChest chest : EnumWorkChest.values()) {
+			if (chest.chestID == id) {
+				return chest;
+			}
+		}
+		return null;
+	}
 
 	public static String getChestName(int id) {
-		return id >= 0 && id < chestNames.length ? chestNames[id] : "Unknown Chest Type";
+		EnumWorkChest chest = getChestFromID(id);
+		return chest != null ? chest.chestName : "Unknown Work Chest Type";
 	}
 
 	public static int getChestSize(int id) {
-		return (id + 1) * DEFAULT_CHEST_SIZE;
+		EnumWorkChest chest = getChestFromID(id);
+		return chest != null ? chest.chestSize : BlockLib.DEFAULT_CHEST_SIZE;
+	}
+
+	public static void registerWorkChests() {
+		/**
+		 * WOODEN WORK CHEST
+		 */
+		String woodChestLocale = getChestName(BlockLib.WORK_CHEST_WOOD_ID);
+		GameRegistry.registerTileEntity(TileEntityWorkChestWood.class,
+										woodChestLocale);
+
+		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.WORK_CHEST_WOOD_ID,
+																		TileEntityWorkChestWood.class);
+
+		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.WORK_CHEST_WOOD_ID,
+															woodChestLocale);
+
+		ItemStack woodChest = new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.WORK_CHEST_WOOD_ID);
+		GameRegistry.addRecipe(	woodChest,
+								new Object[] {
+										"WWW",
+										"WCW",
+										"SSS",
+										Character.valueOf('W'),
+										Block.woodSingleSlab,
+										Character.valueOf('C'),
+										Block.chest,
+										Character.valueOf('S'),
+										Block.cobblestone });
+
+		/**
+		 * STONE WORK CHEST
+		 */
+		String stoneChestLocale = getChestName(BlockLib.WORK_CHEST_STONE_ID);
+
+		GameRegistry.registerTileEntity(TileEntityWorkChestStone.class,
+										stoneChestLocale);
+
+		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.WORK_CHEST_STONE_ID,
+																		TileEntityWorkChestStone.class);
+
+		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.WORK_CHEST_STONE_ID,
+															stoneChestLocale);
+		ItemStack stoneChest = new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.WORK_CHEST_STONE_ID);
+		GameRegistry.addRecipe(	stoneChest,
+								new Object[] {
+										" W ",
+										"WCW",
+										" W ",
+										Character.valueOf('W'),
+										Block.cobblestone,
+										Character.valueOf('C'),
+										woodChest });
+	}
+
+	public static Icon[][] registerWorkChestIcons(IconRegister iconRegister, Icon[][] iconList) {
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][0] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][1] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][2] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		return iconList;
 	}
 
 }

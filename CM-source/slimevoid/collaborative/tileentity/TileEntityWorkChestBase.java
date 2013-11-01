@@ -10,27 +10,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
 import slimevoid.collaborative.core.CollaborativeMod;
-import slimevoid.collaborative.core.lib.BlockLib;
 import slimevoid.collaborative.core.lib.ChestLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.GuiLib;
 import slimevoidlib.util.helpers.ItemHelper;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
-public class TileEntityWorkChestBase extends TileEntityCollaborativeBase
-		implements ISidedInventory {
+public abstract class TileEntityWorkChestBase extends
+		TileEntityCollaborativeBase implements ISidedInventory {
 
 	private ItemStack[]	storedPlans;
-	private int			chestType;
 
 	public TileEntityWorkChestBase() {
-		storedPlans = new ItemStack[ChestLib.DEFAULT_CHEST_SIZE];
-		chestType = 0;
-	}
-
-	@Override
-	public int getExtendedBlockID() {
-		return BlockLib.BLOCK_WORK_CHEST_ID;
+		storedPlans = new ItemStack[ChestLib.getChestSize(this.getExtendedBlockID())];
 	}
 
 	@Override
@@ -132,7 +124,7 @@ public class TileEntityWorkChestBase extends TileEntityCollaborativeBase
 
 	@Override
 	public String getInvName() {
-		return ChestLib.getChestName(this.chestType);
+		return ChestLib.getChestName(this.getExtendedBlockID());
 	}
 
 	@Override
@@ -195,19 +187,12 @@ public class TileEntityWorkChestBase extends TileEntityCollaborativeBase
 	public void onBlockPlacedBy(ItemStack itemstack, EntityLiving entity) {
 		super.onBlockPlacedBy(	itemstack,
 								entity);
-		if (itemstack.getTagCompound() != null) {
-			this.chestType = itemstack.stackTagCompound.getInteger("Type");
-		}
-		this.storedPlans = new ItemStack[ChestLib.getChestSize(this.chestType)];
+		this.storedPlans = new ItemStack[ChestLib.getChestSize(this.getExtendedBlockID())];
 	}
 
 	@Override
 	public void addHarvestContents(ArrayList<ItemStack> harvestList) {
 		ItemStack chest = new ItemStack(this.getBlockID(), 1, this.getExtendedBlockID());
-		NBTTagCompound nbtTag = new NBTTagCompound();
-		nbtTag.setInteger(	"Type",
-							this.chestType);
-		chest.setTagCompound(nbtTag);
 		harvestList.add(chest);
 	}
 
@@ -220,11 +205,6 @@ public class TileEntityWorkChestBase extends TileEntityCollaborativeBase
 			if (j >= 0 && j < this.storedPlans.length) {
 				this.storedPlans[j] = ItemStack.loadItemStackFromNBT(plan);
 			}
-		}
-		if (nbttagcompound.hasKey("Type")) {
-			this.chestType = nbttagcompound.getInteger("Type");
-		} else {
-			this.chestType = 0;
 		}
 	}
 
@@ -240,10 +220,6 @@ public class TileEntityWorkChestBase extends TileEntityCollaborativeBase
 				plans.appendTag(plan);
 			}
 		}
-		nbttagcompound.setTag(	"Plans",
-								plans);
-		nbttagcompound.setInteger(	"Type",
-									this.chestType);
 	}
 
 }

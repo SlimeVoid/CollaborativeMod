@@ -1,9 +1,9 @@
 package slimevoid.collaborative.items;
 
-import java.util.*;
-
-import slimevoid.collaborative.core.lib.IconLib;
-import slimevoid.collaborative.core.lib.ItemLib;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,20 +13,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.Icon;
+import slimevoid.collaborative.core.lib.ConfigurationLib;
+import slimevoid.collaborative.core.lib.IconLib;
+import slimevoid.collaborative.core.lib.ItemLib;
 
 public class ItemPlan extends Item {
-
-	@Override
-	public void registerIcons(IconRegister iconregister) {
-		this.itemIcon = iconregister.registerIcon(IconLib.PLAN_FULL);
-	}
 
 	public ItemPlan(int i) {
 		super(i);
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 		this.setUnlocalizedName(ItemLib.PLAN_FULL);
+		this.setCreativeTab(ConfigurationLib.customTab);
 		this.setMaxStackSize(1);
+	}
+
+	@Override
+	public void registerIcons(IconRegister iconRegister) {
+		this.itemIcon = iconRegister.registerIcon(IconLib.PLAN_FULL);
 	}
 
 	@Override

@@ -5,7 +5,7 @@
     <entry key="tile.cm.work.bench.name">Collaborative WorkBench</entry>
     <entry key="tile.cm.work.chest.wood.name">Wooden Work Chest</entry>
     <entry key="tile.cm.work.chest.stone.name">Stone Work Chest</entry>
-	<entry key="item.cm.plan.blank.name">Blank Plan</entry>
-	<entry key="item.cm.plan.full.name">Written Plan</entry>
+	<entry key="item.cm.plan_blank.name">Blank Plan</entry>
+	<entry key="item.cm.plan_full.name">Written Plan</entry>
 	<entry key="itemGroup.collaborative">Collaborative Mod</entry>
 </properties>

@@ -15,8 +15,9 @@ public class IconLib {
 	public static final String	WORK_BENCH_FRONT	= WORK_BENCH_PREFIX
 														+ "_front";
 
-	public static final String	PLAN				= ICON_PREFIX + "plan";
-	public static final String	PLAN_BLANK			= PLAN + "_blank";
-	public static final String	PLAN_FULL			= PLAN + "_full";
+	private static final String	PLAN_PREFIX			= ICON_PREFIX
+														+ ItemLib.ITEM_PLAN;
+	public static final String	PLAN_BLANK			= PLAN_PREFIX + "_blank";
+	public static final String	PLAN_FULL			= PLAN_PREFIX + "_full";
 
 }

@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import slimevoid.collaborative.blocks.BlockCollaborativeBase;
 import slimevoid.collaborative.core.lib.BlockLib;
+import slimevoid.collaborative.core.lib.ChestLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.IconLib;
 import slimevoid.collaborative.core.lib.ItemLib;
@@ -30,13 +31,8 @@ public class CMCore {
 		/**
 		 * WORK BENCH
 		 */
-		GameRegistry.registerTileEntity(TileEntityWorkBench.class,
-										BlockLib.BLOCK_WORK_BENCH);
-
-		ConfigurationLib.blockCollaborativeBase.addTileEntityMapping(	BlockLib.BLOCK_WORK_BENCH_ID,
-																		TileEntityWorkBench.class);
-
-		ConfigurationLib.blockCollaborativeBase.setItemName(BlockLib.BLOCK_WORK_BENCH_ID,
+		ConfigurationLib.blockCollaborativeBase.addMapping(	BlockLib.BLOCK_WORK_BENCH_ID,
+															TileEntityWorkBench.class,
 															BlockLib.BLOCK_WORK_BENCH);
 
 		GameRegistry.addRecipe(	new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.BLOCK_WORK_BENCH_ID),
@@ -56,7 +52,7 @@ public class CMCore {
 		/**
 		 * WORK CHESTS
 		 */
-		// ChestLib.registerWorkChests();
+		ChestLib.registerWorkChests();
 	}
 
 	public static void registerItems() {

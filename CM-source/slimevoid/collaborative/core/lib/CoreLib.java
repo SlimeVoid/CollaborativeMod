@@ -15,6 +15,6 @@ public class CoreLib {
 	public static final String	CLIENT_PROXY		= "slimevoid.collaborative.client.proxy.ClientProxy";
 	public static final String	COMMON_PROXY		= "slimevoid.collaborative.proxy.CommonProxy";
 	@SideOnly(Side.CLIENT)
-	public static boolean		OPTIFINE_INSTALLED	= FMLClientHandler.instance().hasOptifine();			;
+	public static boolean		OPTIFINE_INSTALLED	= FMLClientHandler.instance().hasOptifine();
 
 }

@@ -11,7 +11,7 @@
   "authors": ["Slime Void Crew"],
   "logoFile": "logo.png",
   "screenshots": [""],
-  "parent":"",
+  "parent":"SlimevoidLib",
   "dependencies": ["SlimevoidLib"]
 }
 ]

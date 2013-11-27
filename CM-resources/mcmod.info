@@ -3,15 +3,15 @@
   "modid": "CollaborativeMod",
   "name": "Collaboration Mod - Alpha",
   "description": "The Collaboration Mod is so named for the beliefs of it's creators.",
-  "version": "0.0.0.56",
+  "version": "0.0.1.0",
   "mcversion": "1.6.4",
   "url": "https://github.com/SlimeVoid/CollaborativeMod",
   "updateUrl": "",
-  "credits": "Eurymachus, Tarig",
+  "credits": "Eurymachus, Tarig, ShalimarMace",
   "authors": ["Slime Void Crew"],
   "logoFile": "logo.png",
   "screenshots": [""],
-  "parent":"",
+  "parent":"SlimevoidLib",
   "dependencies": ["SlimevoidLib"]
 }
 ]

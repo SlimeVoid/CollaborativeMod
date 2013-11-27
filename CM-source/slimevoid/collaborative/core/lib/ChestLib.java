@@ -111,11 +111,17 @@ public class ChestLib {
 
 	public static Icon[][] registerWorkChestIcons(IconRegister iconRegister, Icon[][] iconList) {
 		iconList[BlockLib.WORK_CHEST_WOOD_ID][0] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
-		iconList[BlockLib.WORK_CHEST_WOOD_ID][1] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][1] = iconRegister.registerIcon(IconLib.WORK_CHEST_WOOD_TOP);
 		iconList[BlockLib.WORK_CHEST_WOOD_ID][2] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
-		iconList[BlockLib.WORK_CHEST_WOOD_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
-		iconList[BlockLib.WORK_CHEST_WOOD_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
-		iconList[BlockLib.WORK_CHEST_WOOD_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
+		iconList[BlockLib.WORK_CHEST_WOOD_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
+		iconList[BlockLib.WORK_CHEST_STONE_ID][0] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
+		iconList[BlockLib.WORK_CHEST_STONE_ID][1] = iconRegister.registerIcon(IconLib.WORK_CHEST_STONE_TOP);
+		iconList[BlockLib.WORK_CHEST_STONE_ID][2] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_STONE_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_STONE_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
+		iconList[BlockLib.WORK_CHEST_STONE_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
 		return iconList;
 	}
 

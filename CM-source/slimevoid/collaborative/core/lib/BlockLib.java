@@ -35,8 +35,8 @@ public class BlockLib {
 		iconList[BLOCK_WORK_BENCH_ID][3] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
 		iconList[BLOCK_WORK_BENCH_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
 		iconList[BLOCK_WORK_BENCH_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_SIDE);
-		// iconList = EnumWorkChest.registerWorkChestIcons(iconRegister,
-		// iconList);
+		iconList = ChestLib.registerWorkChestIcons(	iconRegister,
+													iconList);
 		return iconList;
 	}
 }

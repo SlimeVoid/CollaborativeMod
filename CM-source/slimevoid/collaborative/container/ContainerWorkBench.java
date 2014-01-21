@@ -24,6 +24,7 @@ import slimevoid.collaborative.network.packet.PacketGui;
 import slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import slimevoidlib.inventory.ContainerBase;
 import slimevoidlib.inventory.InventorySubUpdate;
+import slimevoidlib.util.helpers.ContainerHelper;
 
 public class ContainerWorkBench extends ContainerBase {
 
@@ -327,9 +328,13 @@ public class ContainerWorkBench extends ContainerBase {
 			itemstackCopy = stackInSlot.copy();
 			if (slotShiftClicked != 9
 				&& (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID || stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)) {
-				if (moveSingleItem(	stackInSlot,
-									9)) {// try to place into plan
-											// slot
+				if (ContainerHelper.mergeItemStack(	this,
+													stackInSlot,
+													9,
+													10,
+													false)) {// try to place
+																// into plan
+					// slot
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)
 						|| !this.mergeItemStack(stackInSlot,
 												11,
@@ -389,19 +394,6 @@ public class ContainerWorkBench extends ContainerBase {
 			}
 		}
 		return itemstackCopy;
-	}
-
-	private boolean moveSingleItem(ItemStack stackInSlot, int i) {
-		Slot slot = (Slot) this.inventorySlots.get(i);
-		ItemStack itemstack1 = slot.getStack();
-		if (itemstack1 == null) {
-			slot.putStack(stackInSlot.copy());
-			slot.getStack().stackSize = 1;
-			slot.onSlotChanged();
-			--stackInSlot.stackSize;
-			return true;
-		}
-		return false;
 	}
 
 	@Override

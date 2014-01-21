@@ -327,11 +327,9 @@ public class ContainerWorkBench extends ContainerBase {
 			itemstackCopy = stackInSlot.copy();
 			if (slotShiftClicked != 9
 				&& (stackInSlot.itemID == ConfigurationLib.itemPlanBlank.itemID || stackInSlot.itemID == ConfigurationLib.itemPlanFull.itemID)) {
-				if (!this.mergeItemStack(	stackInSlot,
-											9,
-											10,
-											true)) {// try to place into plan
-													// slot
+				if (moveSingleItem(	stackInSlot,
+									9)) {// try to place into plan
+											// slot
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)
 						|| !this.mergeItemStack(stackInSlot,
 												11,
@@ -391,6 +389,19 @@ public class ContainerWorkBench extends ContainerBase {
 			}
 		}
 		return itemstackCopy;
+	}
+
+	private boolean moveSingleItem(ItemStack stackInSlot, int i) {
+		Slot slot = (Slot) this.inventorySlots.get(i);
+		ItemStack itemstack1 = slot.getStack();
+		if (itemstack1 == null) {
+			slot.putStack(stackInSlot.copy());
+			slot.getStack().stackSize = 1;
+			slot.onSlotChanged();
+			--stackInSlot.stackSize;
+			return true;
+		}
+		return false;
 	}
 
 	@Override

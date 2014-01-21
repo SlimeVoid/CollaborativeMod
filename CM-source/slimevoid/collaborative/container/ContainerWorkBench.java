@@ -285,11 +285,6 @@ public class ContainerWorkBench extends ContainerBase {
 											par2,
 											par3,
 											par4EntityPlayer);
-		/*
-		 * Slot plan = this.getSlot(ContainerLib.PLAN_SLOT); if (plan != null &&
-		 * plan.getStack() != null && plan.getStack().getItem() instanceof
-		 * ItemPlan) { }
-		 */
 		this.onCraftMatrixChanged(this.craftMatrix);
 		return stack;
 	}
@@ -305,13 +300,11 @@ public class ContainerWorkBench extends ContainerBase {
 	public void putStackInSlot(int par1, ItemStack par2ItemStack) {
 		super.putStackInSlot(	par1,
 								par2ItemStack);
-		// this.onCraftMatrixChanged(this.craftMatrix);
 	}
 
 	@Override
 	public void putStacksInSlots(ItemStack[] par1ArrayOfItemStack) {
 		super.putStacksInSlots(par1ArrayOfItemStack);
-		// this.onCraftMatrixChanged(this.craftMatrix);
 	}
 
 	/**
@@ -332,23 +325,20 @@ public class ContainerWorkBench extends ContainerBase {
 													stackInSlot,
 													9,
 													10,
-													false)) {// try to place
-																// into plan
-					// slot
+													false)) {
+					// try to place plan into plan slot
 					if ((slotShiftClicked >= 11 && slotShiftClicked < 29)
 						|| !this.mergeItemStack(stackInSlot,
 												11,
 												29,
-												false)) {// else place in
-															// internal
-															// inventory
+												false)) {
+						// else place in internal inventory
 						if ((slotShiftClicked >= 29)
 							|| !this.mergeItemStack(stackInSlot,
 													29,
 													65,
-													false)) {// else place in
-																// player
-																// inventory
+													false)) {
+							// else place in player inventory
 							return null;
 						}
 					}
@@ -360,8 +350,8 @@ public class ContainerWorkBench extends ContainerBase {
 											true)) {
 					return null;
 				}
-			} else if (slotShiftClicked < 29) { // if internal inventory shift
-												// click into player inventory
+			} else if (slotShiftClicked < 29) {
+				// if internal inventory shift click into player inventory
 				if (!this.mergeItemStack(	stackInSlot,
 											29,
 											65,
@@ -371,13 +361,13 @@ public class ContainerWorkBench extends ContainerBase {
 			} else if (!this.mergeItemStack(stackInSlot,
 											11,
 											29,
-											false)) { // if player then go into
-														// internal inventory
-														// first
+											false)) {
+				// if player then go into first
 				if (!this.mergeItemStack(	stackInSlot,
 											0,
 											9,
-											false)) {// then crafting grid
+											false)) {
+					// then crafting grid
 					return null;
 				}
 			}

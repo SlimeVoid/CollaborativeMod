@@ -13,7 +13,6 @@ import slimevoid.collaborative.core.CollaborativeMod;
 import slimevoid.collaborative.core.lib.ChestLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.GuiLib;
-import slimevoidlib.util.helpers.ItemHelper;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public abstract class TileEntityWorkChestBase extends
@@ -46,21 +45,6 @@ public abstract class TileEntityWorkChestBase extends
 									this.zCoord);
 			return true;
 		}
-	}
-
-	@Override
-	public void onBlockRemoval(int side, int metadata) {
-		for (int slot = 0; slot < this.storedPlans.length; slot++) {
-			ItemStack itemstack = this.storedPlans[slot];
-			if (itemstack != null && itemstack.stackSize > 0) {
-				ItemHelper.dropItem(this.worldObj,
-									this.xCoord,
-									this.yCoord,
-									this.zCoord,
-									itemstack);
-			}
-		}
-
 	}
 
 	public int getStartInventorySide(ForgeDirection side) {
@@ -190,12 +174,6 @@ public abstract class TileEntityWorkChestBase extends
 		this.storedPlans = new ItemStack[ChestLib.getChestSize(this.getExtendedBlockID())];
 	}
 
-	@Override
-	public void addHarvestContents(ArrayList<ItemStack> harvestList) {
-		ItemStack chest = new ItemStack(this.getBlockID(), 1, this.getExtendedBlockID());
-		harvestList.add(chest);
-	}
-
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
 		NBTTagList plans = nbttagcompound.getTagList("Plans");
@@ -222,4 +200,12 @@ public abstract class TileEntityWorkChestBase extends
 		}
 	}
 
+	@Override
+	protected void addHarvestContents(ArrayList<ItemStack> harvestList) {
+		for (ItemStack itemstack : this.storedPlans) {
+			if (itemstack != null) {
+				harvestList.add(itemstack);
+			}
+		}
+	}
 }

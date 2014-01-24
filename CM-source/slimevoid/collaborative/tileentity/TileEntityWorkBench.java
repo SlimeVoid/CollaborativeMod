@@ -1,5 +1,7 @@
 package slimevoid.collaborative.tileentity;
 
+import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -11,7 +13,6 @@ import slimevoid.collaborative.core.lib.BlockLib;
 import slimevoid.collaborative.core.lib.ConfigurationLib;
 import slimevoid.collaborative.core.lib.ContainerLib;
 import slimevoid.collaborative.core.lib.GuiLib;
-import slimevoidlib.util.helpers.ItemHelper;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 
 public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
@@ -49,21 +50,6 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 									this.zCoord);
 			return true;
 		}
-	}
-
-	@Override
-	public void onBlockRemoval(int side, int metadata) {
-		for (int i = 0; i < 27; i++) {
-			ItemStack itemstack = this.contents[i];
-			if (itemstack != null && itemstack.stackSize > 0) {
-				ItemHelper.dropItem(this.worldObj,
-									this.xCoord,
-									this.yCoord,
-									this.zCoord,
-									itemstack);
-			}
-		}
-
 	}
 
 	@Override
@@ -237,6 +223,15 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 		}
 		nbttagcompound.setTag(	"Items",
 								items);
+	}
+
+	@Override
+	protected void addHarvestContents(ArrayList<ItemStack> harvestList) {
+		for (ItemStack itemstack : this.contents) {
+			if (itemstack != null) {
+				harvestList.add(itemstack);
+			}
+		}
 	}
 
 }

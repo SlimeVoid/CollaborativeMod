@@ -10,18 +10,18 @@ import slimevoidlib.network.PacketUpdate;
 
 public class PacketSettingsExecutor implements IPacketExecutor {
 
-	@Override
-	public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
-		if (packet instanceof PacketSettings) {
-			PacketSettings packetSettings = (PacketSettings) packet;
-			ConfigurationLib.updatePlayersInventoryLocked(	entityplayer,
-															packetSettings.getInventoryMode());
-			if (entityplayer.openContainer != null
-				&& entityplayer.openContainer instanceof ContainerWorkBench) {
-				ContainerWorkBench bench = ((ContainerWorkBench) entityplayer.openContainer);
-				bench.onCraftMatrixChanged(bench.getPlayerInventory());
-			}
-		}
-	}
+    @Override
+    public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
+        if (packet instanceof PacketSettings) {
+            PacketSettings packetSettings = (PacketSettings) packet;
+            ConfigurationLib.updatePlayersInventoryLocked(entityplayer,
+                                                          packetSettings.getInventoryMode());
+            if (entityplayer.openContainer != null
+                && entityplayer.openContainer instanceof ContainerWorkBench) {
+                ContainerWorkBench bench = ((ContainerWorkBench) entityplayer.openContainer);
+                bench.onCraftMatrixChanged(bench.getPlayerInventory());
+            }
+        }
+    }
 
 }

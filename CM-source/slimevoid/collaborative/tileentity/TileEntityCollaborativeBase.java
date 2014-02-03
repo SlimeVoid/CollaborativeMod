@@ -5,8 +5,8 @@ import slimevoidlib.tileentity.TileEntityBase;
 
 public abstract class TileEntityCollaborativeBase extends TileEntityBase {
 
-	@Override
-	public int getBlockID() {
-		return ConfigurationLib.blockCollaborativeBase.blockID;
-	}
+    @Override
+    public int getBlockID() {
+        return ConfigurationLib.blockCollaborativeBase.blockID;
+    }
 }

@@ -7,18 +7,18 @@ import slimevoidlib.network.PacketUpdate;
 
 public class PacketSettings extends PacketUpdate {
 
-	public PacketSettings() {
-		super(PacketIds.PLAYER);
-		this.setChannel(CoreLib.MOD_CHANNEL);
-	}
+    public PacketSettings() {
+        super(PacketIds.PLAYER);
+        this.setChannel(CoreLib.MOD_CHANNEL);
+    }
 
-	@Override
-	public boolean targetExists(World world) {
-		return false;
-	}
+    @Override
+    public boolean targetExists(World world) {
+        return false;
+    }
 
-	public boolean getInventoryMode() {
-		return this.side == 1;
-	}
+    public boolean getInventoryMode() {
+        return this.side == 1;
+    }
 
 }

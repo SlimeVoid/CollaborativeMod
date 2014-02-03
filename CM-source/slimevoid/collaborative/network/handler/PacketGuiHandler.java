@@ -6,9 +6,9 @@ import slimevoidlib.network.handlers.SubPacketHandler;
 
 public class PacketGuiHandler extends SubPacketHandler {
 
-	@Override
-	protected PacketUpdate createNewPacket() {
-		return new PacketGui();
-	}
+    @Override
+    protected PacketUpdate createNewPacket() {
+        return new PacketGui();
+    }
 
 }

@@ -13,35 +13,35 @@ import slimevoidlib.network.PacketIds;
 
 public class PacketLib {
 
-	@SideOnly(Side.CLIENT)
-	public static void registerClientPacketHandlers() {
+    @SideOnly(Side.CLIENT)
+    public static void registerClientPacketHandlers() {
 
-	}
+    }
 
-	public static void registerPacketHandlers() {
-		PacketGuiHandler packetGuiHandler = new PacketGuiHandler();
-		packetGuiHandler.registerPacketHandler(	CommandLib.CREATE_PLAN,
-												new PacketGuiExecutor());
+    public static void registerPacketHandlers() {
+        PacketGuiHandler packetGuiHandler = new PacketGuiHandler();
+        packetGuiHandler.registerPacketHandler(CommandLib.CREATE_PLAN,
+                                               new PacketGuiExecutor());
 
-		CommonPacketHandler.registerPacketHandler(	PacketIds.GUI,
-													packetGuiHandler);
+        CommonPacketHandler.registerPacketHandler(PacketIds.GUI,
+                                                  packetGuiHandler);
 
-		PacketSettingsHandler packetSettingsHandler = new PacketSettingsHandler();
-		packetSettingsHandler.registerPacketHandler(CommandLib.UPDATE_SETTINGS,
-													new PacketSettingsExecutor());
+        PacketSettingsHandler packetSettingsHandler = new PacketSettingsHandler();
+        packetSettingsHandler.registerPacketHandler(CommandLib.UPDATE_SETTINGS,
+                                                    new PacketSettingsExecutor());
 
-		CommonPacketHandler.registerPacketHandler(	PacketIds.PLAYER,
-													packetSettingsHandler);
-	}
+        CommonPacketHandler.registerPacketHandler(PacketIds.PLAYER,
+                                                  packetSettingsHandler);
+    }
 
-	public static void sendPlayerInventoryStatus(boolean newVal) {
-		PacketSettings packet = new PacketSettings();
-		packet.setPosition(	0,
-							0,
-							0,
-							newVal ? 1 : 0);
-		packet.setCommand(CommandLib.UPDATE_SETTINGS);
-		PacketDispatcher.sendPacketToServer(packet.getPacket());
-	}
+    public static void sendPlayerInventoryStatus(boolean newVal) {
+        PacketSettings packet = new PacketSettings();
+        packet.setPosition(0,
+                           0,
+                           0,
+                           newVal ? 1 : 0);
+        packet.setCommand(CommandLib.UPDATE_SETTINGS);
+        PacketDispatcher.sendPacketToServer(packet.getPacket());
+    }
 
 }

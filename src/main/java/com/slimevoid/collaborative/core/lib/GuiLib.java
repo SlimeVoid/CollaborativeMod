@@ -12,12 +12,12 @@ public class GuiLib {
     public static final String           WORK_BENCH       = GUI_PREFIX
                                                             + BlockLib.BLOCK_WORK_BENCH
                                                             + ".png";
-    public static final ResourceLocation GUI_WORK_BENCH   = new ResourceLocation(CoreLib.MOD_RESOURCES, WORK_BENCH);
+    public static final ResourceLocation GUI_WORK_BENCH   = new ResourceLocation(CoreLib.MOD_ID, WORK_BENCH);
 
     public static final String           TITLE_WORK_BENCH = "Collaborative Work Bench";
 
     public static final String           WORK_CHEST       = GUI_PREFIX
                                                             + BlockLib.BLOCK_WORK_CHEST
                                                             + ".png";
-    public static final ResourceLocation GUI_WORK_CHEST   = new ResourceLocation(CoreLib.MOD_RESOURCES, WORK_CHEST);
+    public static final ResourceLocation GUI_WORK_CHEST   = new ResourceLocation(CoreLib.MOD_ID, WORK_CHEST);
 }

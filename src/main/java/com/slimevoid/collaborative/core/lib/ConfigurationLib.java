@@ -82,7 +82,7 @@ public class ConfigurationLib {
     }
 
     public static void createCustomTab() {
-        customTab = new CreativeTabs(CoreLib.MOD_RESOURCES) {
+        customTab = new CreativeTabs(CoreLib.MOD_ID) {
             @Override
             public Item getTabIconItem() {
                 return Item.getItemFromBlock(blockCollaborativeBase);

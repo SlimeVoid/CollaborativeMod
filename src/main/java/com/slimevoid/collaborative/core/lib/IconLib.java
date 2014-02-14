@@ -4,7 +4,7 @@ import net.minecraft.block.BlockWood;
 
 public class IconLib {
 
-    private static final String ICON_PREFIX          = CoreLib.MOD_RESOURCES
+    private static final String ICON_PREFIX          = CoreLib.MOD_ID
                                                        + ":";
     public static final String  WORK_BENCH_PREFIX    = ICON_PREFIX
                                                        + BlockLib.BLOCK_WORK_BENCH;

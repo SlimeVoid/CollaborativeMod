@@ -1,14 +1,19 @@
 package com.slimevoid.collaborative.blocks;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 import com.slimevoid.collaborative.core.lib.BlockLib;
 import com.slimevoid.collaborative.core.lib.ConfigurationLib;
 import com.slimevoid.library.blocks.BlockBase;
+import com.slimevoid.library.items.ItemBlockBase;
 
 public class BlockCollaborativeBase extends BlockBase {
 
@@ -69,6 +74,15 @@ public class BlockCollaborativeBase extends BlockBase {
     @Override
     public CreativeTabs getCreativeTab() {
         return ConfigurationLib.customTab;
+    }
+
+    @Override
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+        if (item instanceof ItemBlockBase) {
+            for (int i = 0; i < ((ItemBlockBase) item).getValidItemBlocks().size(); i++) {
+                list.add(new ItemStack(item, 1, i));
+            }
+        }
     }
 
 }

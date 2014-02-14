@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import com.slimevoid.collaborative.core.lib.ConfigurationLib;
-import com.slimevoid.collaborative.core.lib.IconLib;
-import com.slimevoid.collaborative.core.lib.ItemLib;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -18,9 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
 
+import com.slimevoid.collaborative.core.lib.ConfigurationLib;
+import com.slimevoid.collaborative.core.lib.IconLib;
+import com.slimevoid.collaborative.core.lib.ItemLib;
+
 public class ItemPlanExtended extends ItemPlan {
 
     public ItemPlanExtended() {
+        super();
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         this.setUnlocalizedName(ItemLib.PLAN_FULL);

@@ -8,6 +8,7 @@ import com.slimevoid.collaborative.blocks.BlockCollaborativeBase;
 import com.slimevoid.collaborative.core.lib.BlockLib;
 import com.slimevoid.collaborative.core.lib.ChestLib;
 import com.slimevoid.collaborative.core.lib.ConfigurationLib;
+import com.slimevoid.collaborative.core.lib.ItemLib;
 import com.slimevoid.collaborative.items.ItemPlan;
 import com.slimevoid.collaborative.items.ItemPlanExtended;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
@@ -55,6 +56,11 @@ public class CMCore {
         ConfigurationLib.itemPlanBlank = new ItemPlan();
 
         ConfigurationLib.itemPlanFull = new ItemPlanExtended();
+
+        GameRegistry.registerItem(ConfigurationLib.itemPlanBlank,
+                                  ItemLib.PLAN_BLANK);
+        GameRegistry.registerItem(ConfigurationLib.itemPlanFull,
+                                  ItemLib.PLAN_FULL);
 
         GameRegistry.addRecipe(new ItemStack(ConfigurationLib.itemPlanBlank, 5, 0),
                                new Object[] {

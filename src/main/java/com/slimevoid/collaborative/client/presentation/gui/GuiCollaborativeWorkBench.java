@@ -19,10 +19,10 @@ import com.slimevoid.collaborative.core.lib.ContainerLib;
 import com.slimevoid.collaborative.core.lib.GuiLib;
 import com.slimevoid.collaborative.core.lib.PacketLib;
 import com.slimevoid.collaborative.items.ItemPlanExtended;
-import com.slimevoid.collaborative.network.PacketHandler;
 import com.slimevoid.collaborative.network.packet.PacketGui;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.library.inventory.ContainerBase;
+import com.slimevoid.library.network.handlers.PacketHandler;
 
 public class GuiCollaborativeWorkBench extends GuiContainer implements
         ICrafting {
@@ -42,11 +42,13 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
         if (x >= 18 && y >= 55 && x <= 32 && y <= 69) {
             ItemStack plan = this.inventorySlots.getSlot(ContainerLib.PLAN_SLOT).getStack();
             ItemStack craft = this.inventorySlots.getSlot(ContainerLib.CRAFT_SLOT).getStack();
-            if (plan == null || craft == null || plan.getItem() != null
-                || plan.getItem() instanceof ItemPlanExtended) {
+            if (plan == null
+                || craft == null
+                || (plan.getItem() != null && plan.getItem() instanceof ItemPlanExtended)) {
                 return;
             }
             PacketGui pkt = new PacketGui(this.workBench.xCoord, this.workBench.yCoord, this.workBench.zCoord, CommandLib.CREATE_PLAN, this.inventorySlots.windowId);
+            System.out.println("Sending!");
             PacketHandler.listener.sendToServer(pkt.getPacket());
         }
         // if(x >= 63 && y >= 125 && x <= 77 && y <= 139) {
@@ -105,7 +107,7 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
         if (plan != null
             && craft != null
             && plan.getItem() != null
-            && plan.getItem().getClass().isInstance(ConfigurationLib.itemPlanBlank.getClass())) {
+            && plan.getItem().getClass().isAssignableFrom(ConfigurationLib.itemPlanBlank.getClass())) {
             this.drawTexturedModalRect(this.guiLeft + 18,
                                        this.guiTop + 55,
                                        176,
@@ -113,8 +115,8 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
                                        14,
                                        14);
         }
-        if (plan != null
-            && plan.getClass().isInstance(ConfigurationLib.itemPlanFull.getClass())) {
+        if (plan != null && plan.getItem() != null
+            && plan.getItem() instanceof ItemPlanExtended) {
             ContainerWorkBench bench = (ContainerWorkBench) this.inventorySlots;
             // ContainerWorkBench _tmp = cont;
             ItemStack ist[] = ContainerWorkBench.getShadowItems(plan);

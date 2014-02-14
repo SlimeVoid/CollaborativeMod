@@ -2,22 +2,22 @@ package com.slimevoid.collaborative.proxy;
 
 import java.io.File;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import com.slimevoid.collaborative.container.ContainerWorkBench;
 import com.slimevoid.collaborative.container.ContainerWorkChest;
 import com.slimevoid.collaborative.core.CollaborativeMod;
 import com.slimevoid.collaborative.core.lib.ConfigurationLib;
 import com.slimevoid.collaborative.core.lib.GuiLib;
 import com.slimevoid.collaborative.core.lib.PacketLib;
-import com.slimevoid.collaborative.network.PacketHandler;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 import com.slimevoid.library.ICommonProxy;
 import com.slimevoid.library.IPacketHandling;
 import com.slimevoid.library.util.helpers.BlockHelper;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class CommonProxy implements ICommonProxy {
@@ -59,7 +59,6 @@ public class CommonProxy implements ICommonProxy {
 
     @Override
     public void preInit() {
-        PacketHandler.init();
         PacketLib.registerPacketHandlers();
         NetworkRegistry.INSTANCE.registerGuiHandler(CollaborativeMod.instance,
                                                     CollaborativeMod.proxy);

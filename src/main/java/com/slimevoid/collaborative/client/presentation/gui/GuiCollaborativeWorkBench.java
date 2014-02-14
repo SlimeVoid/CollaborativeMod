@@ -48,7 +48,6 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
                 return;
             }
             PacketGui pkt = new PacketGui(this.workBench.xCoord, this.workBench.yCoord, this.workBench.zCoord, CommandLib.CREATE_PLAN, this.inventorySlots.windowId);
-            System.out.println("Sending!");
             PacketHandler.listener.sendToServer(pkt.getPacket());
         }
         // if(x >= 63 && y >= 125 && x <= 77 && y <= 139) {

@@ -6,9 +6,9 @@ import com.slimevoid.collaborative.network.packet.PacketSettings;
 import com.slimevoid.collaborative.network.packet.executor.PacketGuiExecutor;
 import com.slimevoid.collaborative.network.packet.executor.PacketSettingsExecutor;
 import com.slimevoid.library.network.PacketIds;
-import com.slimevoid.library.network.handlers.PacketHandler;
+import com.slimevoid.library.network.handlers.ServerPacketHandler;
+import com.slimevoid.library.util.helpers.PacketHelper;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -23,7 +23,7 @@ public class PacketLib {
         /*
          * Create new Packet Handler
          */
-        PacketHandler handler = new PacketHandler();
+        ServerPacketHandler handler = new ServerPacketHandler();
 
         /*
          * Regiter SubPacket handlers
@@ -42,11 +42,8 @@ public class PacketLib {
         handler.registerPacketHandler(PacketIds.PLAYER,
                                       packetSettingsHandler);
 
-        /*
-         * Register Listeners
-         */
-        PacketHandler.listener = NetworkRegistry.INSTANCE.newEventDrivenChannel(CoreLib.MOD_CHANNEL);
-        PacketHandler.listener.register(handler);
+        PacketHelper.registerPacketHandler(CoreLib.MOD_CHANNEL,
+                                            handler);
     }
 
     public static void sendPlayerInventoryStatus(boolean newVal) {
@@ -56,7 +53,7 @@ public class PacketLib {
                            0,
                            newVal ? 1 : 0);
         packet.setCommand(CommandLib.UPDATE_SETTINGS);
-        PacketHandler.listener.sendToServer(packet.getPacket());
+        ServerPacketHandler.listener.sendToServer(packet.getPacket());
     }
 
 }

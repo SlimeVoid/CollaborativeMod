@@ -43,7 +43,7 @@ public class PacketLib {
                                       packetSettingsHandler);
 
         PacketHelper.registerPacketHandler(CoreLib.MOD_CHANNEL,
-                                            handler);
+                                           handler);
     }
 
     public static void sendPlayerInventoryStatus(boolean newVal) {
@@ -53,7 +53,7 @@ public class PacketLib {
                            0,
                            newVal ? 1 : 0);
         packet.setCommand(CommandLib.UPDATE_SETTINGS);
-        ServerPacketHandler.listener.sendToServer(packet.getPacket());
+        PacketHelper.sendToServer(packet);
     }
 
 }

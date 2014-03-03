@@ -22,7 +22,7 @@ import com.slimevoid.collaborative.items.ItemPlanExtended;
 import com.slimevoid.collaborative.network.packet.PacketGui;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.library.inventory.ContainerBase;
-import com.slimevoid.library.network.handlers.ClientPacketHandler;
+import com.slimevoid.library.util.helpers.PacketHelper;
 
 public class GuiCollaborativeWorkBench extends GuiContainer implements
         ICrafting {
@@ -48,7 +48,7 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
                 return;
             }
             PacketGui pkt = new PacketGui(this.workBench.xCoord, this.workBench.yCoord, this.workBench.zCoord, CommandLib.CREATE_PLAN, this.inventorySlots.windowId);
-            ClientPacketHandler.listener.sendToServer(pkt.getPacket());
+            PacketHelper.sendToServer(pkt);
         }
         // if(x >= 63 && y >= 125 && x <= 77 && y <= 139) {
         if (x >= 8 && y >= (this.ySize - 96) + 2 && x <= 8 + 50

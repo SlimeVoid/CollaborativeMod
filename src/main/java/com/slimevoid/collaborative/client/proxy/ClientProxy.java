@@ -2,6 +2,9 @@ package com.slimevoid.collaborative.client.proxy;
 
 import java.io.File;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
 import com.slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkBench;
 import com.slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkChest;
 import com.slimevoid.collaborative.container.ContainerWorkBench;
@@ -13,9 +16,6 @@ import com.slimevoid.collaborative.proxy.CommonProxy;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 import com.slimevoid.library.util.helpers.BlockHelper;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class ClientProxy extends CommonProxy {
 
@@ -49,8 +49,8 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void preInit() {
-        super.preInit();
+    public void init() {
+        super.init();
         PacketLib.registerClientPacketHandlers();
     }
 

@@ -3,6 +3,17 @@ package com.slimevoid.collaborative.container;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+
 import com.slimevoid.collaborative.container.slot.SlotCraftRefill;
 import com.slimevoid.collaborative.container.slot.SlotPlan;
 import com.slimevoid.collaborative.core.lib.CommandLib;
@@ -16,17 +27,6 @@ import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.library.inventory.ContainerBase;
 import com.slimevoid.library.inventory.InventorySubUpdate;
 import com.slimevoid.library.util.helpers.ContainerHelper;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 
 public class ContainerWorkBench extends ContainerBase {
 
@@ -325,27 +325,12 @@ public class ContainerWorkBench extends ContainerBase {
             itemstackCopy = stackInSlot.copy();
             if (slotShiftClicked != 9
                 && (stackInSlot.getItem() instanceof ItemPlan)) {
-                if (ContainerHelper.mergeItemStack(this,
-                                                   stackInSlot,
-                                                   9,
-                                                   10,
-                                                   false)) {
-                    // try to place plan into plan slot
-                    if ((slotShiftClicked >= 11 && slotShiftClicked < 29)
-                        || !this.mergeItemStack(stackInSlot,
-                                                11,
-                                                29,
-                                                false)) {
-                        // else place in internal inventory
-                        if ((slotShiftClicked >= 29)
-                            || !this.mergeItemStack(stackInSlot,
-                                                    29,
-                                                    65,
+                if (!ContainerHelper.mergeItemStack(this,
+                                                    stackInSlot,
+                                                    9,
+                                                    10,
                                                     false)) {
-                            // else place in player inventory
-                            return null;
-                        }
-                    }
+                    return null;
                 }
             } else if (slotShiftClicked < 9 || slotShiftClicked == 10) {
                 if (!this.mergeItemStack(stackInSlot,

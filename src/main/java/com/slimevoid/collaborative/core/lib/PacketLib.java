@@ -42,7 +42,7 @@ public class PacketLib {
         handler.registerPacketHandler(PacketIds.PLAYER,
                                       packetSettingsHandler);
 
-        PacketHelper.registerListener(CoreLib.MOD_CHANNEL,
+        PacketHelper.registerServerHandler(CoreLib.MOD_CHANNEL,
                                       handler);
     }
 

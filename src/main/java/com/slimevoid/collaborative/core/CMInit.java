@@ -7,13 +7,6 @@ public class CMInit {
 
     private static boolean initialized;
 
-    public static void postInitialize() {
-        if (initialized) {
-            return;
-        }
-        initialized = true;
-    }
-
     public static void preInitialize() {
         SlimevoidCore.console(CoreLib.MOD_ID,
                               "Registering blocks...");
@@ -24,6 +17,13 @@ public class CMInit {
         CMCore.registerItems();
 
         CollaborativeMod.proxy.registerRenderInformation();
+    }
+
+    public static void postInitialize() {
+        if (initialized) {
+            return;
+        }
+        initialized = true;
     }
 
 }

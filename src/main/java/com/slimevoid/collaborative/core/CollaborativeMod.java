@@ -2,11 +2,13 @@ package com.slimevoid.collaborative.core;
 
 import com.slimevoid.collaborative.core.lib.CoreLib;
 import com.slimevoid.library.ICommonProxy;
+import com.slimevoid.library.util.helpers.PacketHelper;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -26,15 +28,20 @@ public class CollaborativeMod {
 
     @EventHandler
     public void CollaborativePreInit(FMLPreInitializationEvent event) {
-        CollaborativeMod.proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
-
-        CollaborativeMod.proxy.preInit();
-
+        proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
+        proxy.preInit();
         CMInit.preInitialize();
     }
 
     @EventHandler
+    public void CollaborativeInit(FMLInitializationEvent event) {
+        PacketHelper.registerListener(CoreLib.MOD_CHANNEL);
+        proxy.init();
+    }
+
+    @EventHandler
     public void CollaborativePostInit(FMLPostInitializationEvent event) {
+        proxy.postInit();
         CMInit.postInitialize();
     }
 }

@@ -59,50 +59,47 @@ public class CommonProxy implements ICommonProxy {
 
     @Override
     public void preInit() {
+    }
+
+    @Override
+    public void init() {
         PacketLib.registerPacketHandlers();
         NetworkRegistry.INSTANCE.registerGuiHandler(CollaborativeMod.instance,
                                                     CollaborativeMod.proxy);
     }
 
     @Override
-    public void registerTickHandlers() {
-        // TODO :: Auto-generated method stub
+    public void postInit() {
+    }
 
+    @Override
+    public void registerTickHandlers() {
     }
 
     @Override
     public void registerEventHandlers() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void registerRenderInformation() {
-        // TODO :: Auto-generated method stub
-
     }
 
     @Override
     public String getMinecraftDir() {
-        // TODO :: Auto-generated method stub
         return null;
     }
 
     @Override
     public IPacketHandling getPacketHandler() {
-        // TODO :: Auto-generated method stub
         return null;
     }
 
     @Override
     public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {
-        // TODO :: Auto-generated method stub
-
     }
 
     @Override
     public boolean isClient(World world) {
-        // TODO :: Auto-generated method stub
         return false;
     }
 }

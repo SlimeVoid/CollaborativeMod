@@ -26,7 +26,7 @@ public class PacketLib {
         ServerPacketHandler handler = new ServerPacketHandler();
 
         /*
-         * Regiter SubPacket handlers
+         * Register SubPacket handlers
          */
         PacketGuiHandler packetGuiHandler = new PacketGuiHandler();
         packetGuiHandler.registerPacketHandler(CommandLib.CREATE_PLAN,
@@ -43,7 +43,7 @@ public class PacketLib {
                                       packetSettingsHandler);
 
         PacketHelper.registerListener(CoreLib.MOD_CHANNEL,
-                                           handler);
+                                      handler);
     }
 
     public static void sendPlayerInventoryStatus(boolean newVal) {

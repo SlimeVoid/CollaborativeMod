@@ -15,7 +15,6 @@ import com.slimevoid.collaborative.core.lib.PacketLib;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 import com.slimevoid.library.ICommonProxy;
-import com.slimevoid.library.IPacketHandling;
 import com.slimevoid.library.util.helpers.BlockHelper;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -86,11 +85,6 @@ public class CommonProxy implements ICommonProxy {
 
     @Override
     public String getMinecraftDir() {
-        return null;
-    }
-
-    @Override
-    public IPacketHandling getPacketHandler() {
         return null;
     }
 

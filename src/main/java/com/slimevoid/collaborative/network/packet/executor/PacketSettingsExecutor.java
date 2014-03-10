@@ -1,13 +1,13 @@
 package com.slimevoid.collaborative.network.packet.executor;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
 import com.slimevoid.collaborative.container.ContainerWorkBench;
 import com.slimevoid.collaborative.core.lib.ConfigurationLib;
 import com.slimevoid.collaborative.network.packet.PacketSettings;
 import com.slimevoid.library.IPacketExecutor;
 import com.slimevoid.library.network.PacketUpdate;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class PacketSettingsExecutor implements IPacketExecutor {
 

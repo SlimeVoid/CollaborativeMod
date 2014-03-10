@@ -6,13 +6,17 @@ import com.slimevoid.collaborative.network.packet.PacketSettings;
 import com.slimevoid.collaborative.network.packet.executor.PacketGuiExecutor;
 import com.slimevoid.collaborative.network.packet.executor.PacketSettingsExecutor;
 import com.slimevoid.library.network.PacketIds;
-import com.slimevoid.library.network.handlers.ServerPacketHandler;
+import com.slimevoid.library.network.handlers.PacketPipeline;
 import com.slimevoid.library.util.helpers.PacketHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class PacketLib {
+    /*
+     * Create new Packet Handler
+     */
+    public static PacketPipeline handler = new PacketPipeline();
 
     @SideOnly(Side.CLIENT)
     public static void registerClientPacketHandlers() {
@@ -20,30 +24,23 @@ public class PacketLib {
     }
 
     public static void registerPacketHandlers() {
-        /*
-         * Create new Packet Handler
-         */
-        ServerPacketHandler handler = new ServerPacketHandler();
 
         /*
          * Register SubPacket handlers
          */
         PacketGuiHandler packetGuiHandler = new PacketGuiHandler();
-        packetGuiHandler.registerPacketHandler(CommandLib.CREATE_PLAN,
+        packetGuiHandler.registerServerExecutor(CommandLib.CREATE_PLAN,
                                                new PacketGuiExecutor());
 
         handler.registerPacketHandler(PacketIds.GUI,
                                       packetGuiHandler);
 
         PacketSettingsHandler packetSettingsHandler = new PacketSettingsHandler();
-        packetSettingsHandler.registerPacketHandler(CommandLib.UPDATE_SETTINGS,
+        packetSettingsHandler.registerServerExecutor(CommandLib.UPDATE_SETTINGS,
                                                     new PacketSettingsExecutor());
 
         handler.registerPacketHandler(PacketIds.PLAYER,
                                       packetSettingsHandler);
-
-        PacketHelper.registerServerHandler(CoreLib.MOD_CHANNEL,
-                                      handler);
     }
 
     public static void sendPlayerInventoryStatus(boolean newVal) {

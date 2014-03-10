@@ -1,6 +1,7 @@
 package com.slimevoid.collaborative.core;
 
 import com.slimevoid.collaborative.core.lib.CoreLib;
+import com.slimevoid.collaborative.core.lib.PacketLib;
 import com.slimevoid.library.ICommonProxy;
 import com.slimevoid.library.util.helpers.PacketHelper;
 
@@ -35,8 +36,9 @@ public class CollaborativeMod {
 
     @EventHandler
     public void CollaborativeInit(FMLInitializationEvent event) {
-        PacketHelper.registerListener(CoreLib.MOD_CHANNEL);
         proxy.init();
+        PacketHelper.registerHandler(CoreLib.MOD_CHANNEL,
+                                     PacketLib.handler);
     }
 
     @EventHandler

@@ -1,8 +1,9 @@
 package com.slimevoid.collaborative.network.handler;
 
+import net.slimevoid.library.network.PacketUpdate;
+import net.slimevoid.library.network.handlers.SubPacketHandler;
+
 import com.slimevoid.collaborative.network.packet.PacketGui;
-import com.slimevoid.library.network.PacketUpdate;
-import com.slimevoid.library.network.handlers.SubPacketHandler;
 
 public class PacketGuiHandler extends SubPacketHandler {
 

@@ -13,6 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.slimevoid.library.inventory.ContainerBase;
+import net.slimevoid.library.inventory.InventorySubUpdate;
+import net.slimevoid.library.util.helpers.ContainerHelper;
 
 import com.slimevoid.collaborative.container.slot.SlotCraftRefill;
 import com.slimevoid.collaborative.container.slot.SlotPlan;
@@ -24,9 +27,6 @@ import com.slimevoid.collaborative.inventory.InventorySubCraft;
 import com.slimevoid.collaborative.items.ItemPlan;
 import com.slimevoid.collaborative.network.packet.PacketGui;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import com.slimevoid.library.inventory.ContainerBase;
-import com.slimevoid.library.inventory.InventorySubUpdate;
-import com.slimevoid.library.util.helpers.ContainerHelper;
 
 public class ContainerWorkBench extends ContainerBase {
 

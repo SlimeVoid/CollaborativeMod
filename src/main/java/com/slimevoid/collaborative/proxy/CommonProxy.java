@@ -5,6 +5,8 @@ import java.io.File;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.slimevoid.library.ICommonProxy;
+import net.slimevoid.library.util.helpers.BlockHelper;
 
 import com.slimevoid.collaborative.container.ContainerWorkBench;
 import com.slimevoid.collaborative.container.ContainerWorkChest;
@@ -14,8 +16,6 @@ import com.slimevoid.collaborative.core.lib.GuiLib;
 import com.slimevoid.collaborative.core.lib.PacketLib;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
-import com.slimevoid.library.ICommonProxy;
-import com.slimevoid.library.util.helpers.BlockHelper;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 

@@ -1,12 +1,12 @@
 package com.slimevoid.collaborative.client.presentation.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.slimevoid.library.inventory.ContainerBase;
 
 import org.lwjgl.opengl.GL11;
 
 import com.slimevoid.collaborative.container.ContainerWorkChest;
 import com.slimevoid.collaborative.core.lib.GuiLib;
-import com.slimevoid.library.inventory.ContainerBase;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 // import net.minecraft.client.resources.I18n;

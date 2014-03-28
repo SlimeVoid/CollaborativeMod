@@ -3,12 +3,12 @@ package com.slimevoid.collaborative.container;
 import com.slimevoid.collaborative.container.slot.SlotPlan;
 import com.slimevoid.collaborative.core.lib.ConfigurationLib;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
-import com.slimevoid.library.inventory.ContainerBase;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.slimevoid.library.inventory.ContainerBase;
 
 public class ContainerWorkChest extends ContainerBase {
 

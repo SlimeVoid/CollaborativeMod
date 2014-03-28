@@ -9,11 +9,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.slimevoid.library.blocks.BlockBase;
+import net.slimevoid.library.items.ItemBlockBase;
 
 import com.slimevoid.collaborative.core.lib.BlockLib;
 import com.slimevoid.collaborative.core.lib.ConfigurationLib;
-import com.slimevoid.library.blocks.BlockBase;
-import com.slimevoid.library.items.ItemBlockBase;
 
 public class BlockCollaborativeBase extends BlockBase {
 

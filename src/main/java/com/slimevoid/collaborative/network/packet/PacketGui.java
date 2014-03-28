@@ -1,11 +1,11 @@
 package com.slimevoid.collaborative.network.packet;
 
 import com.slimevoid.collaborative.core.lib.CoreLib;
-import com.slimevoid.library.network.PacketGuiEvent;
-import com.slimevoid.library.util.helpers.SlimevoidHelper;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.slimevoid.library.network.PacketGuiEvent;
+import net.slimevoid.library.util.helpers.SlimevoidHelper;
 
 public class PacketGui extends PacketGuiEvent {
 

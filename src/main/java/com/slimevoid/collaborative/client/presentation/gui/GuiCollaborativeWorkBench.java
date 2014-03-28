@@ -9,6 +9,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.slimevoid.library.inventory.ContainerBase;
+import net.slimevoid.library.util.helpers.PacketHelper;
 
 import org.lwjgl.opengl.GL11;
 
@@ -21,8 +23,6 @@ import com.slimevoid.collaborative.core.lib.PacketLib;
 import com.slimevoid.collaborative.items.ItemPlanExtended;
 import com.slimevoid.collaborative.network.packet.PacketGui;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import com.slimevoid.library.inventory.ContainerBase;
-import com.slimevoid.library.util.helpers.PacketHelper;
 
 public class GuiCollaborativeWorkBench extends GuiContainer implements
         ICrafting {

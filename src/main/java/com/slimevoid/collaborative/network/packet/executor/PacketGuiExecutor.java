@@ -3,12 +3,12 @@ package com.slimevoid.collaborative.network.packet.executor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.slimevoid.library.IPacketExecutor;
+import net.slimevoid.library.network.PacketUpdate;
 
 import com.slimevoid.collaborative.container.ContainerWorkBench;
 import com.slimevoid.collaborative.network.packet.PacketGui;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import com.slimevoid.library.IPacketExecutor;
-import com.slimevoid.library.network.PacketUpdate;
 
 public class PacketGuiExecutor implements IPacketExecutor {
 

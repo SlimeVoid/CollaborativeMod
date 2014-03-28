@@ -1,7 +1,8 @@
 package com.slimevoid.collaborative.core;
 
+import net.slimevoid.library.core.SlimevoidCore;
+
 import com.slimevoid.collaborative.core.lib.CoreLib;
-import com.slimevoid.library.core.SlimevoidCore;
 
 public class CMInit {
 

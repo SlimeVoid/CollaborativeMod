@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.slimevoid.library.util.helpers.BlockHelper;
 
 import com.slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkBench;
 import com.slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkChest;
@@ -15,7 +16,6 @@ import com.slimevoid.collaborative.core.lib.PacketLib;
 import com.slimevoid.collaborative.proxy.CommonProxy;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
-import com.slimevoid.library.util.helpers.BlockHelper;
 
 public class ClientProxy extends CommonProxy {
 

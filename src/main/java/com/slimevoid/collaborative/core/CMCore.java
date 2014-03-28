@@ -3,6 +3,7 @@ package com.slimevoid.collaborative.core;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.slimevoid.library.items.ItemBlockBase;
 
 import com.slimevoid.collaborative.blocks.BlockCollaborativeBase;
 import com.slimevoid.collaborative.core.lib.BlockLib;
@@ -12,7 +13,6 @@ import com.slimevoid.collaborative.core.lib.ItemLib;
 import com.slimevoid.collaborative.items.ItemPlan;
 import com.slimevoid.collaborative.items.ItemPlanExtended;
 import com.slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import com.slimevoid.library.items.ItemBlockBase;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 

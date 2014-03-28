@@ -1,10 +1,10 @@
 package com.slimevoid.collaborative.network.packet;
 
 import net.minecraft.world.World;
+import net.slimevoid.library.network.PacketIds;
+import net.slimevoid.library.network.PacketUpdate;
 
 import com.slimevoid.collaborative.core.lib.CoreLib;
-import com.slimevoid.library.network.PacketIds;
-import com.slimevoid.library.network.PacketUpdate;
 
 public class PacketSettings extends PacketUpdate {
 

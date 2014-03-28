@@ -6,7 +6,6 @@ import com.slimevoid.collaborative.core.CollaborativeMod;
 import com.slimevoid.collaborative.core.lib.ChestLib;
 import com.slimevoid.collaborative.core.lib.GuiLib;
 import com.slimevoid.collaborative.items.ItemPlanExtended;
-import com.slimevoid.library.util.helpers.SlimevoidHelper;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.slimevoid.library.util.helpers.SlimevoidHelper;
 
 public abstract class TileEntityWorkChestBase extends
         TileEntityCollaborativeBase implements ISidedInventory {

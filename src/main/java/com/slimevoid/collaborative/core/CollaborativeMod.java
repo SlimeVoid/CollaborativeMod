@@ -1,9 +1,10 @@
 package com.slimevoid.collaborative.core;
 
+import net.slimevoid.library.ICommonProxy;
+import net.slimevoid.library.util.helpers.PacketHelper;
+
 import com.slimevoid.collaborative.core.lib.CoreLib;
 import com.slimevoid.collaborative.core.lib.PacketLib;
-import com.slimevoid.library.ICommonProxy;
-import com.slimevoid.library.util.helpers.PacketHelper;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;

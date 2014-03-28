@@ -1,13 +1,14 @@
 package com.slimevoid.collaborative.core.lib;
 
+import net.slimevoid.library.network.PacketIds;
+import net.slimevoid.library.network.handlers.PacketPipeline;
+import net.slimevoid.library.util.helpers.PacketHelper;
+
 import com.slimevoid.collaborative.network.handler.PacketGuiHandler;
 import com.slimevoid.collaborative.network.handler.PacketSettingsHandler;
 import com.slimevoid.collaborative.network.packet.PacketSettings;
 import com.slimevoid.collaborative.network.packet.executor.PacketGuiExecutor;
 import com.slimevoid.collaborative.network.packet.executor.PacketSettingsExecutor;
-import com.slimevoid.library.network.PacketIds;
-import com.slimevoid.library.network.handlers.PacketPipeline;
-import com.slimevoid.library.util.helpers.PacketHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

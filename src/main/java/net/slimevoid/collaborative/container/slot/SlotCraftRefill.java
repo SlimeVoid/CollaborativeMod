@@ -3,6 +3,7 @@ package net.slimevoid.collaborative.container.slot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.slimevoid.collaborative.container.ContainerWorkBench;
@@ -16,12 +17,12 @@ import net.slimevoid.collaborative.inventory.InventoryMatch;
 public class SlotCraftRefill extends SlotCrafting {
 
     IInventory[]       allInventories;
-    IInventory         craftingMatrix;
+    InventoryCrafting         craftingMatrix;
     InventoryPlayer    playerInventory;
     ContainerWorkBench eventHandler;
     private boolean    PlayerFirstCraft;
 
-    public SlotCraftRefill(EntityPlayer entityplayer, IInventory matrix, IInventory result, IInventory[] allinventories, ContainerWorkBench evh, int slotIndex, int xDisplay, int yDisplay) {
+    public SlotCraftRefill(EntityPlayer entityplayer, InventoryCrafting matrix, IInventory result, IInventory[] allinventories, ContainerWorkBench evh, int slotIndex, int xDisplay, int yDisplay) {
         super(entityplayer, matrix, result, slotIndex, xDisplay, yDisplay);
         playerInventory = entityplayer.inventory;
         allInventories = allinventories;

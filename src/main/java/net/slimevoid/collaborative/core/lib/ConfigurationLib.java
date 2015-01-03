@@ -6,10 +6,10 @@ import java.util.HashMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.slimevoid.collaborative.blocks.BlockCollaborativeBase;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ConfigurationLib {
 
@@ -39,7 +39,7 @@ public class ConfigurationLib {
         // configuration.get(Configuration.CATEGORY_BLOCK,
         // "collaborativeBaseID",
         // 1890).getInt();
-        RenderLib.BLOCK_BASE = RenderingRegistry.getNextAvailableRenderId();
+        RenderLib.BLOCK_BASE = 0;// TODO :: RenderingRegistry.getNextAvailableRenderId();
         //
         // itemPlanBlankID = configuration.get(Configuration.CATEGORY_BLOCK,
         // "planBlankID",

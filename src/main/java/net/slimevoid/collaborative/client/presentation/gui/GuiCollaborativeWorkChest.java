@@ -1,13 +1,13 @@
 package net.slimevoid.collaborative.client.presentation.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraftforge.fml.common.registry.LanguageRegistry;
 import net.slimevoid.collaborative.container.ContainerWorkChest;
 import net.slimevoid.collaborative.core.lib.GuiLib;
 import net.slimevoid.library.inventory.ContainerBase;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
 // import net.minecraft.client.resources.I18n;
 // import net.minecraft.util.ResourceLocation;
 
@@ -29,7 +29,7 @@ public class GuiCollaborativeWorkChest extends GuiContainer {
      * the items)
      */
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        String title = LanguageRegistry.instance().getStringLocalization(((ContainerWorkChest) this.inventorySlots).getInventoryData().getInventoryName());
+        String title = LanguageRegistry.instance().getStringLocalization(((ContainerWorkChest) this.inventorySlots).getInventoryData().getName());
         fontRendererObj.drawString(title,
                                    (this.xSize / 2)
                                            - (fontRendererObj.getStringWidth(title) / 2),

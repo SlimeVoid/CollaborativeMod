@@ -1,6 +1,8 @@
 package net.slimevoid.collaborative.network.packet;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.slimevoid.collaborative.core.lib.CoreLib;
 import net.slimevoid.library.network.PacketGuiEvent;
@@ -25,16 +27,16 @@ public class PacketGui extends PacketGuiEvent {
 
     @Override
     public boolean targetExists(World world) {
-        return world.blockExists(this.xPosition,
+        return !(world.getBlockState(new BlockPos(this.xPosition,
                                  this.yPosition,
-                                 this.zPosition);
+                                 this.zPosition)).getBlock().equals(Blocks.air));
     }
 
     public TileEntity getTarget(World world) {
         return SlimevoidHelper.getBlockTileEntity(world,
-                                                  this.xPosition,
+                                                  new BlockPos(this.xPosition,
                                                   this.yPosition,
-                                                  this.zPosition);
+                                                  this.zPosition));
     }
 
 }

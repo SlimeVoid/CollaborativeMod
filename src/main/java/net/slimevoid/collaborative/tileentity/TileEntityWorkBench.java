@@ -2,12 +2,14 @@ package net.slimevoid.collaborative.tileentity;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 import net.slimevoid.collaborative.core.CollaborativeMod;
 import net.slimevoid.collaborative.core.lib.BlockLib;
 import net.slimevoid.collaborative.core.lib.ContainerLib;
@@ -31,12 +33,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
     }
 
     @Override
-    public boolean canUpdate() {
-        return false;
-    }
-
-    @Override
-    public boolean onBlockActivated(EntityPlayer entityplayer) {
+    public boolean onBlockActivated(IBlockState blockState, EntityPlayer entityplayer, EnumFacing side, float xHit, float yHit, float zHit) {
         if (entityplayer.isSneaking()) {
             return false;
         }
@@ -46,9 +43,9 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
             entityplayer.openGui(CollaborativeMod.instance,
                                  GuiLib.GUIID_WORK_BENCH,
                                  this.worldObj,
-                                 this.xCoord,
-                                 this.yCoord,
-                                 this.zCoord);
+                                 this.pos.getX(),
+                                 this.pos.getY(),
+                                 this.pos.getZ());
             return true;
         }
     }
@@ -120,9 +117,9 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
     public boolean isUseableByPlayer(EntityPlayer entityplayer) {
         return SlimevoidHelper.isUseableByPlayer(this.worldObj,
                                                  entityplayer,
-                                                 this.xCoord,
-                                                 this.yCoord,
-                                                 this.zCoord,
+                                                 this.pos.getX(),
+                                                 this.pos.getY(),
+                                                 this.pos.getZ(),
                                                  0.5D,
                                                  0.5D,
                                                  0.5D,
@@ -142,7 +139,7 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side) {
+    public int[] getSlotsForFace(EnumFacing side) {
         return new int[] {
                 27,
                 26,
@@ -169,15 +166,15 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
+    public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
         return isInventorySlot(slot)
-               && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
+               && !side.equals(EnumFacing.DOWN);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack itemstack, int side) {
+    public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
         return isInventorySlot(slot)
-               && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
+               && !side.equals(EnumFacing.DOWN);
     }
 
     public void readFromNBT(NBTTagCompound nbttagcompound) {
@@ -222,5 +219,28 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
     public String getInvName() {
         return BlockLib.BLOCK_WORK_BENCH;
     }
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+	}
+
+	@Override
+	public IChatComponent getDisplayName() {
+		return null;
+	}
 
 }

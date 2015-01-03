@@ -40,7 +40,7 @@ public class ContainerWorkBench extends ContainerBase {
     public boolean           playerInventoryUsed;
 
     public ContainerWorkBench(InventoryPlayer playerInventory, TileEntityWorkBench tileentity) {
-        super(playerInventory, tileentity, tileentity.getWorldObj(), 0, 140);
+        super(playerInventory, tileentity, tileentity.getWorld(), 0, 140);
 
         // add n,e,w,s inventories
         this.fakeInv = new InventoryCrafting(new ContainerNull(), 3, 3);
@@ -236,8 +236,8 @@ public class ContainerWorkBench extends ContainerBase {
     }
 
     public static ItemStack[] getShadowItems(ItemStack ist) {
-        if (ist.stackTagCompound == null) return null;
-        NBTTagList require = ist.stackTagCompound.getTagList("requires",
+        if (ist.getTagCompound() == null) return null;
+        NBTTagList require = ist.getTagCompound().getTagList("requires",
                                                              10);
         if (require == null) {
             return null;
@@ -400,10 +400,10 @@ public class ContainerWorkBench extends ContainerBase {
             return;
         }
         ItemStack plan = new ItemStack(ConfigurationLib.itemPlanFull);
-        plan.stackTagCompound = new NBTTagCompound();
+        plan.setTagCompound(new NBTTagCompound());
         NBTTagCompound result = new NBTTagCompound();
         craftResult.getStackInSlot(0).writeToNBT(result);
-        plan.stackTagCompound.setTag("result",
+        plan.getTagCompound().setTag("result",
                                      result);
         NBTTagList requires = new NBTTagList();
         for (int i = 0; i < 9; i++) {
@@ -418,7 +418,7 @@ public class ContainerWorkBench extends ContainerBase {
             }
         }
 
-        plan.stackTagCompound.setTag("requires",
+        plan.getTagCompound().setTag("requires",
                                      requires);
         this.customInventory.setInventorySlotContents(9,
                                                       plan);

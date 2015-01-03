@@ -1,5 +1,7 @@
 package net.slimevoid.collaborative.core.lib;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.slimevoid.collaborative.network.handler.PacketGuiHandler;
 import net.slimevoid.collaborative.network.handler.PacketSettingsHandler;
 import net.slimevoid.collaborative.network.packet.PacketSettings;
@@ -8,8 +10,6 @@ import net.slimevoid.collaborative.network.packet.executor.PacketSettingsExecuto
 import net.slimevoid.library.network.PacketIds;
 import net.slimevoid.library.network.handlers.PacketPipeline;
 import net.slimevoid.library.util.helpers.PacketHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class PacketLib {
     /*

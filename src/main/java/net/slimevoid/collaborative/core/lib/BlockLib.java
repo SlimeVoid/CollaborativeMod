@@ -1,8 +1,5 @@
 package net.slimevoid.collaborative.core.lib;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
-
 public class BlockLib {
 
     private static final String BLOCK_PREFIX             = "cm.";
@@ -28,7 +25,7 @@ public class BlockLib {
 
     public static final int     DEFAULT_CHEST_SIZE       = 6 * 9;
 
-    public static IIcon[] registerBottomIcons(IIconRegister iconRegister, int MAX_TILES) {
+    /**public static IIcon[] registerBottomIcons(IIconRegister iconRegister, int MAX_TILES) {
         IIcon[] icons = new IIcon[MAX_TILES];
         icons[BLOCK_WORK_BENCH_ID] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
         return icons;
@@ -52,5 +49,5 @@ public class BlockLib {
         // iconList = ChestLib.registerWorkChestIcons(iconRegister,
         // iconList);
         return icons;
-    }
+    }**/
 }

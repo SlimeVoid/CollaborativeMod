@@ -1,7 +1,5 @@
 package net.slimevoid.collaborative.core.lib;
 
-import net.minecraft.block.BlockWood;
-
 public class IconLib {
 
     private static final String ICON_PREFIX          = CoreLib.MOD_ID
@@ -20,7 +18,7 @@ public class IconLib {
     /**
      * Work Chest Icons
      */
-    public static final String  WORK_CHEST_WOOD_TOP  = BlockWood.field_150096_a[0];
+    public static final String  WORK_CHEST_WOOD_TOP  = "wood";// TODO :: BlockWood.field_150096_a[0];
     public static final String  WORK_CHEST_STONE_TOP = "stone";
 
     private static final String PLAN_PREFIX          = ICON_PREFIX

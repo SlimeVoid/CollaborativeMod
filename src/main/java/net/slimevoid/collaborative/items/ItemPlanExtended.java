@@ -5,14 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IIcon;
 import net.slimevoid.collaborative.core.lib.ConfigurationLib;
 import net.slimevoid.collaborative.core.lib.IconLib;
 import net.slimevoid.collaborative.core.lib.ItemLib;
@@ -28,7 +26,7 @@ public class ItemPlanExtended extends ItemPlan {
         this.setMaxStackSize(1);
     }
 
-    @Override
+    /**@Override
     public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon(IconLib.PLAN_FULL);
     }
@@ -36,17 +34,17 @@ public class ItemPlanExtended extends ItemPlan {
     @Override
     public IIcon getIconFromDamage(int i) {
         return this.itemIcon;
-    }
+    }**/
 
     @Override
     public String getItemStackDisplayName(ItemStack ist) {
-        if (ist.stackTagCompound == null) {
+        if (ist.getTagCompound() == null) {
             return super.getItemStackDisplayName(ist);
         }
-        if (!ist.stackTagCompound.hasKey("result")) {
+        if (!ist.getTagCompound().hasKey("result")) {
             return super.getItemStackDisplayName(ist);
         } else {
-            NBTTagCompound res = ist.stackTagCompound.getCompoundTag("result");
+            NBTTagCompound res = ist.getTagCompound().getCompoundTag("result");
             ItemStack result = ItemStack.loadItemStackFromNBT(res);
             return (new StringBuilder()).append(result != null ? result.getItem().getItemStackDisplayName(result) : "Unknown").append(" Plan").toString();
         }
@@ -54,10 +52,10 @@ public class ItemPlanExtended extends ItemPlan {
 
     @Override
     public void addInformation(ItemStack ist, EntityPlayer player, List lines, boolean par4) {
-        if (ist.stackTagCompound == null) {
+        if (ist.getTagCompound() == null) {
             return;
         }
-        NBTTagList require = ist.stackTagCompound.getTagList("requires",
+        NBTTagList require = ist.getTagCompound().getTagList("requires",
                                                              10);
         if (require == null) return;
         HashMap counts = new HashMap();
@@ -87,7 +85,7 @@ public class ItemPlanExtended extends ItemPlan {
 
     @Override
     public EnumRarity getRarity(ItemStack ist) {
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 
     @Override

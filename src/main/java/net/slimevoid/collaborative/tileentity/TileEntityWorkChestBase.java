@@ -2,13 +2,15 @@ package net.slimevoid.collaborative.tileentity;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 import net.slimevoid.collaborative.core.CollaborativeMod;
 import net.slimevoid.collaborative.core.lib.ChestLib;
 import net.slimevoid.collaborative.core.lib.GuiLib;
@@ -25,12 +27,7 @@ public abstract class TileEntityWorkChestBase extends
     }
 
     @Override
-    public boolean canUpdate() {
-        return false;
-    }
-
-    @Override
-    public boolean onBlockActivated(EntityPlayer entityplayer) {
+    public boolean onBlockActivated(IBlockState blockState, EntityPlayer entityplayer, EnumFacing side, float xHit, float yHit, float zHit) {
         if (entityplayer.isSneaking()) {
             return false;
         }
@@ -38,20 +35,20 @@ public abstract class TileEntityWorkChestBase extends
             return true;
         } else {
             entityplayer.openGui(CollaborativeMod.instance,
-                                 GuiLib.GUIID_WORK_CHEST,
+            					 GuiLib.GUIID_WORK_CHEST,
                                  this.worldObj,
-                                 this.xCoord,
-                                 this.yCoord,
-                                 this.zCoord);
+                                 this.pos.getX(),
+                                 this.pos.getY(),
+                                 this.pos.getZ());
             return true;
         }
     }
 
-    public int getStartInventorySide(ForgeDirection side) {
+    public int getStartInventorySide(EnumFacing side) {
         return 0;
     }
 
-    public int getSizeInventorySide(ForgeDirection side) {
+    public int getSizeInventorySide(EnumFacing side) {
         return this.storedPlans.length;
     }
 
@@ -115,9 +112,9 @@ public abstract class TileEntityWorkChestBase extends
     public boolean isUseableByPlayer(EntityPlayer entityplayer) {
         return SlimevoidHelper.isUseableByPlayer(this.worldObj,
                                                  entityplayer,
-                                                 this.xCoord,
-                                                 this.yCoord,
-                                                 this.zCoord,
+                                                 this.pos.getX(),
+                                                 this.pos.getY(),
+                                                 this.pos.getZ(),
                                                  0.5D,
                                                  0.5D,
                                                  0.5D,
@@ -130,7 +127,7 @@ public abstract class TileEntityWorkChestBase extends
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side) {
+    public int[] getSlotsForFace(EnumFacing side) {
         int[] slots = new int[this.storedPlans.length];
         for (int i = 0; i < slots.length; i++) {
             slots[i] = i;
@@ -139,15 +136,15 @@ public abstract class TileEntityWorkChestBase extends
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack itemstack, int side) {
+    public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing side) {
         return isItemValidForSlot(slot,
                                   itemstack)
-               && ForgeDirection.getOrientation(side) != ForgeDirection.DOWN;
+               && !side.equals(EnumFacing.DOWN);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack itemstack, int side) {
-        return ForgeDirection.getOrientation(side) == ForgeDirection.DOWN;
+    public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
+        return side.equals(EnumFacing.DOWN);
     }
 
     @Override
@@ -197,4 +194,28 @@ public abstract class TileEntityWorkChestBase extends
     public String getInvName() {
         return ChestLib.getChestName(this.getExtendedBlockID());
     }
+
+	@Override
+	public int getField(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
 }

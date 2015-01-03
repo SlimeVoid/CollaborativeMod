@@ -1,12 +1,10 @@
 package net.slimevoid.collaborative.core.lib;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkChestStone;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkChestWood;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ChestLib {
     public enum EnumWorkChest {
@@ -99,7 +97,7 @@ public class ChestLib {
                                        woodChest });
     }
 
-    public static IIcon[][] registerWorkChestIcons(IIconRegister iconRegister, IIcon[][] iconList) {
+    /**public static IIcon[][] registerWorkChestIcons(IIconRegister iconRegister, IIcon[][] iconList) {
         iconList[BlockLib.WORK_CHEST_WOOD_ID][0] = iconRegister.registerIcon(IconLib.WORK_BENCH_BOTTOM);
         iconList[BlockLib.WORK_CHEST_WOOD_ID][1] = iconRegister.registerIcon(IconLib.WORK_CHEST_WOOD_TOP);
         iconList[BlockLib.WORK_CHEST_WOOD_ID][2] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
@@ -113,6 +111,6 @@ public class ChestLib {
         iconList[BlockLib.WORK_CHEST_STONE_ID][4] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
         iconList[BlockLib.WORK_CHEST_STONE_ID][5] = iconRegister.registerIcon(IconLib.WORK_BENCH_FRONT);
         return iconList;
-    }
+    }**/
 
 }

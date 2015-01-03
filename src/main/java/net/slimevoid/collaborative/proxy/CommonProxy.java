@@ -4,7 +4,9 @@ import java.io.File;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.slimevoid.collaborative.container.ContainerWorkBench;
 import net.slimevoid.collaborative.container.ContainerWorkChest;
 import net.slimevoid.collaborative.core.CollaborativeMod;
@@ -15,7 +17,6 @@ import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
 import net.slimevoid.library.ICommonProxy;
 import net.slimevoid.library.util.helpers.BlockHelper;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class CommonProxy implements ICommonProxy {
 
@@ -23,18 +24,18 @@ public class CommonProxy implements ICommonProxy {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == GuiLib.GUIID_WORK_BENCH) {
             TileEntityWorkBench tileentity = (TileEntityWorkBench) BlockHelper.getTileEntity(world,
-                                                                                             x,
+                                                                                             new BlockPos(x,
                                                                                              y,
-                                                                                             z,
+                                                                                             z),
                                                                                              TileEntityWorkBench.class);
             if (tileentity != null) {
                 return new ContainerWorkBench(player.inventory, tileentity);
             }
         } else if (ID == GuiLib.GUIID_WORK_CHEST) {
             TileEntityWorkChestBase tileentity = (TileEntityWorkChestBase) BlockHelper.getTileEntity(world,
-                                                                                                     x,
-                                                                                                     y,
-                                                                                                     z,
+																		            				 new BlockPos(x,
+																		                             y,
+																		                             z),
                                                                                                      TileEntityWorkChestBase.class);
             if (tileentity != null) {
                 return new ContainerWorkChest(player.inventory, tileentity);

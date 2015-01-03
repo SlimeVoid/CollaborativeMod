@@ -1,5 +1,6 @@
 package net.slimevoid.collaborative.client.presentation.gui;
 
+import java.io.IOException;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -7,6 +8,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.slimevoid.collaborative.container.ContainerWorkBench;
@@ -46,7 +48,7 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
                 || (plan.getItem() != null && plan.getItem() instanceof ItemPlanExtended)) {
                 return;
             }
-            PacketGui pkt = new PacketGui(this.workBench.xCoord, this.workBench.yCoord, this.workBench.zCoord, CommandLib.CREATE_PLAN, this.inventorySlots.windowId);
+            PacketGui pkt = new PacketGui(this.workBench.getPos().getX(), this.workBench.getPos().getY(), this.workBench.getPos().getZ(), CommandLib.CREATE_PLAN, this.inventorySlots.windowId);
             PacketHelper.sendToServer(pkt);
         }
         // if(x >= 63 && y >= 125 && x <= 77 && y <= 139) {
@@ -55,9 +57,14 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
             ConfigurationLib.updateplayerInventoryLocked(!ConfigurationLib.playerInventoryLocked);
             PacketLib.sendPlayerInventoryStatus(ConfigurationLib.playerInventoryLocked);
         }
-        super.mouseClicked(i,
-                           j,
-                           k);
+        try {
+			super.mouseClicked(i,
+			                   j,
+			                   k);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 
@@ -136,16 +143,16 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
                     if (sl.getStack() == null) {
                         int slx = sl.xDisplayPosition + this.guiLeft;
                         int sly = sl.yDisplayPosition + this.guiTop;
-                        itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj,
-                                                              this.mc.renderEngine,
+                        itemRender.renderItemOverlayIntoGUI(this.fontRendererObj,
                                                               ist[n],
                                                               slx,
-                                                              sly);
+                                                              sly,
+                                                              null);
                         itemRender.renderItemOverlayIntoGUI(this.fontRendererObj,
-                                                            this.mc.renderEngine,
                                                             ist[n],
                                                             slx,
-                                                            sly);
+                                                            sly,
+                                                            null);
                     }
                 }
             }
@@ -198,5 +205,9 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
     @Override
     public void sendProgressBarUpdate(Container container, int i, int j) {
     }
+
+	@Override
+	public void func_175173_a(Container p_175173_1_, IInventory p_175173_2_) {
+	}
 
 }

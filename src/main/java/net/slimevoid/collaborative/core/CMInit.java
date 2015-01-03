@@ -26,4 +26,7 @@ public class CMInit {
         initialized = true;
     }
 
+	public static void initialize() {
+	}
+
 }

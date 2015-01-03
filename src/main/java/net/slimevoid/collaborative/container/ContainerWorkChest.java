@@ -14,7 +14,7 @@ public class ContainerWorkChest extends ContainerBase {
     private int numRows;
 
     public ContainerWorkChest(InventoryPlayer playerInventory, TileEntityWorkChestBase tileentity) {
-        super(playerInventory, tileentity, tileentity.getWorldObj(), 0, 140);
+        super(playerInventory, tileentity, tileentity.getWorld(), 0, 140);
         this.numRows = tileentity.getSizeInventory() / 9;
     }
 

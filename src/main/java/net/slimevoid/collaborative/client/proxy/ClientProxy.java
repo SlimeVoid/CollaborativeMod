@@ -3,6 +3,7 @@ package net.slimevoid.collaborative.client.proxy;
 import java.io.File;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkBench;
 import net.slimevoid.collaborative.client.presentation.gui.GuiCollaborativeWorkChest;
@@ -27,18 +28,14 @@ public class ClientProxy extends CommonProxy {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == GuiLib.GUIID_WORK_BENCH) {
             TileEntityWorkBench tileentity = (TileEntityWorkBench) BlockHelper.getTileEntity(world,
-                                                                                             x,
-                                                                                             y,
-                                                                                             z,
+                                                                                             new BlockPos(x, y, z),
                                                                                              TileEntityWorkBench.class);
             if (tileentity != null) {
                 return new GuiCollaborativeWorkBench(new ContainerWorkBench(player.inventory, tileentity));
             }
         } else if (ID == GuiLib.GUIID_WORK_CHEST) {
             TileEntityWorkChestBase tileentity = (TileEntityWorkChestBase) BlockHelper.getTileEntity(world,
-                                                                                                     x,
-                                                                                                     y,
-                                                                                                     z,
+                    																				 new BlockPos(x, y, z),
                                                                                                      TileEntityWorkChestBase.class);
             if (tileentity != null) {
                 return new GuiCollaborativeWorkChest(new ContainerWorkChest(player.inventory, tileentity));

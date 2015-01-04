@@ -42,9 +42,9 @@ dependencies {
 minecraft {
     version = mc
     if  (file('../run').exists()) {
-       assetDir = "../run/assets"
+       runDir = "../run/assets"
     } else {
-       assetDir = "assets"
+       runDir = "assets"
     }
     replaceIn 'net/slimevoid/' + pack + '/core/lib/CoreLib.java'
     replace '@VERSION@', project.version

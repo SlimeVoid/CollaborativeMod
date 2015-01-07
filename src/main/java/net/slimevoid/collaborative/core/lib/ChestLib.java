@@ -60,7 +60,6 @@ public class ChestLib {
         String woodChestLocale = getChestName(BlockLib.WORK_CHEST_WOOD_ID);
 
         ConfigurationLib.blockCollaborativeBase.addMapping(BlockLib.WORK_CHEST_WOOD_ID,
-                                                           TileEntityWorkChestWood.class,
                                                            woodChestLocale);
 
         ItemStack woodChest = new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.WORK_CHEST_WOOD_ID);
@@ -82,7 +81,6 @@ public class ChestLib {
         String stoneChestLocale = getChestName(BlockLib.WORK_CHEST_STONE_ID);
 
         ConfigurationLib.blockCollaborativeBase.addMapping(BlockLib.WORK_CHEST_STONE_ID,
-                                                           TileEntityWorkChestStone.class,
                                                            stoneChestLocale);
 
         ItemStack stoneChest = new ItemStack(ConfigurationLib.blockCollaborativeBase, 1, BlockLib.WORK_CHEST_STONE_ID);

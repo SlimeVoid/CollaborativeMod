@@ -29,7 +29,7 @@ public class GuiCollaborativeWorkChest extends GuiContainer {
      * the items)
      */
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        String title = LanguageRegistry.instance().getStringLocalization(((ContainerWorkChest) this.inventorySlots).getInventoryData().getName());
+        String title = ((ContainerWorkChest) this.inventorySlots).getInventoryData().getName();
         fontRendererObj.drawString(title,
                                    (this.xSize / 2)
                                            - (fontRendererObj.getStringWidth(title) / 2),

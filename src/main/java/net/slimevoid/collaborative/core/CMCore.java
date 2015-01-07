@@ -26,7 +26,6 @@ public class CMCore {
          * WORK BENCH
          */
         ConfigurationLib.blockCollaborativeBase.addMapping(BlockLib.BLOCK_WORK_BENCH_ID,
-                                                           TileEntityWorkBench.class,
                                                            BlockLib.BLOCK_WORK_BENCH);
         ConfigurationLib.createCustomTab();
 

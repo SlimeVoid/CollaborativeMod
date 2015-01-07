@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "variant=cm.work.bench": { "model": "collaborative:cm.work.bench" },
+        "variant=cm.work.chest.wood": { "model": "collaborative:cm.work.bench" }
+    }
+}

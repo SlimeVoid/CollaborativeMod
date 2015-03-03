@@ -47,6 +47,11 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init() {
         super.init();
+    }
+
+    @Override
+    public void registerPacketHandlers() {
+        super.registerPacketHandlers();
         PacketLib.registerClientPacketHandlers();
     }
 

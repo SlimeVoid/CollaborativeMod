@@ -4,21 +4,24 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.slimevoid.collaborative.core.lib.ConfigurationLib;
+import net.slimevoid.library.IEnumBlockType;
 import net.slimevoid.library.blocks.BlockBase;
-import net.slimevoid.library.blocks.IBlockEnumType;
 import net.slimevoid.library.items.ItemBlockBase;
 
 public class BlockCollaborativeBase extends BlockBase {
 	
 	protected static PropertyEnum VARIANT = PropertyEnum.create("variant", BlockTypeCollaborative.class);
 
-    public BlockCollaborativeBase(int blockID) {
-        super(Material.rock, BlockTypeCollaborative.class);
+    public BlockCollaborativeBase() {
+        super(Material.rock);
         this.setHardness(2.0F);
         this.setStepSound(Block.soundTypeStone);
     }
@@ -50,29 +53,30 @@ public class BlockCollaborativeBase extends BlockBase {
             }
         }
     }
-    
-    public Comparable<? extends IBlockEnumType> getDefaultVariant() {
+
+    @Override
+    protected IBlockState getInitialState() {
+        return this.blockState.getBaseState().withProperty(VARIANT, getDefaultBlockType()).withProperty(FACING, EnumFacing.NORTH);
+    }
+
+    @Override
+    protected PropertyEnum getBlockTypeProperty() {
+        return VARIANT;
+    }
+
+    @Override
+    protected IProperty[] getPropertyList() {
+        return new IProperty[] {FACING, VARIANT};
+    }
+
+    @Override
+    public Comparable<? extends IEnumBlockType> getDefaultBlockType() {
     	return BlockTypeCollaborative.WORKBENCH;
     }
 
 	@Override
-	protected Comparable<? extends IBlockEnumType> getBlockType(int meta) {
-		return meta < BlockTypeCollaborative.values().length ? BlockTypeCollaborative.values()[meta] : this.getDefaultVariant();
-	}
-
-	@Override
-	protected void setPropertyList(PropertyEnum create) {
-		//VARIANT = create;
-	}
-
-	@Override
-	protected PropertyEnum getPropertyList() {
-		return VARIANT;
-	}
-
-	@Override
-	protected Comparable<? extends IBlockEnumType> getDefaultProperty() {
-		return BlockTypeCollaborative.WORKBENCH;
+	protected Comparable<? extends IEnumBlockType> getBlockType(int meta) {
+		return meta < BlockTypeCollaborative.values().length ? BlockTypeCollaborative.values()[meta] : this.getDefaultBlockType();
 	}
 
 }

@@ -1,6 +1,9 @@
 {
     "variants": {
-        "variant=cm.work.bench": { "model": "collaborative:cm.work.bench" },
+        "facing=north,variant=cm.work.bench": { "model": "collaborative:cm.work.bench" },
+        "facing=south,variant=cm.work.bench": { "model": "collaborative:cm.work.bench", "y": 180 },
+        "facing=east,variant=cm.work.bench": { "model": "collaborative:cm.work.bench", "y": 90 },
+        "facing=west,variant=cm.work.bench": { "model": "collaborative:cm.work.bench", "y": 270 },
         "variant=cm.work.chest.wood": { "model": "collaborative:cm.work.bench" }
     }
 }

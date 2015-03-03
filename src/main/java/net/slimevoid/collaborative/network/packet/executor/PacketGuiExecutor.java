@@ -8,11 +8,12 @@ import net.slimevoid.collaborative.network.packet.PacketGui;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import net.slimevoid.library.IPacketExecutor;
 import net.slimevoid.library.network.PacketUpdate;
+import net.slimevoid.library.network.executor.PacketExecutor;
 
-public class PacketGuiExecutor implements IPacketExecutor {
+public class PacketGuiExecutor extends PacketExecutor {
 
     @Override
-    public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
+    public PacketUpdate execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
         if (packet instanceof PacketGui) {
             PacketGui packetGui = (PacketGui) packet;
             if (packet.targetExists(world)) {
@@ -25,6 +26,7 @@ public class PacketGuiExecutor implements IPacketExecutor {
                 }
             }
         }
+        return null;
     }
 
 }

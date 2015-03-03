@@ -5,20 +5,55 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.slimevoid.collaborative.blocks.BlockCollaborativeBase;
-import net.slimevoid.collaborative.core.lib.BlockLib;
-import net.slimevoid.collaborative.core.lib.ChestLib;
-import net.slimevoid.collaborative.core.lib.ConfigurationLib;
-import net.slimevoid.collaborative.core.lib.ItemLib;
+import net.slimevoid.collaborative.core.lib.*;
 import net.slimevoid.collaborative.items.ItemPlan;
 import net.slimevoid.collaborative.items.ItemPlanExtended;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
+import net.slimevoid.library.core.SlimevoidCore;
 import net.slimevoid.library.items.ItemBlockBase;
+import net.slimevoid.library.util.helpers.PacketHelper;
 
 public class CMCore {
-    public static void registerBlocks() {
-        ConfigurationLib.blockCollaborativeBase = new BlockCollaborativeBase(ConfigurationLib.blockCollaborativeBaseID);
 
-        GameRegistry.registerBlock(ConfigurationLib.blockCollaborativeBase,
+    private static boolean initialized;
+
+    public static void preInitialize() {
+        if (initialized) {
+            return;
+        }
+        PacketHelper.registerHandler();
+        CollaborativeMod.proxy.preInit();
+
+        SlimevoidCore.console(CoreLib.MOD_ID,
+                "Registering blocks...");
+        registerBlocks();
+
+        SlimevoidCore.console(CoreLib.MOD_ID,
+                "Registering items...");
+        registerItems();
+
+        CollaborativeMod.proxy.registerRenderInformation();
+    }
+
+    public static void initialize() {
+        if (initialized) {
+            return;
+        }
+        CollaborativeMod.proxy.init();
+    }
+
+    public static void postInitialize() {
+        if (initialized) {
+            return;
+        }
+        CollaborativeMod.proxy.postInit();
+        initialized = true;
+    }
+
+    public static void registerBlocks() {
+        ConfigurationLib.blockCollaborativeBase = new BlockCollaborativeBase();
+
+        GameRegistry.registerBlock(ConfigurationLib.blockCollaborativeBase.setUnlocalizedName(BlockLib.BLOCK_COLLABORATIVE_BASE),
                                    ItemBlockBase.class,
                                    BlockLib.BLOCK_COLLABORATIVE_BASE);
 

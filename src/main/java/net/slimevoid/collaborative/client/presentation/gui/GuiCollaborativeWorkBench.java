@@ -192,7 +192,7 @@ public class GuiCollaborativeWorkBench extends GuiContainer implements
     }
 
     @Override
-    public void sendContainerAndContentsToPlayer(Container par1Container, List par2List) {
+    public void updateCraftingInventory(Container par1Container, List par2List) {
     }
 
     @Override

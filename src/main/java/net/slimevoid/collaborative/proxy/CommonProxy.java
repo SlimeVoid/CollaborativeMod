@@ -61,13 +61,17 @@ public class CommonProxy implements ICommonProxy {
 
     @Override
     public void init() {
-        PacketLib.registerPacketHandlers();
-        NetworkRegistry.INSTANCE.registerGuiHandler(CollaborativeMod.instance,
-                                                    CollaborativeMod.proxy);
     }
 
     @Override
     public void postInit() {
+    }
+
+    @Override
+    public void registerPacketHandlers() {
+        PacketLib.registerPacketHandlers();
+        NetworkRegistry.INSTANCE.registerGuiHandler(CollaborativeMod.instance,
+                CollaborativeMod.proxy);
     }
 
     @Override

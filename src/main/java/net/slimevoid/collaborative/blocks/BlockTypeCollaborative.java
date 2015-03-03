@@ -5,10 +5,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.slimevoid.collaborative.core.lib.BlockLib;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkChestWood;
-import net.slimevoid.library.blocks.IBlockEnumType;
+import net.slimevoid.library.IEnumBlockType;
 import net.slimevoid.library.tileentity.TileEntityBase;
 
-public enum BlockTypeCollaborative implements IBlockEnumType {
+public enum BlockTypeCollaborative implements IEnumBlockType {
 	
 	WORKBENCH(BlockLib.BLOCK_WORK_BENCH_ID, BlockLib.BLOCK_WORK_BENCH, TileEntityWorkBench.class),
 	WORKCHEST_WOOD(BlockLib.WORK_CHEST_WOOD_ID, BlockLib.BLOCK_WORK_CHEST + ".wood", TileEntityWorkChestWood.class);

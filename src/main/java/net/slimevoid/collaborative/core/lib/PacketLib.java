@@ -2,20 +2,14 @@ package net.slimevoid.collaborative.core.lib;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.slimevoid.collaborative.network.handler.PacketGuiHandler;
-import net.slimevoid.collaborative.network.handler.PacketSettingsHandler;
+import net.slimevoid.collaborative.network.packet.PacketGui;
 import net.slimevoid.collaborative.network.packet.PacketSettings;
 import net.slimevoid.collaborative.network.packet.executor.PacketGuiExecutor;
 import net.slimevoid.collaborative.network.packet.executor.PacketSettingsExecutor;
 import net.slimevoid.library.network.PacketIds;
-import net.slimevoid.library.network.handlers.PacketPipeline;
 import net.slimevoid.library.util.helpers.PacketHelper;
 
 public class PacketLib {
-    /*
-     * Create new Packet Handler
-     */
-    public static PacketPipeline handler = new PacketPipeline();
 
     @SideOnly(Side.CLIENT)
     public static void registerClientPacketHandlers() {
@@ -27,19 +21,17 @@ public class PacketLib {
         /*
          * Register SubPacket handlers
          */
-        PacketGuiHandler packetGuiHandler = new PacketGuiHandler();
-        packetGuiHandler.registerServerExecutor(CommandLib.CREATE_PLAN,
-                                               new PacketGuiExecutor());
+        PacketHelper.registerServerExecutor(
+                PacketGuiExecutor.class,
+                PacketGui.class,
+                0);
+                //CommandLib.CREATE_PLAN,
 
-        handler.registerPacketHandler(PacketIds.GUI,
-                                      packetGuiHandler);
-
-        PacketSettingsHandler packetSettingsHandler = new PacketSettingsHandler();
-        packetSettingsHandler.registerServerExecutor(CommandLib.UPDATE_SETTINGS,
-                                                    new PacketSettingsExecutor());
-
-        handler.registerPacketHandler(PacketIds.PLAYER,
-                                      packetSettingsHandler);
+        PacketHelper.registerServerExecutor(
+                PacketSettingsExecutor.class,
+                PacketSettings.class,
+                1);
+                //CommandLib.UPDATE_SETTINGS
     }
 
     public static void sendPlayerInventoryStatus(boolean newVal) {

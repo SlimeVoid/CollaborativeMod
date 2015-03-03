@@ -1,0 +1,6 @@
+{
+  "parent": "collaborative:item/cm.plan",
+  "textures": {
+    "layer0": "collaborative:items/cm.plan_blank"
+  }
+}

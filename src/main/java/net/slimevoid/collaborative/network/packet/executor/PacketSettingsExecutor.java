@@ -7,11 +7,12 @@ import net.slimevoid.collaborative.core.lib.ConfigurationLib;
 import net.slimevoid.collaborative.network.packet.PacketSettings;
 import net.slimevoid.library.IPacketExecutor;
 import net.slimevoid.library.network.PacketUpdate;
+import net.slimevoid.library.network.executor.PacketExecutor;
 
-public class PacketSettingsExecutor implements IPacketExecutor {
+public class PacketSettingsExecutor extends PacketExecutor {
 
     @Override
-    public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
+    public PacketUpdate execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
         if (packet instanceof PacketSettings) {
             PacketSettings packetSettings = (PacketSettings) packet;
             ConfigurationLib.updatePlayersInventoryLocked(entityplayer,
@@ -22,6 +23,7 @@ public class PacketSettingsExecutor implements IPacketExecutor {
                 bench.onCraftMatrixChanged(bench.getPlayerInventory());
             }
         }
+        return null;
     }
 
 }

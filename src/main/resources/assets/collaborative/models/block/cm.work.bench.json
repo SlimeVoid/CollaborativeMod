@@ -1,12 +1,9 @@
 {
-    "parent": "block/cube",
-    "textures": {
-        "particle": "collaborative:blocks/cm.work.bench_front",
-        "down": "collaborative:blocks/cm.work.bench_bottom",
-        "up": "collaborative:blocks/cm.work.bench_top",
-        "west": "collaborative:blocks/cm.work.bench_front",
-        "east": "collaborative:blocks/cm.work.bench_side",
-        "south": "collaborative:blocks/cm.work.bench_side",
-        "north": "collaborative:blocks/cm.work.bench_side"
-    }
+"parent": "collaborative:block/cube_front",
+  "textures": {
+    "top": "collaborative:blocks/cm.work.bench_top",
+    "bottom": "collaborative:blocks/cm.work.bench_bottom",
+    "front": "collaborative:blocks/cm.work.bench_front",
+    "side": "collaborative:blocks/cm.work.bench_side"
+}
 }

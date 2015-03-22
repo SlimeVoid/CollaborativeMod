@@ -12,11 +12,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.slimevoid.collaborative.core.lib.ConfigurationLib;
+import net.slimevoid.collaborative.core.lib.RenderLib;
 import net.slimevoid.library.IEnumBlockType;
 import net.slimevoid.library.blocks.BlockBase;
+import net.slimevoid.library.blocks.BlockSimpleBase;
+import net.slimevoid.library.blocks.BlockStates;
 import net.slimevoid.library.items.ItemBlockBase;
 
-public class BlockCollaborativeBase extends BlockBase {
+public class BlockCollaborativeBase extends BlockSimpleBase {
 	
 	protected static PropertyEnum VARIANT = PropertyEnum.create("variant", BlockTypeCollaborative.class);
 
@@ -28,7 +31,7 @@ public class BlockCollaborativeBase extends BlockBase {
 
     @Override
     public int getRenderType() {
-        return 3;
+        return RenderLib.BLOCK_BASE;
     }
 
     @Override
@@ -55,8 +58,8 @@ public class BlockCollaborativeBase extends BlockBase {
     }
 
     @Override
-    protected IBlockState getInitialState() {
-        return this.blockState.getBaseState().withProperty(VARIANT, getDefaultBlockType()).withProperty(FACING, EnumFacing.NORTH);
+    protected IBlockState getInitialState(IBlockState state) {
+        return state.withProperty(VARIANT, getDefaultBlockType());
     }
 
     @Override
@@ -66,7 +69,7 @@ public class BlockCollaborativeBase extends BlockBase {
 
     @Override
     protected IProperty[] getPropertyList() {
-        return new IProperty[] {FACING, VARIANT};
+        return new IProperty[] {BlockStates.FACING, VARIANT};
     }
 
     @Override

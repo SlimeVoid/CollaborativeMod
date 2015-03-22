@@ -39,7 +39,7 @@ public class ConfigurationLib {
         // configuration.get(Configuration.CATEGORY_BLOCK,
         // "collaborativeBaseID",
         // 1890).getInt();
-        RenderLib.BLOCK_BASE = 0;// TODO :: RenderingRegistry.getNextAvailableRenderId();
+        RenderLib.BLOCK_BASE = 3;// TODO :: RenderingRegistry.getNextAvailableRenderId();
         //
         // itemPlanBlankID = configuration.get(Configuration.CATEGORY_BLOCK,
         // "planBlankID",

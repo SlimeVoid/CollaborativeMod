@@ -59,7 +59,7 @@ public class BlockCollaborativeBase extends BlockSimpleBase {
 
     @Override
     protected IBlockState getInitialState(IBlockState state) {
-        return state.withProperty(VARIANT, getDefaultBlockType());
+        return state;
     }
 
     @Override

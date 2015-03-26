@@ -15,7 +15,7 @@ import net.slimevoid.collaborative.core.lib.GuiLib;
 import net.slimevoid.collaborative.core.lib.PacketLib;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkChestBase;
-import net.slimevoid.library.ICommonProxy;
+import net.slimevoid.library.proxy.ICommonProxy;
 import net.slimevoid.library.util.helpers.BlockHelper;
 
 public class CommonProxy implements ICommonProxy {

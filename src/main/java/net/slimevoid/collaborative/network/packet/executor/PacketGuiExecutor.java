@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import net.slimevoid.collaborative.container.ContainerWorkBench;
 import net.slimevoid.collaborative.network.packet.PacketGui;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
-import net.slimevoid.library.IPacketExecutor;
 import net.slimevoid.library.network.PacketUpdate;
 import net.slimevoid.library.network.executor.PacketExecutor;
 

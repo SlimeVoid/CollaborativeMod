@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.slimevoid.collaborative.core.lib.BlockLib;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkBench;
 import net.slimevoid.collaborative.tileentity.TileEntityWorkChestWood;
-import net.slimevoid.library.IEnumBlockType;
+import net.slimevoid.library.blocks.IEnumBlockType;
 import net.slimevoid.library.tileentity.TileEntityBase;
 
 public enum BlockTypeCollaborative implements IEnumBlockType {

@@ -10,13 +10,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.slimevoid.collaborative.core.lib.ConfigurationLib;
 import net.slimevoid.collaborative.core.lib.RenderLib;
-import net.slimevoid.library.IEnumBlockType;
-import net.slimevoid.library.blocks.BlockBase;
+import net.slimevoid.library.blocks.IEnumBlockType;
 import net.slimevoid.library.blocks.BlockSimpleBase;
-import net.slimevoid.library.blocks.BlockStates;
+import net.slimevoid.library.blocks.state.BlockStates;
 import net.slimevoid.library.items.ItemBlockBase;
 
 public class BlockCollaborativeBase extends BlockSimpleBase {

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.slimevoid.collaborative.core.lib.CoreLib;
-import net.slimevoid.library.ICommonProxy;
+import net.slimevoid.library.proxy.ICommonProxy;
 
 @Mod(
         modid = CoreLib.MOD_ID,

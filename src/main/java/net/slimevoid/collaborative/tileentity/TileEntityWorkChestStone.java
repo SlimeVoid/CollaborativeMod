@@ -10,9 +10,4 @@ public class TileEntityWorkChestStone extends TileEntityWorkChestBase {
         return BlockLib.WORK_CHEST_STONE_ID;
     }
 
-	@Override
-	public IChatComponent getDisplayName() {
-		return null;
-	}
-
 }

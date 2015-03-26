@@ -238,9 +238,4 @@ public class TileEntityWorkBench extends TileEntityCollaborativeBase implements
 	public void clear() {
 	}
 
-	@Override
-	public IChatComponent getDisplayName() {
-		return null;
-	}
-
 }
